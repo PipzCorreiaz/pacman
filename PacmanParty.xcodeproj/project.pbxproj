@@ -1,0 +1,349 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		002FF8ED151E84D30029ACD7 /* Ball.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 002FF8D9151E84D30029ACD7 /* Ball.cpp */; };
+		002FF8EE151E84D30029ACD7 /* Character.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 002FF8DB151E84D30029ACD7 /* Character.cpp */; };
+		002FF8EF151E84D30029ACD7 /* Eye.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 002FF8DD151E84D30029ACD7 /* Eye.cpp */; };
+		002FF8F0151E84D30029ACD7 /* Eyebrow.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 002FF8DF151E84D30029ACD7 /* Eyebrow.cpp */; };
+		002FF8F1151E84D30029ACD7 /* Ghost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 002FF8E1151E84D30029ACD7 /* Ghost.cpp */; };
+		002FF8F2151E84D30029ACD7 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 002FF8E3151E84D30029ACD7 /* main.cpp */; };
+		002FF8F3151E84D30029ACD7 /* Maze.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 002FF8E4151E84D30029ACD7 /* Maze.cpp */; };
+		002FF8F4151E84D30029ACD7 /* Pacman.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 002FF8E6151E84D30029ACD7 /* Pacman.cpp */; };
+		002FF8F5151E84D30029ACD7 /* Section.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 002FF8E9151E84D30029ACD7 /* Section.cpp */; };
+		002FF8F6151E84D30029ACD7 /* Wall.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 002FF8EB151E84D30029ACD7 /* Wall.cpp */; };
+		002FF8F8151E84EB0029ACD7 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002FF8F7151E84EB0029ACD7 /* OpenGL.framework */; };
+		002FF8FA151E84F20029ACD7 /* GLUT.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 002FF8F9151E84F20029ACD7 /* GLUT.framework */; };
+		0096D44B155C6C94003CCE42 /* Particle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0096D44A155C6C94003CCE42 /* Particle.cpp */; };
+		00E3AB2A1520DDED00B6BCAC /* Game.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00E3AB291520DDED00B6BCAC /* Game.cpp */; };
+		00E5E28215586D0E00DA6CC2 /* Brick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00E5E28115586D0E00DA6CC2 /* Brick.cpp */; };
+		00F8D154155CA6F300EDAE0B /* Explosion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 00F8D153155CA6F300EDAE0B /* Explosion.cpp */; };
+		0B6D0EC5154AAD3500662516 /* DayLight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6D0EC1154AAD3500662516 /* DayLight.cpp */; };
+		0B6D0EC6154AAD3500662516 /* Gspot.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6D0EC3154AAD3500662516 /* Gspot.cpp */; };
+		0B6D11A1154B05D500662516 /* MinerHat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0B6D119F154B05D500662516 /* MinerHat.cpp */; };
+		AB2A06C6152EA1CF00E76A9E /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = AB2A06C5152EA1CF00E76A9E /* Camera.cpp */; };
+		ABF66E9E156B45DA005874B9 /* BMPReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABF66E9C156B45DA005874B9 /* BMPReader.cpp */; };
+		ABFB54B11546D12600364E7D /* Lighting.cpp in Sources */ = {isa = PBXBuildFile; fileRef = ABFB54B01546D12600364E7D /* Lighting.cpp */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		002FF8AD151E84590029ACD7 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		002FF8AF151E84590029ACD7 /* PacmanParty */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = PacmanParty; sourceTree = BUILT_PRODUCTS_DIR; };
+		002FF8D9151E84D30029ACD7 /* Ball.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ball.cpp; path = PacmanParty/Ball.cpp; sourceTree = "<group>"; };
+		002FF8DA151E84D30029ACD7 /* Ball.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ball.h; path = PacmanParty/Ball.h; sourceTree = "<group>"; };
+		002FF8DB151E84D30029ACD7 /* Character.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Character.cpp; path = PacmanParty/Character.cpp; sourceTree = "<group>"; };
+		002FF8DC151E84D30029ACD7 /* Character.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Character.h; path = PacmanParty/Character.h; sourceTree = "<group>"; };
+		002FF8DD151E84D30029ACD7 /* Eye.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Eye.cpp; path = PacmanParty/Eye.cpp; sourceTree = "<group>"; };
+		002FF8DE151E84D30029ACD7 /* Eye.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Eye.h; path = PacmanParty/Eye.h; sourceTree = "<group>"; };
+		002FF8DF151E84D30029ACD7 /* Eyebrow.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Eyebrow.cpp; path = PacmanParty/Eyebrow.cpp; sourceTree = "<group>"; };
+		002FF8E0151E84D30029ACD7 /* Eyebrow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Eyebrow.h; path = PacmanParty/Eyebrow.h; sourceTree = "<group>"; };
+		002FF8E1151E84D30029ACD7 /* Ghost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Ghost.cpp; path = PacmanParty/Ghost.cpp; sourceTree = "<group>"; };
+		002FF8E2151E84D30029ACD7 /* Ghost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Ghost.h; path = PacmanParty/Ghost.h; sourceTree = "<group>"; };
+		002FF8E3151E84D30029ACD7 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = PacmanParty/main.cpp; sourceTree = "<group>"; };
+		002FF8E4151E84D30029ACD7 /* Maze.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Maze.cpp; path = PacmanParty/Maze.cpp; sourceTree = "<group>"; };
+		002FF8E5151E84D30029ACD7 /* Maze.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Maze.h; path = PacmanParty/Maze.h; sourceTree = "<group>"; };
+		002FF8E6151E84D30029ACD7 /* Pacman.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Pacman.cpp; path = PacmanParty/Pacman.cpp; sourceTree = "<group>"; };
+		002FF8E7151E84D30029ACD7 /* Pacman.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Pacman.h; path = PacmanParty/Pacman.h; sourceTree = "<group>"; };
+		002FF8E8151E84D30029ACD7 /* PacmanParty.1 */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.man; name = PacmanParty.1; path = PacmanParty/PacmanParty.1; sourceTree = "<group>"; };
+		002FF8E9151E84D30029ACD7 /* Section.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Section.cpp; path = PacmanParty/Section.cpp; sourceTree = "<group>"; };
+		002FF8EA151E84D30029ACD7 /* Section.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Section.h; path = PacmanParty/Section.h; sourceTree = "<group>"; };
+		002FF8EB151E84D30029ACD7 /* Wall.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Wall.cpp; path = PacmanParty/Wall.cpp; sourceTree = "<group>"; };
+		002FF8EC151E84D30029ACD7 /* Wall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Wall.h; path = PacmanParty/Wall.h; sourceTree = "<group>"; };
+		002FF8F7151E84EB0029ACD7 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		002FF8F9151E84F20029ACD7 /* GLUT.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLUT.framework; path = System/Library/Frameworks/GLUT.framework; sourceTree = SDKROOT; };
+		0096D44A155C6C94003CCE42 /* Particle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Particle.cpp; path = PacmanParty/Particle.cpp; sourceTree = "<group>"; };
+		0096D44D155C6CA7003CCE42 /* Particle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Particle.h; path = PacmanParty/Particle.h; sourceTree = "<group>"; };
+		0096D451155C7467003CCE42 /* Explosion.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Explosion.h; path = PacmanParty/Explosion.h; sourceTree = "<group>"; };
+		00E3AB271520DDE000B6BCAC /* Game.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Game.h; path = PacmanParty/Game.h; sourceTree = "<group>"; };
+		00E3AB291520DDED00B6BCAC /* Game.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Game.cpp; path = PacmanParty/Game.cpp; sourceTree = "<group>"; };
+		00E5E27F15586D0000DA6CC2 /* Brick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Brick.h; path = PacmanParty/Brick.h; sourceTree = "<group>"; };
+		00E5E28115586D0E00DA6CC2 /* Brick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Brick.cpp; path = PacmanParty/Brick.cpp; sourceTree = "<group>"; };
+		00F8D153155CA6F300EDAE0B /* Explosion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Explosion.cpp; path = PacmanParty/Explosion.cpp; sourceTree = "<group>"; };
+		0B6D0EC1154AAD3500662516 /* DayLight.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = DayLight.cpp; path = PacmanParty/DayLight.cpp; sourceTree = "<group>"; };
+		0B6D0EC2154AAD3500662516 /* DayLight.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DayLight.h; path = PacmanParty/DayLight.h; sourceTree = "<group>"; };
+		0B6D0EC3154AAD3500662516 /* Gspot.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Gspot.cpp; path = PacmanParty/Gspot.cpp; sourceTree = "<group>"; };
+		0B6D0EC4154AAD3500662516 /* Gspot.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Gspot.h; path = PacmanParty/Gspot.h; sourceTree = "<group>"; };
+		0B6D119F154B05D500662516 /* MinerHat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MinerHat.cpp; path = PacmanParty/MinerHat.cpp; sourceTree = "<group>"; };
+		0B6D11A0154B05D500662516 /* MinerHat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MinerHat.h; path = PacmanParty/MinerHat.h; sourceTree = "<group>"; };
+		AB2A06C3152EA13600E76A9E /* Camera.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Camera.h; path = PacmanParty/Camera.h; sourceTree = "<group>"; };
+		AB2A06C5152EA1CF00E76A9E /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Camera.cpp; path = PacmanParty/Camera.cpp; sourceTree = "<group>"; };
+		AB826A1815461A3400522E89 /* Constraints.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Constraints.h; path = PacmanParty/Constraints.h; sourceTree = "<group>"; };
+		ABF66E9C156B45DA005874B9 /* BMPReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = BMPReader.cpp; path = PacmanParty/BMPReader.cpp; sourceTree = "<group>"; };
+		ABF66E9D156B45DA005874B9 /* BMPReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BMPReader.h; path = PacmanParty/BMPReader.h; sourceTree = "<group>"; };
+		ABFB54B01546D12600364E7D /* Lighting.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Lighting.cpp; path = PacmanParty/Lighting.cpp; sourceTree = "<group>"; };
+		ABFB54B51546D31200364E7D /* Lighting.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Lighting.h; path = PacmanParty/Lighting.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		002FF8AC151E84590029ACD7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				002FF8FA151E84F20029ACD7 /* GLUT.framework in Frameworks */,
+				002FF8F8151E84EB0029ACD7 /* OpenGL.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		002FF8A4151E84580029ACD7 = {
+			isa = PBXGroup;
+			children = (
+				ABF66E9C156B45DA005874B9 /* BMPReader.cpp */,
+				ABF66E9D156B45DA005874B9 /* BMPReader.h */,
+				002FF8F9151E84F20029ACD7 /* GLUT.framework */,
+				002FF8F7151E84EB0029ACD7 /* OpenGL.framework */,
+				AB826A1815461A3400522E89 /* Constraints.h */,
+				002FF8DD151E84D30029ACD7 /* Eye.cpp */,
+				002FF8DE151E84D30029ACD7 /* Eye.h */,
+				AB2A06C3152EA13600E76A9E /* Camera.h */,
+				AB2A06C5152EA1CF00E76A9E /* Camera.cpp */,
+				ABFB54B01546D12600364E7D /* Lighting.cpp */,
+				ABFB54B51546D31200364E7D /* Lighting.h */,
+				0B6D0EC1154AAD3500662516 /* DayLight.cpp */,
+				0B6D0EC2154AAD3500662516 /* DayLight.h */,
+				0B6D0EC3154AAD3500662516 /* Gspot.cpp */,
+				0B6D0EC4154AAD3500662516 /* Gspot.h */,
+				002FF8DF151E84D30029ACD7 /* Eyebrow.cpp */,
+				002FF8E0151E84D30029ACD7 /* Eyebrow.h */,
+				0B6D119F154B05D500662516 /* MinerHat.cpp */,
+				0B6D11A0154B05D500662516 /* MinerHat.h */,
+				002FF8DB151E84D30029ACD7 /* Character.cpp */,
+				002FF8DC151E84D30029ACD7 /* Character.h */,
+				002FF8E6151E84D30029ACD7 /* Pacman.cpp */,
+				002FF8E7151E84D30029ACD7 /* Pacman.h */,
+				002FF8E1151E84D30029ACD7 /* Ghost.cpp */,
+				002FF8E2151E84D30029ACD7 /* Ghost.h */,
+				00E3AB291520DDED00B6BCAC /* Game.cpp */,
+				00E3AB271520DDE000B6BCAC /* Game.h */,
+				002FF8D9151E84D30029ACD7 /* Ball.cpp */,
+				002FF8DA151E84D30029ACD7 /* Ball.h */,
+				002FF8E4151E84D30029ACD7 /* Maze.cpp */,
+				002FF8E5151E84D30029ACD7 /* Maze.h */,
+				00E5E27F15586D0000DA6CC2 /* Brick.h */,
+				00E5E28115586D0E00DA6CC2 /* Brick.cpp */,
+				002FF8EB151E84D30029ACD7 /* Wall.cpp */,
+				002FF8EC151E84D30029ACD7 /* Wall.h */,
+				002FF8E9151E84D30029ACD7 /* Section.cpp */,
+				002FF8EA151E84D30029ACD7 /* Section.h */,
+				00F8D153155CA6F300EDAE0B /* Explosion.cpp */,
+				0096D451155C7467003CCE42 /* Explosion.h */,
+				0096D44A155C6C94003CCE42 /* Particle.cpp */,
+				0096D44D155C6CA7003CCE42 /* Particle.h */,
+				002FF8E3151E84D30029ACD7 /* main.cpp */,
+				002FF8E8151E84D30029ACD7 /* PacmanParty.1 */,
+				002FF8B2151E84590029ACD7 /* PacmanParty */,
+				002FF8B0151E84590029ACD7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		002FF8B0151E84590029ACD7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				002FF8AF151E84590029ACD7 /* PacmanParty */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		002FF8B2151E84590029ACD7 /* PacmanParty */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = PacmanParty;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		002FF8AE151E84590029ACD7 /* PacmanParty */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 002FF8B9151E84590029ACD7 /* Build configuration list for PBXNativeTarget "PacmanParty" */;
+			buildPhases = (
+				002FF8AB151E84590029ACD7 /* Sources */,
+				002FF8AC151E84590029ACD7 /* Frameworks */,
+				002FF8AD151E84590029ACD7 /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = PacmanParty;
+			productName = PacmanParty;
+			productReference = 002FF8AF151E84590029ACD7 /* PacmanParty */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		002FF8A6151E84580029ACD7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+			};
+			buildConfigurationList = 002FF8A9151E84580029ACD7 /* Build configuration list for PBXProject "PacmanParty" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 002FF8A4151E84580029ACD7;
+			productRefGroup = 002FF8B0151E84590029ACD7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				002FF8AE151E84590029ACD7 /* PacmanParty */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		002FF8AB151E84590029ACD7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				002FF8ED151E84D30029ACD7 /* Ball.cpp in Sources */,
+				002FF8EE151E84D30029ACD7 /* Character.cpp in Sources */,
+				002FF8EF151E84D30029ACD7 /* Eye.cpp in Sources */,
+				002FF8F0151E84D30029ACD7 /* Eyebrow.cpp in Sources */,
+				002FF8F1151E84D30029ACD7 /* Ghost.cpp in Sources */,
+				002FF8F2151E84D30029ACD7 /* main.cpp in Sources */,
+				002FF8F3151E84D30029ACD7 /* Maze.cpp in Sources */,
+				002FF8F4151E84D30029ACD7 /* Pacman.cpp in Sources */,
+				002FF8F5151E84D30029ACD7 /* Section.cpp in Sources */,
+				002FF8F6151E84D30029ACD7 /* Wall.cpp in Sources */,
+				00E3AB2A1520DDED00B6BCAC /* Game.cpp in Sources */,
+				AB2A06C6152EA1CF00E76A9E /* Camera.cpp in Sources */,
+				ABFB54B11546D12600364E7D /* Lighting.cpp in Sources */,
+				0B6D0EC5154AAD3500662516 /* DayLight.cpp in Sources */,
+				0B6D0EC6154AAD3500662516 /* Gspot.cpp in Sources */,
+				0B6D11A1154B05D500662516 /* MinerHat.cpp in Sources */,
+				00E5E28215586D0E00DA6CC2 /* Brick.cpp in Sources */,
+				0096D44B155C6C94003CCE42 /* Particle.cpp in Sources */,
+				00F8D154155CA6F300EDAE0B /* Explosion.cpp in Sources */,
+				ABF66E9E156B45DA005874B9 /* BMPReader.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		002FF8B7151E84590029ACD7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		002FF8B8151E84590029ACD7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		002FF8BA151E84590029ACD7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		002FF8BB151E84590029ACD7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		002FF8A9151E84580029ACD7 /* Build configuration list for PBXProject "PacmanParty" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				002FF8B7151E84590029ACD7 /* Debug */,
+				002FF8B8151E84590029ACD7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		002FF8B9151E84590029ACD7 /* Build configuration list for PBXNativeTarget "PacmanParty" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				002FF8BA151E84590029ACD7 /* Debug */,
+				002FF8BB151E84590029ACD7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 002FF8A6151E84580029ACD7 /* Project object */;
+}

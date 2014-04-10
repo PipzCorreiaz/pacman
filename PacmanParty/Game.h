@@ -22,6 +22,7 @@
 #include "DayLight.h"
 #include "Constraints.h"
 #include "Explosion.h"
+#include "Wizard.h"
 
 void backToNormal(int value);
 void theComeBack(int value);
@@ -33,6 +34,8 @@ public:
     
 	Game();
 	~Game();
+    
+    void update();
 	
     void ballsInspector();
     
@@ -79,11 +82,13 @@ public:
     int _ghostsState;
     int _ghostsNextState;
     
-public:
 	std::string matrix;
     bool _detonator;
     Explosion* _explosion;
 
+private:
+    float present_time = 0, last_time = 0;
+    
 };
 
 

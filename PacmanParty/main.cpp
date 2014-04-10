@@ -30,7 +30,6 @@ void setGhostsState(int state);
 void LoadTexture( const std::string & textureFilename);
 
 // "Variaveis" Globais
-float present_time = 0, last_time = 0;
 Game* game = new Game();
 
 //TEXTURE STUFF
@@ -174,24 +173,7 @@ void specialPressedKeys(int key, int x, int y){
 // Deslocamento em funcao do tempo real mantendo uma velocidade
 void update(){
     
-	float dt;
-	// GLUT_ELAPSED TIME: milisegundos desde que foi chamada a glutInit
-	present_time = glutGet(GLUT_ELAPSED_TIME); /* in milliseconds */
-	dt = 0.001f*(present_time - last_time); /* in seconds */ 
-
-    if(game->_detonator){
-        game->_explosion->moveParticles(dt);
-    }
-    else {
-        game->movePac(game->_pac->getSpeed()*dt);
-    }
-    
-    game->moveGhost(game->_ghostOne, game->_ghostOne->getSpeed()*dt);
-    game->moveGhost(game->_ghostTwo, game->_ghostTwo->getSpeed()*dt);
-    game->moveGhost(game->_ghostThree, game->_ghostThree->getSpeed()*dt);
-    
-	last_time = present_time;
-    
+    game->update();
 	glutPostRedisplay(); //forçar o re-desenho
     
 }

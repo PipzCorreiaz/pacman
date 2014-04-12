@@ -23,6 +23,8 @@ public:
     void setX(float x);
     void setY(float y);
     
+    void virtual update(float dt) = 0;
+    
     bool isUp();
     bool isDown();
     bool isLeft();
@@ -38,7 +40,8 @@ public:
     void down();
     void left();
     void right();
-    void virtual move(float dist) = 0;
+    void move(float dist);
+    void turn(int direction);
     void resetMove();
     void resetPressedKeys();
     void pause();

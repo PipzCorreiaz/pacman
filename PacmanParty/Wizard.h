@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 
+
 class Wizard {
 
 public:
@@ -20,7 +21,6 @@ public:
     
 private:
     Wizard();
-    Wizard(Wizard const&);
     std::string _map;
 };
 

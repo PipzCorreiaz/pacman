@@ -13,6 +13,7 @@ Pacman::Pacman(){
     _posZ = 1.25f;
     _direction = _pauseAngle = 0;
 	_up = _down = _left = _right = false; //inicia parado
+    _down = true;
 	_speed = 10; // unidades do labirinto per second
     //_left = true; // possivel direccao inicial
     _angle = 1;
@@ -95,44 +96,10 @@ void Pacman::backAgain(){
 
 
 
-void Pacman::move(float dist){
-
-    if(_up){
-        _posY = _posY + dist;
-        _direction = 180;        
-        _pauseAngle = 0;
-        _turnedUp = true;
-        _turnedDown = false;
-        _turnedLeft = false;
-        _turnedRight = false;
-    }
-    
-    else if(_down){
-        _posY = _posY - dist;
-        _direction = 0;
-        _pauseAngle = 0;
-        _turnedUp = false;
-        _turnedDown = true;
-        _turnedLeft = false;
-        _turnedRight = false;
-    }
-    
-    else if(isLeft()){
-        _posX = _posX - dist;
-        _direction = -90;
-        _pauseAngle = 0;
-        _turnedUp = false;
-        _turnedDown = false;
-        _turnedLeft = true;
-        _turnedRight = false;
-    }
-    else if(_right){
-        _posX = _posX + dist;
-        _direction = 90;
-        _pauseAngle = 0;
-        _turnedUp = false;
-        _turnedDown = false;
-        _turnedLeft = false;
-        _turnedRight = true;
-    }
+void Pacman::update(float dt) {
+    float dist = getSpeed() * dt;
+    int dir = rand() % 4;
+    turn(dir);
+    move(dist);
 }
+

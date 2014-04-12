@@ -6,6 +6,7 @@
 
 #include <iostream>
 #include "Character.h"
+#include "Constraints.h"
 
 
 Character::Character(){}
@@ -58,6 +59,7 @@ bool Character::isStopped(){
 
 void Character::resetMove(){
     _up = _down = _left = _right = false;
+    _turnedUp = _turnedLeft = _turnedDown = _turnedRight = false;
 }
 
 void Character::resetPressedKeys(){
@@ -97,26 +99,63 @@ void Character::pause(){
 void Character::up(){
     resetMove();
 	_up = true;
-
-    
+    _turnedUp = true;
 }
 
 void Character::down(){
     resetMove();
     _down = true;
+    _turnedDown = true;
 }
 
 void Character::left(){
     resetMove();
     _left = true;
+    _turnedLeft = true;
 }
 
 void Character::right(){
     resetMove();
     _right = true;
+    _turnedRight = true;
 }
 
+void Character::move(float dist){
+    
+    if(isUp()){
+        _posY = _posY + dist;
+    }
+    
+    else if(isDown()){
+        _posY = _posY - dist;
+    }
+    
+    else if(isLeft()){
+        _posX = _posX - dist;
+    }
+    else if(isRight()){
+        _posX = _posX + dist;
+    }
+}
 
+void Character::turn(int direction) {
+    switch (direction) {    
+        case UP:
+            up();
+            break;
+        case LEFT:
+            left();
+            break;
+        case DOWN:
+            down();
+            break;
+        case RIGHT:
+            right();
+            break;
+        default:
+            break;
+    }
+}
 
 
 

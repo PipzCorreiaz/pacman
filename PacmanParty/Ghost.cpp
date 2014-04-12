@@ -33,6 +33,10 @@ Ghost::Ghost(int posx, int posy, int id){
 
 Ghost::~Ghost(){}
 
+void Ghost::update(float dt) {
+    
+}
+
 
 bool Ghost::isGhost(){
     return true;

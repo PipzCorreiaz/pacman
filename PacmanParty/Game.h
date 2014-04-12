@@ -87,7 +87,8 @@ public:
     Explosion* _explosion;
 
 private:
-    float present_time = 0, last_time = 0;
+    float present_time;
+    float last_time;
     
 };
 

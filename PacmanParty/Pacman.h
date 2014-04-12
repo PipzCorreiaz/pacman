@@ -22,7 +22,6 @@ public:
     bool _explodingTime;
     
 private:
-    int _angle;
 	Eyebrow* _eyebrow;
 	MinerHat* _cap;
 };

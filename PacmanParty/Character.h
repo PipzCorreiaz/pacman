@@ -2,7 +2,10 @@
 #define PacmanLove_Character_h
 
 #include "Eye.h"
+#include "Constraints.h"
+#include "Wizard.h"
 #include <string.h>
+#include <iostream>
 
 class Character {
     
@@ -49,11 +52,11 @@ public:
     bool _upPressed, _downPressed, _leftPressed, _rightPressed;
     bool _turnedUp, _turnedDown, _turnedLeft, _turnedRight;
      
-
     
 protected:
     float _posX, _posY, _posZ, _direction, _pauseAngle, _speed;
     bool _up, _down, _left, _right;
+    int _angle;
 	Eye* _eye;
     
     

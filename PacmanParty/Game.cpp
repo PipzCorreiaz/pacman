@@ -40,7 +40,15 @@ void theComeBack(int value){
 
 
 Game::Game(){
-    matrix = Wizard::getInstance().loadMap("map.txt");
+	
+	try{
+		matrix = Wizard::getInstance().loadMap("map.txt");
+		std::cout << Wizard::getInstance().indexToPosition(2071)[0] << " " << Wizard::getInstance().indexToPosition(2071)[1] << std::endl;
+	}
+	catch(std::string* e) {
+		std::cerr << *e << std::endl;
+		exit(-1);
+	}
     _pac = new Pacman();
     _camera = new Camera(_pac);
     _maze = new Maze();
@@ -56,6 +64,8 @@ Game::Game(){
     _lives = 3;
     _balls = 276;
     _detonator = false;
+    present_time = 0;
+    last_time = 0;
 
 }
 

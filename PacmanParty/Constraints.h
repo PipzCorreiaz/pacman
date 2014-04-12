@@ -33,4 +33,7 @@
 #define DOWN 2
 #define RIGHT 3
 
+#define WALL 'w'
+#define BALL 'b'
+
 #endif

@@ -18,7 +18,7 @@
 #include "Ghost.h"
 
 
-Ghost::Ghost(int posx, int posy, int id){
+Ghost::Ghost(int posx, int posy, int id) {
 	_eye = new Eye();
 	_posX = posx;
     _posY = posy; 

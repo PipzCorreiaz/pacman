@@ -7,7 +7,7 @@
 #include <iostream>
 #include "Pacman.h"
 
-Pacman::Pacman(){
+Pacman::Pacman() {
     _posX = 9.0f;
 	_posY = 6.0f;
     _posZ = 1.25f;
@@ -15,15 +15,13 @@ Pacman::Pacman(){
 	_up = _down = _left = _right = false; //inicia parado
     _down = true;
 	_speed = 10; // unidades do labirinto per second
-    //_left = true; // possivel direccao inicial
-    _angle = 1;
+    _angle = DOWN;
 	_eye = new Eye();
 	_eyebrow = new Eyebrow();
 	_cap = new MinerHat();
     _turnedUp = _turnedRight = _turnedLeft = false;
     _turnedDown = true;
-    _explodingTime = false;
-    
+    _explodingTime = false;    
 }
 
 Pacman::~Pacman(){}
@@ -98,8 +96,14 @@ void Pacman::backAgain(){
 
 void Pacman::update(float dt) {
     float dist = getSpeed() * dt;
+    int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getAngle());
     int dir = rand() % 4;
-    turn(dir);
-    move(dist);
+    if (Wizard::getInstance().isWall(positionAhead)) {
+		turn(dir);
+	} else if(Wizard::getInstance().canTurn(getX(), getY())) {
+		turn(dir);
+	}else {
+		move(dist);
+	}     
 }
 

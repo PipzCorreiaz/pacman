@@ -4,12 +4,13 @@
 #include <GL/glut.h>
 #endif
 
-#include <iostream>
 #include "Character.h"
-#include "Constraints.h"
 
 
-Character::Character(){}
+
+Character::Character(){
+	
+}
 
 Character::~Character(){}
 float Character::getX(){
@@ -100,24 +101,32 @@ void Character::up(){
     resetMove();
 	_up = true;
     _turnedUp = true;
+    _angle = UP;
+    _direction = 180;
 }
 
 void Character::down(){
     resetMove();
     _down = true;
     _turnedDown = true;
+    _angle = DOWN;
+    _direction = 0;
 }
 
 void Character::left(){
     resetMove();
     _left = true;
     _turnedLeft = true;
+    _angle = LEFT;
+    _direction = -90;
 }
 
 void Character::right(){
     resetMove();
     _right = true;
     _turnedRight = true;
+    _angle = RIGHT;
+    _direction = 90;
 }
 
 void Character::move(float dist){
@@ -139,6 +148,10 @@ void Character::move(float dist){
 }
 
 void Character::turn(int direction) {
+	
+	setX(round(getX()));
+	setY(round(getY()));
+	
     switch (direction) {    
         case UP:
             up();

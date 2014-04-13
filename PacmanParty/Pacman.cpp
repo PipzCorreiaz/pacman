@@ -7,15 +7,15 @@
 #include <iostream>
 #include "Pacman.h"
 
-Pacman::Pacman(){
+Pacman::Pacman() {
     _posX = 9.0f;
 	_posY = 6.0f;
     _posZ = 1.25f;
     _direction = _pauseAngle = 0;
 	_up = _down = _left = _right = false; //inicia parado
+    _down = true;
 	_speed = 10; // unidades do labirinto per second
-    //_left = true; // possivel direccao inicial
-    _angle = 1;
+    _angle = DOWN;
 	_eye = new Eye();
 	_eyebrow = new Eyebrow();
 	_cap = new MinerHat();
@@ -23,14 +23,13 @@ Pacman::Pacman(){
     _turnedDown = true;
     _explodingTime = false;
     
+    _previousX = 0.0;
+    _previousY = 0.0;
 }
 
 Pacman::~Pacman(){}
 
 // ACRESCENTAR OS EIXOS PARA ELE OLHAR :D
-int Pacman::getAngle(){
-    return _angle;
-}
 
 void Pacman::setAngle(float posX, float posY){
 
@@ -93,46 +92,31 @@ void Pacman::backAgain(){
     _direction = 0;
 }
 
-
-
-void Pacman::move(float dist){
-
-    if(_up){
-        _posY = _posY + dist;
-        _direction = 180;        
-        _pauseAngle = 0;
-        _turnedUp = true;
-        _turnedDown = false;
-        _turnedLeft = false;
-        _turnedRight = false;
-    }
+void Pacman::update(float dt) {
+    float dist = getSpeed() * dt;
+    int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getAngle());
+    std::vector<float> nextPosition = Wizard::getInstance().nextPosition(getX(), getY(), dist, getAngle());
     
-    else if(_down){
-        _posY = _posY - dist;
-        _direction = 0;
-        _pauseAngle = 0;
-        _turnedUp = false;
-        _turnedDown = true;
-        _turnedLeft = false;
-        _turnedRight = false;
-    }
     
-    else if(isLeft()){
-        _posX = _posX - dist;
-        _direction = -90;
-        _pauseAngle = 0;
-        _turnedUp = false;
-        _turnedDown = false;
-        _turnedLeft = true;
-        _turnedRight = false;
-    }
-    else if(_right){
-        _posX = _posX + dist;
-        _direction = 90;
-        _pauseAngle = 0;
-        _turnedUp = false;
-        _turnedDown = false;
-        _turnedLeft = false;
-        _turnedRight = true;
-    }
+    if (Wizard::getInstance().isWall(positionAhead)) {
+        move(dist);
+		turn(Wizard::getInstance().availablePosition(nextPosition[0], nextPosition[1]));
+		
+		_previousX = round(getX());
+		_previousY = round(getY());
+		
+	} else {
+		
+		if(Wizard::getInstance().canTurn(getX(), getY())) {
+			if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+				turn(Wizard::getInstance().availablePosition(getX(), getY()));
+			}
+			_previousX = round(getX());
+			_previousY = round(getY());
+			move(dist);
+		}else {
+			move(dist);
+		}
+	}     
 }
+

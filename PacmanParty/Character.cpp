@@ -4,11 +4,13 @@
 #include <GL/glut.h>
 #endif
 
-#include <iostream>
 #include "Character.h"
 
 
-Character::Character(){}
+
+Character::Character(){
+	
+}
 
 Character::~Character(){}
 float Character::getX(){
@@ -24,7 +26,7 @@ float Character::getZ(){
     return _posZ;
 }
 
-float Character::getDirection(){
+int Character::getDirection(){
 	return _direction;
 }
 
@@ -34,6 +36,10 @@ float Character::getSpeed(){
 
 float Character::getPauseAngle(){
     return _pauseAngle;
+}
+
+int Character::getAngle(){
+    return _angle;
 }
 
 bool Character::isUp(){
@@ -58,6 +64,7 @@ bool Character::isStopped(){
 
 void Character::resetMove(){
     _up = _down = _left = _right = false;
+    _turnedUp = _turnedLeft = _turnedDown = _turnedRight = false;
 }
 
 void Character::resetPressedKeys(){
@@ -97,26 +104,76 @@ void Character::pause(){
 void Character::up(){
     resetMove();
 	_up = true;
-
-    
+    _turnedUp = true;
+    _angle = UP;
+    _direction = 180;
 }
 
 void Character::down(){
     resetMove();
     _down = true;
+    _turnedDown = true;
+    _angle = DOWN;
+    _direction = 0;
 }
 
 void Character::left(){
     resetMove();
     _left = true;
+    _turnedLeft = true;
+    _angle = LEFT;
+    _direction = -90;
 }
 
 void Character::right(){
     resetMove();
     _right = true;
+    _turnedRight = true;
+    _angle = RIGHT;
+    _direction = 90;
 }
 
+void Character::move(float dist){
+    
+    if(isUp()){
+        _posY = _posY + dist;
+    }
+    
+    else if(isDown()){
+        _posY = _posY - dist;
+    }
+    
+    else if(isLeft()){
+        _posX = _posX - dist;
+    }
+    else if(isRight()){
+        _posX = _posX + dist;
+    }
+}
 
+ 
+void Character::turn(int direction) {
+	
+	setX(round(getX()));
+	setY(round(getY()));
+	
+    switch (direction) {    
+        case UP:
+            up();
+            break;
+        case LEFT:
+            left();
+            break;
+        case DOWN:
+            down();
+            break;
+        case RIGHT:
+            right();
+            break;
+        default:
+            break;
+    }
+}
 
 
 

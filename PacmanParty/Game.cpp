@@ -40,13 +40,20 @@ void theComeBack(int value){
 
 
 Game::Game(){
-
+	
+	try{
+		matrix = Wizard::getInstance().loadMap("map.txt");
+	}
+	catch(std::string* e) {
+		std::cerr << *e << std::endl;
+		exit(-1);
+	}
     _pac = new Pacman();
     _camera = new Camera(_pac);
     _maze = new Maze();
     _ghostOne = new Ghost(25,26, 1);
     _ghostTwo = new Ghost(-25,26, 2);
-    _ghostThree = new Ghost(25,-26, 3);
+    _ghostThree = new Ghost(25,-12, 3);
     _light = new DayLight();
     ghost1 = _ghostOne;
     ghost2 = _ghostTwo;
@@ -56,67 +63,9 @@ Game::Game(){
     _lives = 3;
     _balls = 276;
     _detonator = false;
+    present_time = 0;
+    last_time = 0;
 
-    
-matrix = "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\
-w                         w w                         w\
-w b.b.b.b.b.b.b.b.b.b.b.b w w b.b.b.b.b.b.b.b.b.b.b.b w\
-w .         .           . w w .           .         . w\
-w b wwwwwww b wwwwwwwww b w w b wwwwwwwww b wwwwwww b w\
-w . wwwwwww . wwwwwwwww . w w . wwwwwwwww . wwwwwww . w\
-w B wwwwwww b wwwwwwwww b w w b wwwwwwwww b wwwwwww B w\
-w . wwwwwww . wwwwwwwww . w w . wwwwwwwww . wwwwwww . w\
-w b wwwwwww b wwwwwwwww b www b wwwwwwwww b wwwwwww b w\
-w .         .           .     .           .         . w\
-w b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b w\
-w .         .     .                 .     .         . w\
-w b wwwwwww b www b wwwwwwwwwwwwwww b www b wwwwwww b w\
-w . wwwwwww . www . wwwwwwwwwwwwwww . www . wwwwwww . w\
-w b wwwwwww b www b wwwwwwwwwwwwwww b w w b wwwwwww b w\
-w .         . www .       w w       . w w .         . w\
-w b.b.b.b.b.b www b.b.b.b w w b.b.b.B w w b.b.b.b.b.b w\
-w           . www       . w w .       w w .           w\
-wwwwwwwwwww b wwwwwwwww b w w b wwwwwww w b wwwwwwwwwww\
-wwwwwwwwwww . wwwwwwwww . w w . wwwwwww w . w w w w w w\
-wwwwwwwwwww b wwwwwwwww b www b wwwwwww w b w w w w w w\
-wwwwwwwwwww . www       .     .       w w . w w w w w w\
-wwwwwwwwwww b www b.b.b.b.b.b.b.b.b.b www b w w w w w w\
-wwwwwwwwwww . www .        .        . w w . w w w w w w\
-w w w w w w b www b wwwww  .  wwwww b w w b w w w w w w\
-w w w w w w . www . w w w  .  w w w . w w . w w w w w w\
-wwwwwwwwwww b www b w w w  .  w w w b www b wwwwwwwwwww\
-            .     . wwwww  .  wwwww .     .            \
-b.b.b.b.B.b.b.b.b.b wwwww  .  wwwww b.b.b.b.b.b.b.b.b.b\
-            .     . wwwww  .  wwwww .     .            \
-wwwwwwwwwww b www b w w w  .  w w w b www b wwwwwwwwwww\
-w w w w w w . w w . w w w  .  w w w . w w . w w w w w w\
-w w w w w w b w w b wwwww  .  wwwww b w w b w w w w w w\
-w w w w w w . w w .        .        . w w . w w w w w w\
-w w w w w w b w w b.b.b.b.b.b.b.b.b.b w w b w w w w w w\
-w w w w w w . w w       .     .       w w . w w w w w w\
-w w w w w w b w wwwwwww b www b wwwwwww w b w w w w w w\
-w w w w w w . w w w w w . w w . w w w w w . w w w w w w\
-wwwwwwwwwww b w wwwwwww b w w b wwwwwww w b wwwwwwwwwww\
-w           . w w       . w w .       w w .           w\
-w b.b.b.b.b.b w w b.b.b.b w w b.b.b.b w w b b.b.b.b.b w\
-w .         . w w .       w w       . w w .         . w\
-w b wwwwwww b w w b wwwwwww wwwwwww b w w b wwwwwww b w\
-w . w w w w . w w . w w w w w w w w . w w . w w w w . w\
-w b wwwwwww b www b wwwwwwwwwwwwwww b www b wwwwwww b w\
-w .         .     .                 .     .         . w\
-w b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b.b w\
-w .         .           .     .           .         . w\
-w b wwwwwww b wwwwwwwww b www b wwwwwwwww b wwwwwww b w\
-w . w w w w . w w w w w . w w . w w w w w . w w w w . w\
-w B w w w w b w w w w w b w w b w w w w w b w w w w B w\
-w . w w w w . w w w w w . w w . w w w w w . w w w w . w\
-w b wwwwwww b wwwwwwwww b w w b wwwwwwwww b wwwwwww b w\
-w .         .           . w w .           .         . w\
-w b.b.b.b.b.b.b.b.b.b.b.b w w b.b.b.b.b.b.b.b.b.b.b.b w\
-w                         w w                         w\
-wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww";
-
-    
 }
 
 Game::~Game(){}
@@ -124,6 +73,31 @@ Game::~Game(){}
 void Game::resetPressedKeys(){
     _pac->_upPressed = _pac->_downPressed = _pac->_leftPressed = _pac->_rightPressed = false;
 
+}
+
+void Game::update() {
+    
+	float dt;
+	present_time = glutGet(GLUT_ELAPSED_TIME); /* in milliseconds */
+	dt = 0.001f*(present_time - last_time); /* in seconds */
+    
+//    if(_detonator){
+//        _explosion->moveParticles(dt);
+//    }
+//    else {
+//        movePac(_pac->getSpeed()*dt);
+//    }
+//    
+//    moveGhost(_ghostOne, _ghostOne->getSpeed()*dt);
+//    moveGhost(_ghostTwo, _ghostTwo->getSpeed()*dt);
+//    moveGhost(_ghostThree, _ghostThree->getSpeed()*dt);
+    
+    _pac->update(dt);
+    _ghostOne->update(dt);
+    _ghostTwo->update(dt);
+    _ghostThree->update(dt);
+    
+	last_time = present_time;
 }
 
 

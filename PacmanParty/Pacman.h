@@ -11,17 +11,16 @@ public:
     Pacman();
     ~Pacman();
    
+    void update(float dt);
     void draw();
-    void move(float dist);
+    // void move(float dist);
     void setAngle(float posX, float posY);
-    int getAngle();
     bool isGhost();
     void backAgain();
 
     bool _explodingTime;
     
 private:
-    int _angle;
 	Eyebrow* _eyebrow;
 	MinerHat* _cap;
 };

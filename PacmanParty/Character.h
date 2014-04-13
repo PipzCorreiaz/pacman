@@ -2,7 +2,10 @@
 #define PacmanLove_Character_h
 
 #include "Eye.h"
+#include "Constraints.h"
+#include "Wizard.h"
 #include <string.h>
+#include <iostream>
 
 class Character {
     
@@ -12,7 +15,8 @@ public:
     float getX();
     float getY();
     float getZ();
-    float getDirection();
+    int getDirection();
+    int getAngle();
     float getPauseAngle();
     float getSpeed();
     
@@ -22,6 +26,8 @@ public:
     void setRight(bool right);
     void setX(float x);
     void setY(float y);
+    
+    void virtual update(float dt) = 0;
     
     bool isUp();
     bool isDown();
@@ -38,19 +44,22 @@ public:
     void down();
     void left();
     void right();
-    void virtual move(float dist) = 0;
+    void move(float dist);
+    void turn(int direction);
     void resetMove();
     void resetPressedKeys();
     void pause();
     
     bool _upPressed, _downPressed, _leftPressed, _rightPressed;
     bool _turnedUp, _turnedDown, _turnedLeft, _turnedRight;
+    int _previousX, _previousY;
      
-
+private:
     
 protected:
-    float _posX, _posY, _posZ, _direction, _pauseAngle, _speed;
+    float _posX, _posY, _posZ, _pauseAngle, _speed;
     bool _up, _down, _left, _right;
+    int _angle, _direction;
 	Eye* _eye;
     
     

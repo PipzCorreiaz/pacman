@@ -28,6 +28,8 @@ public:
     void setColor(float a, float b, float c);
     void setSpeed(float speed);
     void setTrouble(bool trouble);
+    
+    void update(float dt);
     void draw();
     void move(float dist);
     void backAgain();

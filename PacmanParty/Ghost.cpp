@@ -23,18 +23,46 @@ Ghost::Ghost(int posx, int posy, int id) {
 	_posX = posx;
     _posY = posy; 
     _posZ = _direction = _pauseAngle = 0;
+    _angle = DOWN;
 	_up = _down = _left = _right = false; //inicia parado
-    _left = true;
+    _down = true;
     _speed = GHOST_NORMAL_SPEED; // unidades do labirinto per second
     _trouble = false; //if true vou ser comido :D
     _ghostId = id;
     _hiddenTime = false;
+    
+    _previousX = 0.0;
+    _previousY = 0.0;
 }
 
 Ghost::~Ghost(){}
 
 void Ghost::update(float dt) {
+    float dist = getSpeed() * dt;
+    int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getAngle());
+    std::vector<float> nextPosition = Wizard::getInstance().nextPosition(getX(), getY(), dist, getAngle());
     
+    
+    if (Wizard::getInstance().isWall(positionAhead)) {
+        move(dist);
+		turn(Wizard::getInstance().availablePosition(nextPosition[0], nextPosition[1]));
+		
+		_previousX = round(getX());
+		_previousY = round(getY());
+		
+	} else {
+		
+		if(Wizard::getInstance().canTurn(getX(), getY())) {
+			if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+				turn(Wizard::getInstance().availablePosition(getX(), getY()));
+			}
+			_previousX = round(getX());
+			_previousY = round(getY());
+			move(dist);
+		}else {
+			move(dist);
+		}
+	}
 }
 
 

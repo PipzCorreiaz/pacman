@@ -21,15 +21,15 @@ Pacman::Pacman() {
 	_cap = new MinerHat();
     _turnedUp = _turnedRight = _turnedLeft = false;
     _turnedDown = true;
-    _explodingTime = false;    
+    _explodingTime = false;
+    
+    _previousX = 0.0;
+    _previousY = 0.0;
 }
 
 Pacman::~Pacman(){}
 
 // ACRESCENTAR OS EIXOS PARA ELE OLHAR :D
-int Pacman::getAngle(){
-    return _angle;
-}
 
 void Pacman::setAngle(float posX, float posY){
 
@@ -92,9 +92,6 @@ void Pacman::backAgain(){
     _direction = 0;
 }
 
-float previousX = 0.0;
-float previousY = 0.0;
-
 void Pacman::update(float dt) {
     float dist = getSpeed() * dt;
     int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getAngle());
@@ -105,17 +102,17 @@ void Pacman::update(float dt) {
         move(dist);
 		turn(Wizard::getInstance().availablePosition(nextPosition[0], nextPosition[1]));
 		
-		previousX = round(getX());
-		previousY = round(getY());
+		_previousX = round(getX());
+		_previousY = round(getY());
 		
 	} else {
 		
 		if(Wizard::getInstance().canTurn(getX(), getY())) {
-			if (! (previousX == round(getX()) && previousY == round(getY()))) {
+			if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
 				turn(Wizard::getInstance().availablePosition(getX(), getY()));
 			}
-			previousX = round(getX());
-			previousY = round(getY());
+			_previousX = round(getX());
+			_previousY = round(getY());
 			move(dist);
 		}else {
 			move(dist);

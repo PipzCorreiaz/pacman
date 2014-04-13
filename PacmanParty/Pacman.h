@@ -15,7 +15,6 @@ public:
     void draw();
     // void move(float dist);
     void setAngle(float posX, float posY);
-    int getAngle();
     bool isGhost();
     void backAgain();
 

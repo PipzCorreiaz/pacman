@@ -16,6 +16,7 @@ public:
     float getY();
     float getZ();
     int getDirection();
+    int getAngle();
     float getPauseAngle();
     float getSpeed();
     
@@ -51,9 +52,9 @@ public:
     
     bool _upPressed, _downPressed, _leftPressed, _rightPressed;
     bool _turnedUp, _turnedDown, _turnedLeft, _turnedRight;
+    int _previousX, _previousY;
      
 private:
-	void roundPosition();
     
 protected:
     float _posX, _posY, _posZ, _pauseAngle, _speed;

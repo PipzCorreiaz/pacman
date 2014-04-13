@@ -38,6 +38,10 @@ float Character::getPauseAngle(){
     return _pauseAngle;
 }
 
+int Character::getAngle(){
+    return _angle;
+}
+
 bool Character::isUp(){
     return _up;   
 }
@@ -147,29 +151,9 @@ void Character::move(float dist){
     }
 }
 
-void Character::roundPosition() {
-	
-	switch (getDirection()) {    
-        case UP:
-			setY(ceil(getY()));
-            break;
-        case LEFT:
-            setX(floor(getX()));
-            break;
-        case DOWN:
-			setY(floor(getY()));
-            break;
-        case RIGHT:
-            setX(ceil(getX()));
-            break;
-        default:
-            break;
-    }
-}
  
 void Character::turn(int direction) {
 	
-	//roundPosition();
 	setX(round(getX()));
 	setY(round(getY()));
 	

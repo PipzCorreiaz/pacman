@@ -53,7 +53,7 @@ Game::Game(){
     _maze = new Maze();
     _ghostOne = new Ghost(25,26, 1);
     _ghostTwo = new Ghost(-25,26, 2);
-    _ghostThree = new Ghost(25,-26, 3);
+    _ghostThree = new Ghost(25,-12, 3);
     _light = new DayLight();
     ghost1 = _ghostOne;
     ghost2 = _ghostTwo;

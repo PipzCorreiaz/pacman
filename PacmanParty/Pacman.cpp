@@ -96,16 +96,18 @@ float previousX = 0.0;
 float previousY = 0.0;
 
 void Pacman::update(float dt) {
-	std::cout << "-------UPDATE--------" << std::endl;
     float dist = getSpeed() * dt;
     int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getAngle());
+    std::vector<float> nextPosition = Wizard::getInstance().nextPosition(getX(), getY(), dist, getAngle());
+    
+    
     if (Wizard::getInstance().isWall(positionAhead)) {
-		std::cout << "Sou paredeee" << std::endl;
-		turn(Wizard::getInstance().availablePosition(getX(), getY()));
+        move(dist);
+		turn(Wizard::getInstance().availablePosition(nextPosition[0], nextPosition[1]));
 		
 		previousX = round(getX());
 		previousY = round(getY());
-		move(dist);
+		
 	} else {
 		
 		if(Wizard::getInstance().canTurn(getX(), getY())) {

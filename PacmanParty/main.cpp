@@ -181,7 +181,7 @@ void update(){
 
 int main(int argc, char** argv) {
 	
-	srand(time(NULL));
+	srand((unsigned int)time(NULL));
 	
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB|GLUT_DEPTH);

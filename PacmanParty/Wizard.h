@@ -32,7 +32,8 @@ public:
     bool canTurn(float x, float y);
     int positionAhead(float x, float y, float dist, int direction);
     int availablePosition(float x, float y);
-    int availablePosition(int index);    
+    int availablePosition(int index);
+    std::vector<float> nextPosition(float x, float y, float dist, int direction);
     
 private:
     Wizard() {};

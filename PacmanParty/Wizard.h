@@ -5,6 +5,7 @@
 #include <fstream>
 #include <string>
 #include <cmath>
+#include <cstdlib>
 #include <vector>
 #include "Constraints.h"
 
@@ -20,17 +21,18 @@ public:
     }
     
     std::string loadMap(std::string fileName);
-    int positionToIndex(int x, int y);
-    std::vector<int> indexToPosition(int index);
+    int positionToIndex(float x, float y);
+    std::vector<float> indexToPosition(int index);
     int rightPosition(int index);
     int leftPosition(int index);
     int upPosition(int index);
     int downPosition(int index);
     std::vector<int> availablePositions(int index);
     bool isWall(int index);
-    bool canTurn(int x, int y);
-    int positionAhead(int x, int y, float dist, int direction);
-        
+    bool canTurn(float x, float y);
+    int positionAhead(float x, float y, float dist, int direction);
+    int availablePosition(float x, float y);
+    int availablePosition(int index);    
     
 private:
     Wizard() {};

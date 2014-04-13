@@ -43,7 +43,6 @@ Game::Game(){
 	
 	try{
 		matrix = Wizard::getInstance().loadMap("map.txt");
-		std::cout << Wizard::getInstance().indexToPosition(2071)[0] << " " << Wizard::getInstance().indexToPosition(2071)[1] << std::endl;
 	}
 	catch(std::string* e) {
 		std::cerr << *e << std::endl;

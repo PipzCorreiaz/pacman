@@ -92,18 +92,32 @@ void Pacman::backAgain(){
     _direction = 0;
 }
 
-
+float previousX = 0.0;
+float previousY = 0.0;
 
 void Pacman::update(float dt) {
+	std::cout << "-------UPDATE--------" << std::endl;
     float dist = getSpeed() * dt;
     int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getAngle());
-    int dir = rand() % 4;
     if (Wizard::getInstance().isWall(positionAhead)) {
-		turn(dir);
-	} else if(Wizard::getInstance().canTurn(getX(), getY())) {
-		turn(dir);
-	}else {
+		std::cout << "Sou paredeee" << std::endl;
+		turn(Wizard::getInstance().availablePosition(getX(), getY()));
+		
+		previousX = round(getX());
+		previousY = round(getY());
 		move(dist);
+	} else {
+		
+		if(Wizard::getInstance().canTurn(getX(), getY())) {
+			if (! (previousX == round(getX()) && previousY == round(getY()))) {
+				turn(Wizard::getInstance().availablePosition(getX(), getY()));
+			}
+			previousX = round(getX());
+			previousY = round(getY());
+			move(dist);
+		}else {
+			move(dist);
+		}
 	}     
 }
 

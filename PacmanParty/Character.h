@@ -15,7 +15,7 @@ public:
     float getX();
     float getY();
     float getZ();
-    float getDirection();
+    int getDirection();
     float getPauseAngle();
     float getSpeed();
     
@@ -52,11 +52,13 @@ public:
     bool _upPressed, _downPressed, _leftPressed, _rightPressed;
     bool _turnedUp, _turnedDown, _turnedLeft, _turnedRight;
      
+private:
+	void roundPosition();
     
 protected:
-    float _posX, _posY, _posZ, _direction, _pauseAngle, _speed;
+    float _posX, _posY, _posZ, _pauseAngle, _speed;
     bool _up, _down, _left, _right;
-    int _angle;
+    int _angle, _direction;
 	Eye* _eye;
     
     

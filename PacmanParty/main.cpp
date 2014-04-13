@@ -180,6 +180,9 @@ void update(){
 
 
 int main(int argc, char** argv) {
+	
+	srand(time(NULL));
+	
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE|GLUT_RGB|GLUT_DEPTH);
 	glutInitWindowSize (640, 640);

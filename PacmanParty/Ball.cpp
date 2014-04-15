@@ -14,6 +14,10 @@ Ball::Ball(){
     _scale = 1;
 }
 
+Ball::~Ball() {
+
+}
+
 void Ball::draw(){
     
     glPushMatrix();

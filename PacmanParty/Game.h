@@ -56,7 +56,6 @@ public:
     int _ghostsState;
     int _ghostsNextState;
     
-	std::string matrix;
     bool _detonator;
     Explosion* _explosion;
 

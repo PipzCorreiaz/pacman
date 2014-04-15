@@ -19,26 +19,32 @@ public:
         static Wizard instance;
         return instance;
     }
-    
-    std::string loadMap(std::string fileName);
+ 
+    void loadMap(std::string fileName);
+    std::string getMap();
     int positionToIndex(float x, float y);
     std::vector<float> indexToPosition(int index);
-    int rightPosition(int index);
-    int leftPosition(int index);
-    int upPosition(int index);
-    int downPosition(int index);
-    std::vector<int> availablePositions(int index);
-    bool isWall(int index);
     bool canTurn(float x, float y);
-    int positionAhead(float x, float y, float dist, int direction);
     int availablePosition(float x, float y);
     int availablePosition(int index);
-    std::vector<float> nextPosition(float x, float y, float dist, int direction);
+    void changeMap(float, float, char symbol);
+    bool isWall(float, float, int);
+    bool isBall(float x, float y);
+   
     
 private:
     Wizard() {};
     Wizard(Wizard const&);
     void operator= (Wizard const&);
+
+    int positionAhead(float x, float y, int direction);
+    std::vector<int> availablePositions(int index);
+    int rightPosition(int index);
+    int leftPosition(int index);
+    int upPosition(int index);
+    int downPosition(int index);
+
+
     std::string _map;
     int _mapWidth;
     int _mapHeight;

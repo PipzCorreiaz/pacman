@@ -18,7 +18,7 @@ static int bigBalls;
 
 Game::Game(){
 	try{
-		matrix = Wizard::getInstance().loadMap("map.txt");
+		Wizard::getInstance().loadMap("map.txt");
 	}
 	catch(std::string* e) {
 		std::cerr << *e << std::endl;
@@ -46,7 +46,6 @@ Game::Game(){
 }
 
 void Game::update() {
-    
 	float dt;
 	present_time = glutGet(GLUT_ELAPSED_TIME); /* in milliseconds */
 	dt = 0.001f*(present_time - last_time); /* in seconds */
@@ -72,13 +71,10 @@ void Game::update() {
 
 
 void Game::ballsInspector(){ //actualiza o desenho das bolas 
-    Ball* balls[_balls]; //evitar getBalls
-    int f;
-    
-    for(f = 0; f < _balls; f++){
-        balls[f] = new Ball();
-    }
-    
+    std::string map = Wizard::getInstance().getMap();
+    Ball* ball = new Ball(); //evitar getBalls
+    int balls = 0;
+
 	glPushMatrix();
 	
 	int i, j = 0; //i percorre matriz, j percorre balls
@@ -86,32 +82,35 @@ void Game::ballsInspector(){ //actualiza o desenho das bolas
 	
 	glColor3f(0.7f,0.7f,0.7f); //cor bolas
 	
-	
-	for (i=0; i< matrix.size(); i = i + 2) {
+	for (i=0; i< map.size(); i = i + 2) {
 		
-		if(matrix[i] == 'b'){
-			balls[j]->intoPlace(x, y);
-			balls[j]->draw();
-			j++;
+		if(map[i] == SMALL_BALL){
+			ball->intoPlace(x, y);
+            ball->growth(1.0f);
+			ball->draw();
+            balls++;
 		}
-		if(matrix[i] == 'B'){
-			balls[j]->intoPlace(x, y);
-			balls[j]->growth(2.0f);
-			balls[j]->draw();
-			j++;
+		if(map[i] == BIG_BALL){
+			ball->intoPlace(x, y);
+			ball->growth(2.0f);
+			ball->draw();
+            balls++;
 		}
 		
 		x = x+2;
         
-		
 		if ((i+1)%55 == 0 && i != 0) {
             i = i + 54; // ignora uma linha
 			x = -27;
 			y = y - 2;
 		}
 	}
-	
-	glPopMatrix();
+
+    glPopMatrix();
+
+    _score = _balls - balls;
+
+    delete(ball);
 }
 
 

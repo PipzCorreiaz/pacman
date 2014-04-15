@@ -94,6 +94,33 @@ void Character::turn(int direction) {
     }
 }
 
+std::vector<float> Character::nextPosition(float dist) {
+    
+    std::vector<float> coords(2);
+
+    coords[0] = getX();
+    coords[1] = getY();
+    
+    switch (getDirection()) {
+        case UP:
+            coords[1] += dist;
+            break;
+        case LEFT:
+            coords[0] -= dist;
+            break;
+        case DOWN:
+            coords[1] -= dist;
+            break;
+        case RIGHT:
+            coords[0] += dist;
+            break;
+        default:
+            break;
+    }
+    
+    return coords;
+}
+
 
 
 

@@ -67,11 +67,10 @@ void Ghost::setColor(float a,float b,float c){
 
 void Ghost::update(float dt) {
     float dist = getSpeed() * dt;
-    int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getDirection());
-    std::vector<float> nextPosition = Wizard::getInstance().nextPosition(getX(), getY(), dist, getDirection());
+    std::vector<float> nextPosition = Character::nextPosition(dist);
     
     
-    if (Wizard::getInstance().isWall(positionAhead)) {
+    if (Wizard::getInstance().isWall(nextPosition[0], nextPosition[1], getDirection())) {
         move(dist);
 		turn(Wizard::getInstance().availablePosition(nextPosition[0], nextPosition[1]));
 		

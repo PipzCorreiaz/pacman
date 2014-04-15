@@ -72,13 +72,26 @@ void Pacman::backAgain(){
     setAngle(DOWN_ANGLE);
 }
 
+void Pacman::eat(float x, float y) {
+    Wizard::getInstance().changeMap(x, y, HALL);
+}
+
+void Pacman::move(float dist) {
+    std::vector<float> nextPosition = Character::nextPosition(dist);
+
+    if (Wizard::getInstance().isBall(nextPosition[0], nextPosition[1])) {
+            eat(nextPosition[0], nextPosition[1]);
+    }
+
+    Character::move(dist);
+}
+
 void Pacman::update(float dt) {
     float dist = getSpeed() * dt;
-    int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getDirection());
-    std::vector<float> nextPosition = Wizard::getInstance().nextPosition(getX(), getY(), dist, getDirection());
+    std::vector<float> nextPosition = Character::nextPosition(dist);
     
     
-    if (Wizard::getInstance().isWall(positionAhead)) {
+    if (Wizard::getInstance().isWall(nextPosition[0], nextPosition[1], getDirection())) {
         move(dist);
 		turn(Wizard::getInstance().availablePosition(nextPosition[0], nextPosition[1]));
 		
@@ -94,7 +107,7 @@ void Pacman::update(float dt) {
 			_previousX = round(getX());
 			_previousY = round(getY());
 			move(dist);
-		}else {
+		} else {
 			move(dist);
 		}
 	}     

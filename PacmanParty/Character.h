@@ -2,7 +2,8 @@
 #define PacmanLove_Character_h
 
 #include <iostream>
-#include <string.h>
+#include <string>
+#include <vector>
 #include "Constraints.h"
 #include "Wizard.h"
 #include "Eye.h"
@@ -25,6 +26,7 @@ public:
     
     void move(float dist);
     void turn(int direction);
+    std::vector<float> nextPosition(float dist);
     
     void virtual draw() = 0;
     void virtual update(float dt) = 0;

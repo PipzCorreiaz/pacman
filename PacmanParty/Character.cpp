@@ -48,21 +48,32 @@ void Character::setAngle(int angle) {
 }
 
 void Character::move(float dist){
-    switch (getDirection()) {
-        case UP:
-            setY(getY() + dist);
-            break;
-        case DOWN:
-            setY(getY() - dist);
-            break;
-        case LEFT:
-            setX(getX() - dist);
-            break;
-        case RIGHT:
-            setX(getX() + dist);
-            break;
-        default:
-            break;
+    float x = getX();
+    float y = getY();
+    int dir = getDirection();
+    float limit = ((Wizard::getInstance().getMapWidth()) / 2);
+
+    if (x <= -limit && dir == LEFT && y == 0) {
+        setX(limit);
+    } else if (x >= limit && dir == RIGHT && y == 0) {
+        setX(-limit);
+    } else {
+        switch (dir) {
+            case UP:
+                setY(y + dist);
+                break;
+            case DOWN:
+                setY(y - dist);
+                break;
+            case LEFT:
+                setX(x - dist);
+                break;
+            case RIGHT:
+                setX(x + dist);
+                break;
+            default:
+                break;
+        }
     }
 }
 
@@ -100,7 +111,7 @@ std::vector<float> Character::nextPosition(float dist) {
 
     coords[0] = getX();
     coords[1] = getY();
-    
+
     switch (getDirection()) {
         case UP:
             coords[1] += dist;

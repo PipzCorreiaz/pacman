@@ -28,6 +28,8 @@ public:
     int availablePosition(float x, float y);
     int availablePosition(int index);
     void changeMap(float, float, char symbol);
+    float getMapWidth();
+    float getMapHeight();
     bool isWall(float, float, int);
     bool isBall(float x, float y);
    

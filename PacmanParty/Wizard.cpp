@@ -27,6 +27,14 @@ std::string Wizard::getMap() {
     return _map;
 }
 
+float Wizard::getMapWidth() {
+    return _mapWidth;
+}
+
+float Wizard::getMapHeight() {
+    return _mapHeight;
+}
+
 int Wizard::positionToIndex(float x, float y) {
     int position = (((_mapHeight - 1) / 2) - round(y)) * _mapWidth;
     position += ((_mapWidth - 1) / 2) + round(x);

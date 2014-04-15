@@ -8,7 +8,7 @@
 #include <cstdlib>
 #include <vector>
 #include "Constraints.h"
-
+ 
 class Wizard {
 
 public:

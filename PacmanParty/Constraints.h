@@ -1,11 +1,3 @@
-//
-//  CONSTRAINTS.h
-//  PacmanParty
-//
-//  Created by Miguel Roxo on 4/24/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #ifndef PacmanParty_CONSTRAINTS_h
 #define PacmanParty_CONSTRAINTS_h
 
@@ -32,6 +24,11 @@
 #define LEFT 1
 #define DOWN 2
 #define RIGHT 3
+
+#define UP_ANGLE 180
+#define LEFT_ANGLE -90
+#define DOWN_ANGLE 0
+#define RIGHT_ANGLE 90
 
 #define WALL 'w'
 #define BALL 'b'

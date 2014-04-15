@@ -1,11 +1,3 @@
-//
-//  Game.h
-//  PacmanParty
-//
-//  Created by bia on 3/26/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #ifndef PacmanParty_Game_h
 #define PacmanParty_Game_h
 
@@ -33,34 +25,16 @@ class Game {
 public:
     
 	Game();
-	~Game();
     
     void update();
 	
     void ballsInspector();
-    
-    int matrixPosition(int x, int y);
-    
-    void movePac(float dist);
-    void moveGhost(Ghost* ghost, float dist);
-    
-    int chaseDirection(Ghost* g);
-    int runAwayDirection(Ghost* g);
+        
     void ghostsTrouble();
-    
-    int upCheck(Character* car,float dist);
-    int downCheck(Character* car,float dist);
-    int leftCheck(Character* car,float dist);
-    int rightCheck(Character* car,float dist);
-    
-    int check(Character* car, float dist);
-    void resetPressedKeys();
     
     bool colision(Ghost* g);
     void detonate();
     
-    void getOut(Character* g);
-    void ballsEater();
     void renderBitmapString();
     void winnerRenderBitmapString();
     void loserRenderBitmapString();
@@ -91,10 +65,6 @@ private:
     float last_time;
     
 };
-
-
-
-
 
 
 

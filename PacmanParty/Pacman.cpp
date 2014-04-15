@@ -11,32 +11,15 @@ Pacman::Pacman() {
     _posX = 9.0f;
 	_posY = 6.0f;
     _posZ = 1.25f;
-    _direction = _pauseAngle = 0;
-	_up = _down = _left = _right = false; //inicia parado
-    _down = true;
 	_speed = 10; // unidades do labirinto per second
-    _angle = DOWN;
+    _direction = DOWN;
 	_eye = new Eye();
 	_eyebrow = new Eyebrow();
 	_cap = new MinerHat();
-    _turnedUp = _turnedRight = _turnedLeft = false;
-    _turnedDown = true;
     _explodingTime = false;
-    
+    _angle = DOWN_ANGLE;
     _previousX = 0.0;
     _previousY = 0.0;
-}
-
-Pacman::~Pacman(){}
-
-// ACRESCENTAR OS EIXOS PARA ELE OLHAR :D
-
-void Pacman::setAngle(float posX, float posY){
-
-}
-
-bool Pacman::isGhost(){
-    return false;
 }
 
 
@@ -44,11 +27,9 @@ void Pacman::draw() {
     
     glPushMatrix();
 
-    glTranslatef(getX(),getY(), getZ()); // colocar pacman na pos (x,y,z)
-    glScalef(1.25f, 1.25f, 1.25f); //Pacman um bocadinho maior
-	glRotatef(getDirection(), 0, 0, 1); // direccao do pacman
-	glRotatef(getPauseAngle(), 1, 0, 0);
-    
+    glTranslatef(getX(), getY(), getZ());
+    glScalef(1.25f, 1.25f, 1.25f);
+	glRotatef(getAngle(), 0, 0, 1); // direccao do pacman
 	
     //glColor3f(1, 1, 0); // Amarelo
     
@@ -88,14 +69,13 @@ void Pacman::backAgain(){
 	_posY = 6.0f;
     _posZ = 1.25f;
     _explodingTime = false;
-    resetMove();
-    _direction = 0;
+    setAngle(DOWN_ANGLE);
 }
 
 void Pacman::update(float dt) {
     float dist = getSpeed() * dt;
-    int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getAngle());
-    std::vector<float> nextPosition = Wizard::getInstance().nextPosition(getX(), getY(), dist, getAngle());
+    int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getDirection());
+    std::vector<float> nextPosition = Wizard::getInstance().nextPosition(getX(), getY(), dist, getDirection());
     
     
     if (Wizard::getInstance().isWall(positionAhead)) {

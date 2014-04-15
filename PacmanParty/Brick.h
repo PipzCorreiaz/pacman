@@ -1,11 +1,3 @@
-//
-//  Brick.h
-//  PacmanParty
-//
-//  Created by bia on 5/7/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #ifndef PacmanParty_Brick_h
 #define PacmanParty_Brick_h
 

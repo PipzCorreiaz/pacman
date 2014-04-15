@@ -1,11 +1,3 @@
-//
-//  Camera.h
-//  PacmanParty
-//
-//  Created by Miguel Roxo on 4/6/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #ifndef PacmanParty_Camera_h
 #define PacmanParty_Camera_h
 

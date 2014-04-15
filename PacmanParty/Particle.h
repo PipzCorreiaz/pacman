@@ -1,11 +1,3 @@
-//
-//  Particle.h
-//  PacmanParty
-//
-//  Created by bia on 5/10/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #ifndef PacmanParty_Particle_h
 #define PacmanParty_Particle_h
 

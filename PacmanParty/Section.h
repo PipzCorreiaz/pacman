@@ -1,11 +1,3 @@
-//
-//  Section.h
-//  PacmanLove
-//
-//  Created by bia on 3/16/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #ifndef PacmanLove_Section_h
 #define PacmanLove_Section_h
 

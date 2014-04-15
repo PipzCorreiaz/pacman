@@ -1,11 +1,3 @@
-//
-//  main.cpp
-//  PacmanLove
-//
-//  Created by bia on 3/16/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #if defined (__APPLE__) || defined (MACOSX)
 #include <GLUT/glut.h>
 #else
@@ -29,16 +21,13 @@ void specialUpKeys(int key, int x, int y);
 void setGhostsState(int state);
 void LoadTexture( const std::string & textureFilename);
 
-// "Variaveis" Globais
+//Variaveis Globais
 Game* game = new Game();
 
-//TEXTURE STUFF
 
-void LoadTexture( const std::string & textureFilename)
-{
-	BMPloader * bitmap = new BMPloader( textureFilename);
-	if ( bitmap->Isvalid() )
-	{
+void LoadTexture( const std::string & textureFilename) {
+	BMPloader * bitmap = new BMPloader(textureFilename);
+	if (bitmap->Isvalid()) {
 		glPixelStoref( GL_UNPACK_ALIGNMENT, 1);
 		glEnable( GL_TEXTURE_2D);
 		glTexImage2D( GL_TEXTURE_2D, 0, GL_RGB, bitmap->Width(), bitmap->Heigth(), 0, GL_RGB, GL_UNSIGNED_BYTE, bitmap->Image());
@@ -47,19 +36,18 @@ void LoadTexture( const std::string & textureFilename)
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexEnvf( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE);		 
-	}
-	else
+	} else {
         std::cout << "Problems Loading Texture" << std::endl;
+    }
+    
 	delete bitmap;
 }
 
-// ENDOF TEXTURE STUFF
 
 void myReshape(GLsizei w, GLsizei h) {
     
-	glViewport(40, 40, w-80, h-80);
-    
-	game->_camera->setProjection(((double)w)/h);
+	glViewport(40, 40, w - 80, h - 80);
+	game->_camera->setProjection(((double) w) / h);
     
 }
 
@@ -84,17 +72,10 @@ void myDisplay(void) {
 }
 
 
-// Teclas W(up), S(down), A(left), D(right)
-void keyboard(unsigned char key, int x, int y){
+void keyboard(unsigned char key, int x, int y) {
 	if (key == 27) {
 		exit(0);
 	}
-    if(key == 'p'){
-        game->_pac->pause();
-        game->_ghostOne->pause();
-        game->_ghostTwo->pause();
-        game->_ghostThree->pause();
-    }
     if(key == 'c'){
         game->_camera->nextMode();
         game->_camera->setProjection((double)glutGet(GLUT_WINDOW_WIDTH)/glutGet(GLUT_WINDOW_HEIGHT));
@@ -110,71 +91,11 @@ void keyboard(unsigned char key, int x, int y){
     }
 }
 
-void specialUpKeys(int key, int x, int y){
-    switch (key) {
-            
-        case GLUT_KEY_UP:
-            game->_pac->_upPressed = false;
-            break;
-            
-        case GLUT_KEY_DOWN:
-            game->_pac->_downPressed = false;
-            break;
-            
-        case GLUT_KEY_LEFT:
-            game->_pac->_leftPressed = false;
-            break;
-            
-        case GLUT_KEY_RIGHT:
-            game->_pac->_rightPressed = false;
-            break;
-            
-        default:
-            break;
-    }
-}
 
-
-// Teclas Setas
-void specialPressedKeys(int key, int x, int y){
-    switch (key) {
-            
-        case GLUT_KEY_UP:
-            
-            game->resetPressedKeys();
-            game->_pac->_upPressed = true;
-            
-            break;
-            
-        case GLUT_KEY_DOWN:
-            
-            game->resetPressedKeys();
-            game->_pac->_downPressed = true;
-            
-            break;
-            
-        case GLUT_KEY_LEFT:
-            game->resetPressedKeys();               
-            game->_pac->_leftPressed = true;
-            
-            break;
-            
-        case GLUT_KEY_RIGHT:
-            game->resetPressedKeys();
-            game->_pac->_rightPressed = true;
-            
-            break;
-            
-        default:
-            break;
-    }
-}
-
-// Deslocamento em funcao do tempo real mantendo uma velocidade
-void update(){
+void update() {
     
     game->update();
-	glutPostRedisplay(); //forçar o re-desenho
+	glutPostRedisplay();
     
 }
 
@@ -191,8 +112,6 @@ int main(int argc, char** argv) {
 	glutDisplayFunc(myDisplay);
 	glutReshapeFunc(myReshape);
 	glutKeyboardFunc(keyboard);
-	glutSpecialFunc(specialPressedKeys);
-	glutSpecialUpFunc(specialUpKeys);
 	glutIdleFunc(update);
     
 	LoadTexture("darkmetal.bmp");

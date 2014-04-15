@@ -1,11 +1,3 @@
-//
-//  Section.cpp
-//  PacmanLove
-//
-//  Created by bia on 3/16/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #if defined (__APPLE__) || defined (MACOSX)
 #include <GLUT/glut.h>
 #else

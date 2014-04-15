@@ -1,11 +1,3 @@
-//
-//  Lighting.h
-//  PacmanParty
-//
-//  Created by Miguel Roxo on 4/24/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #ifndef PacmanParty_DayLight_h
 #define PacmanParty_DayLight_h
 

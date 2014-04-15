@@ -7,16 +7,9 @@
 #include "Character.h"
 
 
-
-Character::Character(){
-	
-}
-
-Character::~Character(){}
 float Character::getX(){
     return _posX;
 }
-
 
 float Character::getY(){
     return _posY;
@@ -26,62 +19,16 @@ float Character::getZ(){
     return _posZ;
 }
 
-int Character::getDirection(){
-	return _direction;
-}
-
 float Character::getSpeed(){
 	return _speed;
 }
 
-float Character::getPauseAngle(){
-    return _pauseAngle;
+int Character::getDirection(){
+    return _direction;
 }
 
 int Character::getAngle(){
-    return _angle;
-}
-
-bool Character::isUp(){
-    return _up;   
-}
-
-bool Character::isDown(){
-    return _down;
-}
-
-bool Character::isLeft(){
-    return _left;
-}
-
-bool Character::isRight(){
-    return _right;
-}
-
-bool Character::isStopped(){
-    return !isUp() && !isDown() && !isLeft() && !isRight();
-}
-
-void Character::resetMove(){
-    _up = _down = _left = _right = false;
-    _turnedUp = _turnedLeft = _turnedDown = _turnedRight = false;
-}
-
-void Character::resetPressedKeys(){
-    _upPressed = _downPressed = _leftPressed = _rightPressed = false;
-}
-
-void Character::setUp(bool up){
-    _up = up;
-}
-void Character::setDown(bool down){
-    _down = down;
-}
-void Character::setLeft( bool left){
-    _left = left;
-}
-void Character::setRight(bool right){
-    _right = right;
+	return _angle;
 }
 
 void Character::setX(float x){
@@ -92,62 +39,30 @@ void Character::setY(float y){
     _posY = y;
 }
 
-void Character::pause(){
-
-    resetMove(); //limpar as flags para pacman parar
-    
-    _direction = 0;
-    _pauseAngle = -90;
-    
+void Character::setDirection(int direction) {
+    _direction = direction;
 }
 
-void Character::up(){
-    resetMove();
-	_up = true;
-    _turnedUp = true;
-    _angle = UP;
-    _direction = 180;
-}
-
-void Character::down(){
-    resetMove();
-    _down = true;
-    _turnedDown = true;
-    _angle = DOWN;
-    _direction = 0;
-}
-
-void Character::left(){
-    resetMove();
-    _left = true;
-    _turnedLeft = true;
-    _angle = LEFT;
-    _direction = -90;
-}
-
-void Character::right(){
-    resetMove();
-    _right = true;
-    _turnedRight = true;
-    _angle = RIGHT;
-    _direction = 90;
+void Character::setAngle(int angle) {
+    _angle = angle;
 }
 
 void Character::move(float dist){
-    
-    if(isUp()){
-        _posY = _posY + dist;
-    }
-    
-    else if(isDown()){
-        _posY = _posY - dist;
-    }
-    
-    else if(isLeft()){
-        _posX = _posX - dist;
-    }
-    else if(isRight()){
-        _posX = _posX + dist;
+    switch (getDirection()) {
+        case UP:
+            setY(getY() + dist);
+            break;
+        case DOWN:
+            setY(getY() - dist);
+            break;
+        case LEFT:
+            setX(getX() - dist);
+            break;
+        case RIGHT:
+            setX(getX() + dist);
+            break;
+        default:
+            break;
     }
 }
 
@@ -159,16 +74,20 @@ void Character::turn(int direction) {
 	
     switch (direction) {    
         case UP:
-            up();
+            setDirection(UP);
+            setAngle(UP_ANGLE);
             break;
         case LEFT:
-            left();
+            setDirection(LEFT);
+            setAngle(LEFT_ANGLE);
             break;
         case DOWN:
-            down();
+            setDirection(DOWN);
+            setAngle(DOWN_ANGLE);
             break;
         case RIGHT:
-            right();
+            setDirection(RIGHT);
+            setAngle(RIGHT_ANGLE);
             break;
         default:
             break;

@@ -1,12 +1,3 @@
-/*
- *  BMPReader.cpp
- *  SpotAndTiles
- *
- *  Created by brisson on 12/05/17.
- *  Copyright 2012 IST. All rights reserved.
- *
- */
-
 #include "BMPReader.h"
 #include <iostream>
 

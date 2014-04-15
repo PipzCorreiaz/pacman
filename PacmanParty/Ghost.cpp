@@ -1,20 +1,9 @@
-//
-//  Ghost.cpp
-//  BatesPoucoBates
-//
-//  Created by bia on 3/24/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
 #if defined (__APPLE__) || defined (MACOSX)
 #include <GLUT/glut.h>
 #else
 #include <GL/glut.h>
 #endif
 
-
-#include <iostream>
-#include <cmath>
 #include "Ghost.h"
 
 
@@ -22,25 +11,64 @@ Ghost::Ghost(int posx, int posy, int id) {
 	_eye = new Eye();
 	_posX = posx;
     _posY = posy; 
-    _posZ = _direction = _pauseAngle = 0;
-    _angle = DOWN;
-	_up = _down = _left = _right = false; //inicia parado
-    _down = true;
+    _posZ = 0;
+    _angle = DOWN_ANGLE;
+    _direction = DOWN;
     _speed = GHOST_NORMAL_SPEED; // unidades do labirinto per second
     _trouble = false; //if true vou ser comido :D
     _ghostId = id;
-    _hiddenTime = false;
+    _hidden = false;
     
     _previousX = 0.0;
     _previousY = 0.0;
 }
 
-Ghost::~Ghost(){}
+
+bool Ghost::getTrouble() {
+    return _trouble;
+}
+
+
+bool Ghost::getHidden() {
+    return _hidden;
+}
+
+
+void Ghost::setSpeed(float speed){
+    _speed = speed;
+}
+
+
+void Ghost::setTrouble(bool trouble){
+    _trouble = trouble;
+}
+
+
+void Ghost::setHidden(bool value){
+    _hidden = value;
+}
+
+
+void Ghost::setColor(float a,float b,float c){
+    
+    // glColor4f(a, b, c, 0.5);
+    
+    GLfloat mat_ambient[] = {a, b, c};
+    GLfloat mat_diffuse[] = {a, b, c};
+    GLfloat mat_specular[] = {a, b, c};
+    GLfloat mat_shine = 0.0f;
+    
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
+    
+}
 
 void Ghost::update(float dt) {
     float dist = getSpeed() * dt;
-    int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getAngle());
-    std::vector<float> nextPosition = Wizard::getInstance().nextPosition(getX(), getY(), dist, getAngle());
+    int positionAhead = Wizard::getInstance().positionAhead(getX(), getY(), dist, getDirection());
+    std::vector<float> nextPosition = Wizard::getInstance().nextPosition(getX(), getY(), dist, getDirection());
     
     
     if (Wizard::getInstance().isWall(positionAhead)) {
@@ -66,45 +94,12 @@ void Ghost::update(float dt) {
 }
 
 
-bool Ghost::isGhost(){
-    return true;
-}
-
-
 void Ghost::backAgain(){
     _posX = 0.0f;
 	_posY = 0.0f;
 }
 
-void Ghost::setDirection(float posX, float posY){
-    float vecX = posX - _posX;
-    float vecY = posY - _posY;
-    _direction = atan2(vecX, -vecY) * 180.0f / 3.14f;
-}
 
-void Ghost::setColor(float a,float b,float c){
-    
-    // glColor4f(a, b, c, 0.5);
-    
-    GLfloat mat_ambient[] = {a, b, c};
-    GLfloat mat_diffuse[] = {a, b, c};
-    GLfloat mat_specular[] = {a, b, c};
-    GLfloat mat_shine = 0.0f;
-    
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
-    
-}
-
-void Ghost::setSpeed(float speed){
-    _speed = speed;
-}
-
-void Ghost::setTrouble(bool trouble){
-    _trouble = trouble;
-}
 
 void Ghost::draw() {
     
@@ -113,10 +108,7 @@ void Ghost::draw() {
     
     glTranslatef(getX(),getY(), getZ()); // colocar ghost na pos (x,y,z)
 
-	glRotatef(getDirection(), 0, 0, 1); // direccao do ghost
-
-   // glRotatef(getPauseAngle(), 1, 0, 0);
-    
+	glRotatef(getAngle(), 0, 0, 1); // direccao do ghost
 	
     glBegin(GL_TRIANGLE_FAN); //topo fantasma
     
@@ -306,31 +298,4 @@ void Ghost::draw() {
     
 }
 
-void Ghost::move(float dist){
-    
-    if(_up){
-        _posY = _posY + dist;
-        _direction = 180;
-        _pauseAngle = 0;
-    }
-    
-    else if(_down){
-        _posY = _posY - dist;
-        _direction = 0;
-        _pauseAngle = 0;
-    }
-    
-    else if(_left){
-        _posX = _posX - dist;
-        _direction = -90;
-        _pauseAngle = 0;
-    }
-    else if(_right){
-        _posX = _posX + dist;
-        _direction = 90;
-        _pauseAngle = 0;
-    }
-    
-    return;
-}
 

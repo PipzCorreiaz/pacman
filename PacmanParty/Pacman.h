@@ -9,13 +9,9 @@ class Pacman : public Character {
     
 public:
     Pacman();
-    ~Pacman();
    
     void update(float dt);
     void draw();
-    // void move(float dist);
-    void setAngle(float posX, float posY);
-    bool isGhost();
     void backAgain();
 
     bool _explodingTime;

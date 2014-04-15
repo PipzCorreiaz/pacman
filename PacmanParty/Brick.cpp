@@ -1,12 +1,3 @@
-//
-//  Brick.cpp
-//  PacmanParty
-//
-//  Created by bia on 5/7/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
-
-
 #if defined (__APPLE__) || defined (MACOSX)
 #include <GLUT/glut.h>
 #else

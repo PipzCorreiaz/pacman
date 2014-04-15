@@ -31,6 +31,8 @@
 #define RIGHT_ANGLE 90
 
 #define WALL 'w'
-#define BALL 'b'
+#define SMALL_BALL 'b'
+#define BIG_BALL 'B'
+#define HALL '.'
 
 #endif

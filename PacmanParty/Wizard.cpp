@@ -5,7 +5,7 @@ Wizard::~Wizard() {
     
 }
 
-std::string Wizard::loadMap(std::string fileName) {
+void Wizard::loadMap(std::string fileName) {
     std::ifstream infile;
     std::string line;
     infile.open(fileName.c_str(), std::ifstream::in);
@@ -21,7 +21,9 @@ std::string Wizard::loadMap(std::string fileName) {
     } else {
         throw new std::string("Could not load the map file.");
     }
-    
+}
+
+std::string Wizard::getMap() {
     return _map;
 }
 
@@ -100,47 +102,20 @@ int Wizard::availablePosition(int index) {
 	return lol;
 }
 
-std::vector<float> Wizard::nextPosition(float x, float y, float dist, int direction) {
-    
-    std::vector<float> coords(2);
-    
-    coords[0] = x;
-    coords[1] = y;
-    
-    switch (direction) {
-		case UP:
-			coords[1] = y + dist;
-			break;
-		case LEFT:
-			coords[0] = x - dist;
-			break;
-		case DOWN:
-			coords[1] = y - dist;
-			break;
-		case RIGHT:
-			coords[0] = x + dist;
-			break;
-		default:
-			break;
-	}
-    
-    return coords;
-}
-
-int Wizard::positionAhead(float x, float y, float dist, int direction) {
+int Wizard::positionAhead(float x, float y, int direction) {
 	int index = 0;
 	switch (direction) {    
 		case UP:
-			index = upPosition(positionToIndex(x, y + dist));
+			index = upPosition(positionToIndex(x, y));
 			break;
 		case LEFT:
-			index = leftPosition(positionToIndex(x - dist, y));
+			index = leftPosition(positionToIndex(x, y));
 			break;
 		case DOWN:
-			index = downPosition(positionToIndex(x, y - dist));
+			index = downPosition(positionToIndex(x, y));
 			break;
 		case RIGHT:
-			index = rightPosition(positionToIndex(x + dist, y));
+			index = rightPosition(positionToIndex(x, y));
 			break;
 		default:
 			break;
@@ -149,9 +124,19 @@ int Wizard::positionAhead(float x, float y, float dist, int direction) {
 	return index;
 }
 
-bool Wizard::isWall(int index) {
-	
-	return _map[index] == WALL;
+void Wizard::changeMap(float x, float y, char symbol) {
+    int index = positionToIndex(x, y);
+    _map[index] = symbol;
+}
+
+bool Wizard::isWall(float x, float y, int direction) {
+	int indexAhead = positionAhead(x, y, direction);
+	return _map[indexAhead] == WALL;
+}
+
+bool Wizard::isBall(float x, float y) {
+    int index = positionToIndex(x, y);
+    return (_map[index] == SMALL_BALL || _map[index] == BIG_BALL);
 }
 
  

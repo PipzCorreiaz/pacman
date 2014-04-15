@@ -13,6 +13,8 @@ public:
     void update(float dt);
     void draw();
     void backAgain();
+    void eat(float, float);
+    void move(float);
 
     bool _explodingTime;
     

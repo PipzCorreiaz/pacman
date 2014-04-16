@@ -6,10 +6,9 @@
 
 #include <iostream>
 #include "Game.h"
+#include "Wizard.h"
 
-static Ghost* ghost1;
-static Ghost* ghost2;
-static Ghost* ghost3;
+
 static std::vector<Ghost*>* stack = new std::vector<Ghost*>();
 static int bigBalls;
 
@@ -31,10 +30,12 @@ Game::Game(){
     _ghostOne = new Ghost(25,26, 1);
     _ghostTwo = new Ghost(-25,26, 2);
     _ghostThree = new Ghost(25,-12, 3);
+    
+    _ghosts.push_back(_ghostOne);
+    _ghosts.push_back(_ghostTwo);
+    _ghosts.push_back(_ghostThree);
+    Wizard::getInstance().setGhosts(_ghosts);
     _light = new DayLight();
-    ghost1 = _ghostOne;
-    ghost2 = _ghostTwo;
-    ghost3 = _ghostThree;
     bigBalls = 0;
     _score = 0;
     _lives = 3;
@@ -77,7 +78,7 @@ void Game::ballsInspector(){ //actualiza o desenho das bolas
 
 	glPushMatrix();
 	
-	int i, j = 0; //i percorre matriz, j percorre balls
+	int i = 0; //i percorre matriz, j percorre balls
 	int x = -27, y = 28; 
 	
 	glColor3f(0.7f,0.7f,0.7f); //cor bolas
@@ -114,28 +115,29 @@ void Game::ballsInspector(){ //actualiza o desenho das bolas
 }
 
 
-void Game::ghostsTrouble(){
-    _ghostOne->setTrouble(true);
-    _ghostTwo->setTrouble(true);
-    _ghostThree->setTrouble(true);
-}
-
-void backToNormal(int value){
-	bigBalls--;
-    if(bigBalls == 0){
-        ghost1->setTrouble(false);
-        ghost2->setTrouble(false);
-        ghost3->setTrouble(false);
-    }
-}
-
-void theComeBack(int value){
-    Ghost* g = stack->front();
-    stack->erase(stack->begin());
-    g->setHidden(false);
-    g->setTrouble(false);
-    g->backAgain();
-}
+//void Game::ghostsTrouble() {
+//    _ghostOne->setTrouble(true);
+//    _ghostTwo->setTrouble(true);
+//    _ghostThree->setTrouble(true);
+//    glutTimerFunc(10000, backToNormal, 1);
+//}
+//
+//void backToNormal(int value) {
+//	bigBalls--;
+//    if(bigBalls == 0){
+//        ghost1->setTrouble(false);
+//        ghost2->setTrouble(false);
+//        ghost3->setTrouble(false);
+//    }
+//}
+//
+//void theComeBack(int value){
+//    Ghost* g = stack->front();
+//    stack->erase(stack->begin());
+//    g->setHidden(false);
+//    g->setTrouble(false);
+//    g->backAgain();
+//}
 
 
 std::string Game::integerToString(int num){
@@ -272,73 +274,73 @@ void Game::detonate(){
     _lives--;
 }
 
-bool Game::colision(Ghost* g){
-    //ghost à direita do pacman
-    if(!g->getHidden() && !_pac->_explodingTime && g->getX() > _pac->getX() && g->getY() == _pac->getY() && g->getX()-GHOST_RADIUS <= _pac->getX()+PAC_RADIUS){
-        if(g->getTrouble()){
-            g->setHidden(true);
-            stack->push_back(g);
-            glutTimerFunc(5000, theComeBack, 0);
-            _score +=50;
-            return false;
-        }
-        else{
-            detonate();
-            return true;
-        }
-    }
-    //ghost à esquerda do pacman
-    else if(!g->getHidden() && !_pac->_explodingTime && g->getX() < _pac->getX() && g->getY() == _pac->getY() && g->getX()+GHOST_RADIUS >= _pac->getX()-PAC_RADIUS){
-
-        if(g->getTrouble()){
-            g->setHidden(true);
-            stack->push_back(g);
-            glutTimerFunc(5000, theComeBack, 0);
-            _score +=50;
-            return false;
-        }
-        else{
-            detonate();
-            return true;
-        }
-    }
-    //mesma coluna
-    else if(!g->getHidden() && !_pac->_explodingTime && g->getX() == _pac->getX()){
-        //ghost acima do pacman
-        if(!g->getHidden() && !_pac->_explodingTime && g->getY() > _pac->getY() && g->getX() == _pac->getX() && g->getY()-GHOST_RADIUS <= _pac->getY()+PAC_RADIUS){
-
-            if(g->getTrouble()){
-                g->setHidden(true);
-                stack->push_back(g);
-                glutTimerFunc(5000, theComeBack, 0);
-                _score +=50;
-                return false;
-            }
-            else{
-                detonate();
-                return true;
-            }
-        }
-        //ghost abaixo do pacman
-        else if(!g->getHidden() && !_pac->_explodingTime && g->getY() < _pac->getY() && g->getX() == _pac->getX() && g->getY()+GHOST_RADIUS >= _pac->getY()-PAC_RADIUS){
-
-            if(g->getTrouble()){
-                g->setHidden(true);
-                stack->push_back(g);
-                glutTimerFunc(5000, theComeBack, 0);
-                _score +=50;
-                return false;
-            }
-            else{
-                detonate();
-                return true;
-            }
-        }
-        else {
-        }
-    }
-    return true;
-}
+//bool Game::colision(Ghost* g){
+//    //ghost à direita do pacman
+//    if(!g->getHidden() && !_pac->_explodingTime && g->getX() > _pac->getX() && g->getY() == _pac->getY() && g->getX()-GHOST_RADIUS <= _pac->getX()+PAC_RADIUS){
+//        if(g->getTrouble()){
+//            g->setHidden(true);
+//            stack->push_back(g);
+//            glutTimerFunc(5000, theComeBack, 0);
+//            _score +=50;
+//            return false;
+//        }
+//        else{
+//            detonate();
+//            return true;
+//        }
+//    }
+//    //ghost à esquerda do pacman
+//    else if(!g->getHidden() && !_pac->_explodingTime && g->getX() < _pac->getX() && g->getY() == _pac->getY() && g->getX()+GHOST_RADIUS >= _pac->getX()-PAC_RADIUS){
+//
+//        if(g->getTrouble()){
+//            g->setHidden(true);
+//            stack->push_back(g);
+//            glutTimerFunc(5000, theComeBack, 0);
+//            _score +=50;
+//            return false;
+//        }
+//        else{
+//            detonate();
+//            return true;
+//        }
+//    }
+//    //mesma coluna
+//    else if(!g->getHidden() && !_pac->_explodingTime && g->getX() == _pac->getX()){
+//        //ghost acima do pacman
+//        if(!g->getHidden() && !_pac->_explodingTime && g->getY() > _pac->getY() && g->getX() == _pac->getX() && g->getY()-GHOST_RADIUS <= _pac->getY()+PAC_RADIUS){
+//
+//            if(g->getTrouble()){
+//                g->setHidden(true);
+//                stack->push_back(g);
+//                glutTimerFunc(5000, theComeBack, 0);
+//                _score +=50;
+//                return false;
+//            }
+//            else{
+//                detonate();
+//                return true;
+//            }
+//        }
+//        //ghost abaixo do pacman
+//        else if(!g->getHidden() && !_pac->_explodingTime && g->getY() < _pac->getY() && g->getX() == _pac->getX() && g->getY()+GHOST_RADIUS >= _pac->getY()-PAC_RADIUS){
+//
+//            if(g->getTrouble()){
+//                g->setHidden(true);
+//                stack->push_back(g);
+//                glutTimerFunc(5000, theComeBack, 0);
+//                _score +=50;
+//                return false;
+//            }
+//            else{
+//                detonate();
+//                return true;
+//            }
+//        }
+//        else {
+//        }
+//    }
+//    return true;
+//}
 
 void Game::draw(){
     
@@ -373,7 +375,7 @@ void Game::draw(){
             _ghostOne->setColor(0,0,1);
             _ghostOne->setSpeed(GHOST_NORMAL_SPEED);
         }
-        colision(_ghostOne);
+//        colision(_ghostOne);
         if(!_ghostOne->getHidden()){
             _ghostOne->draw();
         }
@@ -387,7 +389,7 @@ void Game::draw(){
             _ghostTwo->setColor(1,0,0);
             _ghostTwo->setSpeed(GHOST_NORMAL_SPEED);
         }
-        colision(_ghostTwo);
+//        colision(_ghostTwo);
         if(!_ghostTwo->getHidden()){
             _ghostTwo->draw();
         }
@@ -401,7 +403,7 @@ void Game::draw(){
             _ghostThree->setColor(0, 1, 0);
             _ghostThree->setSpeed(GHOST_NORMAL_SPEED);
         }
-        colision(_ghostThree);
+//        colision(_ghostThree);
         if(!_ghostThree->getHidden()){
             _ghostThree->draw();
         }

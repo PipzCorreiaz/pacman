@@ -14,7 +14,6 @@
 #include "DayLight.h"
 #include "Constraints.h"
 #include "Explosion.h"
-#include "Wizard.h"
 
 void backToNormal(int value);
 void theComeBack(int value);
@@ -32,7 +31,7 @@ public:
         
     void ghostsTrouble();
     
-    bool colision(Ghost* g);
+//    bool colision(Ghost* g);
     void detonate();
     
     void renderBitmapString();
@@ -53,6 +52,7 @@ public:
     Ghost* _ghostOne;
     Ghost* _ghostTwo;
     Ghost* _ghostThree;
+    std::vector<Ghost*> _ghosts;
     int _ghostsState;
     int _ghostsNextState;
     

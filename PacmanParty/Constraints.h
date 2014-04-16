@@ -34,5 +34,6 @@
 #define SMALL_BALL 'b'
 #define BIG_BALL 'B'
 #define HALL '.'
+#define GHOST 'g'
 
 #endif

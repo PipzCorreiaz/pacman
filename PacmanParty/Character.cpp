@@ -5,6 +5,8 @@
 #endif
 
 #include "Character.h"
+#include "Wizard.h"
+
 
 
 float Character::getX(){

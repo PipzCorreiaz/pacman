@@ -5,7 +5,6 @@
 #include <string>
 #include <vector>
 #include "Constraints.h"
-#include "Wizard.h"
 #include "Eye.h"
 
 class Character {

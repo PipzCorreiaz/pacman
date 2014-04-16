@@ -6,6 +6,8 @@
 
 #include <iostream>
 #include "Pacman.h"
+#include "Wizard.h"
+
 
 Pacman::Pacman() {
     _posX = 9.0f;
@@ -72,17 +74,30 @@ void Pacman::backAgain(){
     setAngle(DOWN_ANGLE);
 }
 
-void Pacman::eat(float x, float y) {
-    Wizard::getInstance().changeMap(x, y, HALL);
+void Pacman::eat(float x, float y, char symbol) {
+    
+    
+    switch (symbol) {
+        case SMALL_BALL:
+            Wizard::getInstance().changeMap(x, y, HALL);
+            break;
+        case BIG_BALL:
+            Wizard::getInstance().changeMap(x, y, HALL);
+            Wizard::getInstance().ghostsTrouble();
+            break;
+        case GHOST:
+            Wizard::getInstance().ghostHidden(x, y);
+            break;
+        default:
+            break;
+    }
 }
 
 void Pacman::move(float dist) {
     std::vector<float> nextPosition = Character::nextPosition(dist);
-
-    if (Wizard::getInstance().isBall(nextPosition[0], nextPosition[1])) {
-            eat(nextPosition[0], nextPosition[1]);
-    }
-
+    char symbol = Wizard::getInstance().getMapSymbol(nextPosition[0], nextPosition[1]);
+    
+    eat(nextPosition[0], nextPosition[1], symbol);
     Character::move(dist);
 }
 
@@ -98,18 +113,22 @@ void Pacman::update(float dt) {
 		_previousX = round(getX());
 		_previousY = round(getY());
 		
-	} else {
-		
-		if(Wizard::getInstance().canTurn(getX(), getY())) {
-			if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
-				turn(Wizard::getInstance().availablePosition(getX(), getY()));
-			}
-			_previousX = round(getX());
-			_previousY = round(getY());
-			move(dist);
-		} else {
-			move(dist);
-		}
-	}     
-}
+	} else if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1])) {
+        if(Wizard::getInstance().isGhostInTrouble(nextPosition[0], nextPosition[1])) {
+            eat(nextPosition[0], nextPosition[1], GHOST);
+        }
+        
+        
+    } else if(Wizard::getInstance().canTurn(getX(), getY())) {
+        if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+        }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
+    } else {
+        move(dist);
+    }
+}     
+
 

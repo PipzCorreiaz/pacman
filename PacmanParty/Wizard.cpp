@@ -1,5 +1,13 @@
 #include "Wizard.h"
 
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+void backToNormal(int value);
+void theComeBack(int ghostIndex);
 
 Wizard::~Wizard() {
     
@@ -21,6 +29,14 @@ void Wizard::loadMap(std::string fileName) {
     } else {
         throw new std::string("Could not load the map file.");
     }
+}
+
+void Wizard::setGhosts(std::vector<Ghost*> ghosts) {
+    _ghosts = ghosts;
+}
+
+std::vector<Ghost*> Wizard::getGhosts() {
+    return _ghosts;
 }
 
 std::string Wizard::getMap() {
@@ -132,6 +148,11 @@ int Wizard::positionAhead(float x, float y, int direction) {
 	return index;
 }
 
+char Wizard::getMapSymbol(float x, float y) {
+    int index = positionToIndex(x, y);
+    return _map[index];
+}
+
 void Wizard::changeMap(float x, float y, char symbol) {
     int index = positionToIndex(x, y);
     _map[index] = symbol;
@@ -147,4 +168,60 @@ bool Wizard::isBall(float x, float y) {
     return (_map[index] == SMALL_BALL || _map[index] == BIG_BALL);
 }
 
+bool Wizard::isGhost(float x, float y) {
+    int ghostIndex = 0;
+    for (int i=0; i < _ghosts.size(); i++) {
+        ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
+        if (ghostIndex == positionToIndex(x, y)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Wizard::isGhostInTrouble(float x, float y) {
+    int ghostIndex = 0;
+    for (int i=0; i < _ghosts.size(); i++) {
+        ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
+        if (ghostIndex == positionToIndex(x, y)) {
+            return _ghosts[i]->getTrouble();
+        }
+    }
+    return false;
+}
+
+void backToNormal(int value) {
+    std::vector<Ghost*> ghosts = Wizard::getInstance().getGhosts();
+    for (int i = 0; i < ghosts.size(); i++) {
+        ghosts[i]->setTrouble(false);
+    }
+}
+
+void theComeBack(int ghostIndex) {
+    std::vector<Ghost*> ghosts = Wizard::getInstance().getGhosts();
+    Ghost* ghost = ghosts[ghostIndex];
+    ghost->setHidden(false);
+}
+
+void Wizard::ghostsTrouble() {
+    for (int i = 0; i < _ghosts.size(); i++) {
+        _ghosts[i]->setTrouble(true);
+    }
+    glutTimerFunc(10000, backToNormal, 1);
+}
+
+void Wizard::ghostHidden(float x, float y) {
+    int ghostIndex = 0;
+    for (int i=0; i < _ghosts.size(); i++) {
+        ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
+        if (ghostIndex == positionToIndex(x, y)) {
+            _ghosts[i]->setHidden(true);
+            _ghosts[i]->setTrouble(false);
+            _ghosts[i]->backAgain();
+            glutTimerFunc(5000, theComeBack, i);
+            return;
+        }
+    }
+    
+}
  

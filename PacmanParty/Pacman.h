@@ -9,6 +9,7 @@
 
 #include "Character.h"
 #include "Eyebrow.h"
+#include "Explosion.h"
 #include "MinerHat.h"
 
 class Pacman : public Character {
@@ -25,12 +26,14 @@ public:
     
     void backAgain();
     void eat(float x, float y, char symbol);
+    void detonate();
 
     
 private:
     bool _exploding;
 	Eyebrow* _eyebrow;
 	MinerHat* _cap;
+    Explosion* _explosion;
 };
 
 

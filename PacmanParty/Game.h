@@ -11,7 +11,6 @@
 #include "Ghost.h"
 #include "Camera.h"
 #include "DayLight.h"
-#include "Explosion.h"
 #include "Wizard.h"
 #include "Ball.h"
 
@@ -32,7 +31,7 @@ public:
     void ghostsTrouble();
     
 //    bool colision(Ghost* g);
-    void detonate();
+//    void detonate();
     
     void renderBitmapString();
     void winnerRenderBitmapString();
@@ -57,7 +56,7 @@ public:
     int _ghostsNextState;
     
     bool _detonator;
-    Explosion* _explosion;
+//    Explosion* _explosion;
 
 private:
     float present_time;

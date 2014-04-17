@@ -41,8 +41,8 @@ public:
     
     bool isWall(float, float, int);
     bool isBall(float x, float y);
-    bool isGhost(float x, float y);
-    bool isGhostInTrouble(float x, float y);
+    bool isGhost(float x, float y, int direction);
+    bool isGhostScared(float x, float y, int direction);
     
    
     
@@ -51,12 +51,12 @@ private:
     Wizard(Wizard const&);
     void operator= (Wizard const&);
 
-    int positionAhead(float x, float y, int direction);
+    int positionAhead(float x, float y, int direction, int nPositions);
     std::vector<int> availablePositions(int index);
-    int rightPosition(int index);
-    int leftPosition(int index);
-    int upPosition(int index);
-    int downPosition(int index);
+    int rightPosition(int index, int nPositions);
+    int leftPosition(int index, int nPositions);
+    int upPosition(int index, int nPositions);
+    int downPosition(int index, int nPositions);
 
 
     std::string _map;

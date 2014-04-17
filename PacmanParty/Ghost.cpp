@@ -16,6 +16,7 @@ Ghost::Ghost(int posx, int posy, int id) {
     
     _previousX = 0.0;
     _previousY = 0.0;
+    _lastSymbol = SMALL_BALL;
 }
 
 
@@ -58,6 +59,26 @@ void Ghost::setColor(float a,float b,float c){
     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
     glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
     
+}
+
+void Ghost::setLastSymbol(char symbol) {
+    if (symbol != GHOST && symbol != SCARED_GHOST && symbol != PACMAN) {
+        _lastSymbol = symbol;
+    }
+}
+
+void Ghost::move(float dist) {
+    Wizard::getInstance().changeMap(getX(), getY(), _lastSymbol);
+    
+    Character::move(dist);
+    if (getTrouble()) {
+        setLastSymbol(Wizard::getInstance().getMapSymbol(getX(), getY()));
+        Wizard::getInstance().changeMap(getX(), getY(), SCARED_GHOST);
+    } else {
+        setLastSymbol(Wizard::getInstance().getMapSymbol(getX(), getY()));
+        Wizard::getInstance().changeMap(getX(), getY(), GHOST);
+    }
+
 }
 
 void Ghost::update(float dt) {

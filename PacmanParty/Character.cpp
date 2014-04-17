@@ -27,6 +27,10 @@ int Character::getAngle() {
 	return _angle;
 }
 
+char Character::getLastSymbol() {
+    return _lastSymbol;
+}
+
 void Character::setX(float x) {
     _posX = x;
 }
@@ -100,6 +104,31 @@ void Character::turn(int direction) {
             break;
     }
 }
+
+int Character::turnBack(){
+    int direction = getDirection();
+    int backDirection = 0;
+    switch (direction) {
+        case UP:
+            backDirection = DOWN;
+            break;
+        case LEFT:
+            backDirection = RIGHT;
+            break;
+        case DOWN:
+            backDirection = UP;
+            break;
+        case RIGHT:
+            backDirection = LEFT;
+            break;
+        default:
+            break;
+    }
+    return backDirection;
+}
+
+
+
 
 std::vector<float> Character::nextPosition(float dist) {
     

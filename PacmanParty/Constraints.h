@@ -1,5 +1,5 @@
-#ifndef PacmanParty_CONSTRAINTS_h
-#define PacmanParty_CONSTRAINTS_h
+#ifndef __CONSTRAINTS_H__
+#define __CONSTRAINTS_H__
 
 /* Ghost Constraints */
 
@@ -19,6 +19,13 @@
 
 #define PAC_RADIUS 1.25
 #define GHOST_RADIUS 1.5
+
+
+#define CAM_MODE_1 0
+#define CAM_MODE_2 1
+#define CAM_MODE_3 2
+#define DEFAULT CAM_MODE_1
+
 
 #define UP 0
 #define LEFT 1

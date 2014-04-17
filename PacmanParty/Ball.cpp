@@ -1,10 +1,3 @@
-#if defined (__APPLE__) || defined (MACOSX)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
-#include <iostream>
 #include "Ball.h"
 
 Ball::Ball(){
@@ -16,6 +9,15 @@ Ball::Ball(){
 
 Ball::~Ball() {
 
+}
+
+void Ball::intoPlace(float posX, float posY){
+    _posX = posX;
+    _posY = posY;
+}
+
+void Ball::growth(float scale){
+	_scale  = scale;
 }
 
 void Ball::draw(){
@@ -38,14 +40,5 @@ void Ball::draw(){
     glutSolidSphere(0.25, 30, 30);
     
     glPopMatrix();
-}
-
-void Ball::intoPlace(float posX, float posY){
-    _posX = posX;
-    _posY = posY;
-}
-
-void Ball::growth(float scale){
-	_scale  = scale;
 }
 

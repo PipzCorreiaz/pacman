@@ -1,5 +1,5 @@
-#ifndef PacmanParty_DayLight_h
-#define PacmanParty_DayLight_h
+#ifndef __DAYLIGHT_H__
+#define __DAYLIGHT_H__
 
 #if defined (__APPLE__) || defined (MACOSX)
 #include <GLUT/glut.h>

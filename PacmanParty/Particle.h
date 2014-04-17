@@ -1,7 +1,14 @@
-#ifndef PacmanParty_Particle_h
-#define PacmanParty_Particle_h
+#ifndef __PARTICLE_H__
+#define __PARTICLE_H__
 
-class Particle{
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+
+class Particle {
 
 public:
     Particle();

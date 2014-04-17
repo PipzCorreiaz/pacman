@@ -1,7 +1,13 @@
-#ifndef PacmanLove_Ball_h
-#define PacmanLove_Ball_h
+#ifndef __BALL_H__
+#define __BALL_H__
 
-class Ball{
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+class Ball {
     
 public:
     Ball();

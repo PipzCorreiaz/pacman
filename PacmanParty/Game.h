@@ -1,19 +1,19 @@
-#ifndef PacmanParty_Game_h
-#define PacmanParty_Game_h
+#ifndef __GAME_H__
+#define __GAME_H__
 
-#include <vector>
-#include <string>
-#include <string.h>
-#include <cstdlib>
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 #include "Maze.h"
-#include "Pacman.h"
-#include "Ball.h"
 #include "Ghost.h"
 #include "Camera.h"
-#include "Lighting.h"
 #include "DayLight.h"
-#include "Constraints.h"
 #include "Explosion.h"
+#include "Wizard.h"
+#include "Ball.h"
 
 void backToNormal(int value);
 void theComeBack(int value);

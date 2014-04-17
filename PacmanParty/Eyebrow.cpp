@@ -1,34 +1,27 @@
-#if defined (__APPLE__) || defined (MACOSX)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
-#include <iostream>
 #include "Eyebrow.h"
 
-Eyebrow::Eyebrow(){
+Eyebrow::Eyebrow() {
 	_posX= _posY = _posZ = 0; 
 }
 
-Eyebrow::~Eyebrow(){}
+Eyebrow::~Eyebrow() {
 
-void Eyebrow::intoPlace(float posX, float posY, float posZ){
+}
+
+void Eyebrow::intoPlace(float posX, float posY, float posZ) {
     _posX = posX;
     _posY = posY;
     _posZ = posZ;
 }
 
-void Eyebrow::adjust(float angle){
+void Eyebrow::adjust(float angle) {
 	_angle = angle;
 }
 
 
-void Eyebrow::draw(){
+void Eyebrow::draw() {
 
 	glPushMatrix();
-    
-    //glColor3f(0.25, 0.15, 0.075);
     
     GLfloat mat_ambient[] = {0.25, 0.15, 0.075};
     GLfloat mat_diffuse[] = {0.25, 0.15, 0.075};
@@ -43,8 +36,7 @@ void Eyebrow::draw(){
     glTranslatef(_posX,_posY,_posZ);
 	glRotatef(_angle, 0.0f, 1.0f, 0.0f);
 	glScalef(1.0f, 0.25f, 0.25f);
-	glutSolidSphere(0.25, 30, 30); //raio do olho 0.25
-	
+	glutSolidSphere(0.25, 30, 30); //raio do olho 0.25	
     
     glPopMatrix();
 

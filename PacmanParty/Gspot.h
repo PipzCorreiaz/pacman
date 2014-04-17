@@ -1,5 +1,5 @@
-#ifndef PacmanParty_Gspot_h
-#define PacmanParty_Gspot_h
+#ifndef __GSPOT_H__
+#define __GSPOT_H__
 
 #if defined (__APPLE__) || defined (MACOSX)
 #include <GLUT/glut.h>

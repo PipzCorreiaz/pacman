@@ -1,12 +1,18 @@
-#ifndef PacmanParty_Explosion_h
-#define PacmanParty_Explosion_h
+#ifndef __EXPLOSION_H__
+#define __EXPLOSION_H__
 
-#include "Particle.h"
-#include "Constraints.h"
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+#include <iostream>
 #include <cmath>
+#include "Constraints.h"
+#include "Particle.h"
 
-
-class Explosion{
+class Explosion {
 
 public:
     Explosion(float pacX, float pacY, float pacZ);

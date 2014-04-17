@@ -1,12 +1,4 @@
-#if defined (__APPLE__) || defined (MACOSX)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
-#include <iostream>
 #include "Game.h"
-#include "Wizard.h"
 
 
 static std::vector<Ghost*>* stack = new std::vector<Ghost*>();
@@ -269,7 +261,7 @@ void Game::loserRenderBitmapString(){
 
 void Game::detonate(){
     _detonator = true;
-    _pac->_explodingTime = true;
+    _pac->setExploding(true);
     _explosion = new Explosion(_pac->getX(), _pac->getY(), _pac->getZ());
     _lives--;
 }
@@ -346,11 +338,11 @@ void Game::draw(){
     
     glPushMatrix();
 	
-    if(!_balls && !_pac->_explodingTime){
+    if(!_balls && !_pac->getExploding()){
         winnerRenderBitmapString();
     }
     
-    else if(!_lives && !_pac->_explodingTime){
+    else if(!_lives && !_pac->getExploding()){
         loserRenderBitmapString();
     }
     

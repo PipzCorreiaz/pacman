@@ -1,30 +1,23 @@
-#if defined (__APPLE__) || defined (MACOSX)
-    #include <GLUT/glut.h>
-#else
-    #include <GL/glut.h>
-#endif
-
-#include <iostream>
 #include "Eye.h"
 
-Eye::Eye(){
-	_posX = _posY = _posZ = 0; 
+Eye::Eye() {
+	_posX = _posY = _posZ = 0;
+    
+}
 
-	}
+Eye::~Eye() {
 
-Eye::~Eye(){}
+}
 
-void Eye::intoPlace(float posX, float posY, float posZ){
+void Eye::intoPlace(float posX, float posY, float posZ) {
     _posX = posX;
     _posY = posY;
     _posZ = posZ;
 }
 
-void Eye::draw(){
+void Eye::draw() {
     
     glPushMatrix();
-    
-    //glColor3f(1, 1, 1);
     
     GLfloat mat_ambient_eye[] = {1, 1, 1};
     GLfloat mat_diffuse_eye[] = {1, 1, 1};
@@ -40,8 +33,6 @@ void Eye::draw(){
 	glutSolidSphere(0.25, 30, 30); //raio do olho 0.25
 	
 	// Iris (modificar depois)
-    
-    //glColor3f(0, 0, 0);
     
     GLfloat mat_ambient_iris[] = {0, 0, 0};
     GLfloat mat_diffuse_iris[] = {0, 0, 0};

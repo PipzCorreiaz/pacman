@@ -1,18 +1,25 @@
-#ifndef PacmanLove_Section_h
-#define PacmanLove_Section_h
+#ifndef __SECTION_H__
+#define __SECTION_H__
+
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 
 #include "Wall.h"
-#include "Ball.h"
 
 class Section{
     
 public:
-	Section(int quadX, int quadY);
+	Section();
 	~Section();
-	
+    
+	void setQuadrant(int x, int y);
 	void draw();
     
 private:
+    Wall* _wall;
 	int _quadrantX;
 	int _quadrantY;
     

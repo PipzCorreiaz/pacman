@@ -7,6 +7,3 @@ Lighting::Lighting(){
 Lighting::~Lighting(){
     
 }
-
-
-

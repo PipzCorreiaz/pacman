@@ -1,11 +1,15 @@
-#ifndef BatesPoucoBates_Ghost_h
-#define BatesPoucoBates_Ghost_h
+#ifndef __GHOST_H__
+#define __GHOST_H__
+
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 
 #include <iostream>
 #include <cmath>
-#include "Constraints.h"
 #include "Character.h"
-#include "Eye.h"
 
 class Ghost : public Character {
 

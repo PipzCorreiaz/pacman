@@ -1,8 +1,12 @@
-#ifndef PacmanLove_Character_h
-#define PacmanLove_Character_h
+#ifndef __CHARACTER_H__
+#define __CHARACTER_H__
 
-#include <iostream>
-#include <string>
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 #include <vector>
 #include "Constraints.h"
 #include "Eye.h"

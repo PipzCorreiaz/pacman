@@ -1,13 +1,6 @@
-#if defined (__APPLE__) || defined (MACOSX)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
-#include <iostream>
 #include "Particle.h"
 
-Particle::Particle(){
+Particle::Particle() {
     _posX = 0;
     _posY = 0;
     _posZ = 0;
@@ -16,11 +9,11 @@ Particle::Particle(){
     _vZ = 0;
 }
 
-Particle::~Particle(){
+Particle::~Particle() {
     
 }
 
-void Particle::reset(float posX, float posY, float posZ, float vx, float vy, float vz){
+void Particle::reset(float posX, float posY, float posZ, float vx, float vy, float vz) {
     _posX = posX;
     _posY = posY;
     _posZ = posZ;
@@ -29,13 +22,13 @@ void Particle::reset(float posX, float posY, float posZ, float vx, float vy, flo
     _vZ = vz;
 }
 
-void Particle::move(float dx, float dy, float dz){
+void Particle::move(float dx, float dy, float dz) {
     _posX += dx;
     _posY += dy;
     _posZ += dz;
 }
 
-void Particle::draw(){
+void Particle::draw() {
 
     if(_posZ > 0){
         

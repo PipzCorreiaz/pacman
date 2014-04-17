@@ -1,10 +1,3 @@
-#if defined (__APPLE__) || defined (MACOSX)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
-#include <iostream>
 #include "Pacman.h"
 #include "Wizard.h"
 
@@ -15,13 +8,21 @@ Pacman::Pacman() {
     _posZ = 1.25f;
 	_speed = 10; // unidades do labirinto per second
     _direction = DOWN;
-	_eye = new Eye();
-	_eyebrow = new Eyebrow();
-	_cap = new MinerHat();
-    _explodingTime = false;
     _angle = DOWN_ANGLE;
+    _exploding = false;
+	_eyebrow = new Eyebrow();
+	_eye = new Eye();
+	_cap = new MinerHat();
     _previousX = 0.0;
     _previousY = 0.0;
+}
+
+bool Pacman::getExploding() {
+    return _exploding;
+}
+
+void Pacman::setExploding(bool value) {
+    _exploding = value;
 }
 
 
@@ -66,33 +67,6 @@ void Pacman::draw() {
     
 }
 
-void Pacman::backAgain(){
-    _posX = 9.0f;
-	_posY = 6.0f;
-    _posZ = 1.25f;
-    _explodingTime = false;
-    setAngle(DOWN_ANGLE);
-}
-
-void Pacman::eat(float x, float y, char symbol) {
-    
-    
-    switch (symbol) {
-        case SMALL_BALL:
-            Wizard::getInstance().changeMap(x, y, HALL);
-            break;
-        case BIG_BALL:
-            Wizard::getInstance().changeMap(x, y, HALL);
-            Wizard::getInstance().ghostsTrouble();
-            break;
-        case GHOST:
-            Wizard::getInstance().ghostHidden(x, y);
-            break;
-        default:
-            break;
-    }
-}
-
 void Pacman::move(float dist) {
     std::vector<float> nextPosition = Character::nextPosition(dist);
     char symbol = Wizard::getInstance().getMapSymbol(nextPosition[0], nextPosition[1]);
@@ -129,6 +103,33 @@ void Pacman::update(float dt) {
     } else {
         move(dist);
     }
-}     
+}
+
+void Pacman::backAgain() {
+    _posX = 9.0f;
+	_posY = 6.0f;
+    _posZ = 1.25f;
+    setExploding(false);
+    setAngle(DOWN_ANGLE);
+}
+
+void Pacman::eat(float x, float y, char symbol) {
+    
+    
+    switch (symbol) {
+        case SMALL_BALL:
+            Wizard::getInstance().changeMap(x, y, HALL);
+            break;
+        case BIG_BALL:
+            Wizard::getInstance().changeMap(x, y, HALL);
+            Wizard::getInstance().ghostsTrouble();
+            break;
+        case GHOST:
+            Wizard::getInstance().ghostHidden(x, y);
+            break;
+        default:
+            break;
+    }
+}
 
 

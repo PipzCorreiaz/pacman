@@ -1,5 +1,5 @@
-#ifndef PacmanParty_Camera_h
-#define PacmanParty_Camera_h
+#ifndef __CAMERA_H__
+#define __CAMERA_H__
 
 #if defined (__APPLE__) || defined (MACOSX)
 #include <GLUT/glut.h>
@@ -8,6 +8,7 @@
 #endif
 
 #include "Pacman.h"
+#include "Constraints.h"
 
 class Camera {
     

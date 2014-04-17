@@ -21,6 +21,7 @@ public:
     float getSpeed();
     int getDirection();
     int getAngle();
+    char getLastSymbol();
     
     void setX(float x);
     void setY(float y);
@@ -29,12 +30,14 @@ public:
     
     void move(float dist);
     void turn(int direction);
+    int turnBack();
     std::vector<float> nextPosition(float dist);
     
     void virtual draw() = 0;
     void virtual update(float dt) = 0;
     
     void virtual backAgain() = 0;
+    
     
     int _previousX, _previousY;
     
@@ -46,6 +49,7 @@ protected:
     float _speed;
     int _direction;
     int _angle;
+    char _lastSymbol;
 	Eye* _eye;
     
 };

@@ -42,5 +42,7 @@
 #define BIG_BALL 'B'
 #define HALL '.'
 #define GHOST 'g'
+#define SCARED_GHOST 's'
+#define PACMAN 'p'
 
 #endif

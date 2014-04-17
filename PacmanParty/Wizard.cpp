@@ -60,19 +60,19 @@ std::vector<float> Wizard::indexToPosition(int index) {
 	return coords;
 }
 
-int Wizard::rightPosition(int index) {
-	return index + 2;
+int Wizard::rightPosition(int index, int nPositions) {
+	return index + nPositions;
 }
 
-int Wizard::leftPosition(int index) {
-	return index - 2;
+int Wizard::leftPosition(int index, int nPositions) {
+	return index - nPositions;
 }
 
-int Wizard::upPosition(int index) {
-	return index - 2 * _mapWidth;
+int Wizard::upPosition(int index, int nPositions) {
+	return index - nPositions * _mapWidth;
 }
-int Wizard::downPosition(int index) {
-	return index + 2 * _mapWidth;
+int Wizard::downPosition(int index, int nPositions) {
+	return index + nPositions * _mapWidth;
 
 }
 
@@ -80,21 +80,21 @@ std::vector<int> Wizard::availablePositions(int index) {
 	std::vector<int> neighbours;
 	int newIndex = 0;
 	
-	newIndex = leftPosition(index);
+	newIndex = leftPosition(index, 2);
 	if(_map[newIndex] != WALL && _map[newIndex] != ' ') {
 		neighbours.push_back(LEFT); 
 	}
-	newIndex = rightPosition(index);
+	newIndex = rightPosition(index, 2);
 	if(_map[newIndex] != WALL && _map[newIndex] != ' ') {
 		neighbours.push_back(RIGHT); 
 	}
 	
-	newIndex = upPosition(index);
+	newIndex = upPosition(index, 2);
 	if(_map[newIndex] != WALL && _map[newIndex] != ' ') {
 		neighbours.push_back(UP); 
 	}
 	
-	newIndex = downPosition(index); 
+	newIndex = downPosition(index, 2);
 	if(_map[newIndex] != WALL && _map[newIndex] != ' ') {
 		neighbours.push_back(DOWN); 
 	}
@@ -120,20 +120,20 @@ int Wizard::availablePosition(int index) {
 	return lol;
 }
 
-int Wizard::positionAhead(float x, float y, int direction) {
+int Wizard::positionAhead(float x, float y, int direction, int nPositions) {
 	int index = 0;
 	switch (direction) {    
 		case UP:
-			index = upPosition(positionToIndex(x, y));
+			index = upPosition(positionToIndex(x, y), nPositions);
 			break;
 		case LEFT:
-			index = leftPosition(positionToIndex(x, y));
+			index = leftPosition(positionToIndex(x, y), nPositions);
 			break;
 		case DOWN:
-			index = downPosition(positionToIndex(x, y));
+			index = downPosition(positionToIndex(x, y), nPositions);
 			break;
 		case RIGHT:
-			index = rightPosition(positionToIndex(x, y));
+			index = rightPosition(positionToIndex(x, y), nPositions);
 			break;
 		default:
 			break;
@@ -153,7 +153,7 @@ void Wizard::changeMap(float x, float y, char symbol) {
 }
 
 bool Wizard::isWall(float x, float y, int direction) {
-	int indexAhead = positionAhead(x, y, direction);
+	int indexAhead = positionAhead(x, y, direction, 2);
 	return _map[indexAhead] == WALL;
 }
 
@@ -162,23 +162,30 @@ bool Wizard::isBall(float x, float y) {
     return (_map[index] == SMALL_BALL || _map[index] == BIG_BALL);
 }
 
-bool Wizard::isGhost(float x, float y) {
+bool Wizard::isGhost(float x, float y, int direction) {
     int ghostIndex = 0;
+    int indexAhead = positionAhead(x, y, direction, 1);
+    int indexFarAway = positionAhead(x, y, direction, 2);
     for (int i=0; i < _ghosts.size(); i++) {
         ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
-        if (ghostIndex == positionToIndex(x, y)) {
+        if (ghostIndex == positionToIndex(x, y) || ghostIndex == indexAhead ||ghostIndex == indexFarAway) {
             return true;
         }
     }
     return false;
 }
 
-bool Wizard::isGhostInTrouble(float x, float y) {
+bool Wizard::isGhostScared(float x, float y, int direction) {
     int ghostIndex = 0;
+    int indexAhead = positionAhead(x, y, direction, 1);
+    int indexFarAway = positionAhead(x, y, direction, 2);
     for (int i=0; i < _ghosts.size(); i++) {
         ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
-        if (ghostIndex == positionToIndex(x, y)) {
-            return _ghosts[i]->getTrouble();
+        if (_ghosts[i]->getTrouble() &&
+            (ghostIndex == positionToIndex(x, y)
+            || ghostIndex == indexAhead
+            || ghostIndex == indexFarAway)) {
+            return true;
         }
     }
     return false;

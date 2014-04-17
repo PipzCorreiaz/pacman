@@ -259,12 +259,12 @@ void Game::loserRenderBitmapString(){
     glEnable(GL_LIGHTING);
 }
 
-void Game::detonate(){
-    _detonator = true;
-    _pac->setExploding(true);
-    _explosion = new Explosion(_pac->getX(), _pac->getY(), _pac->getZ());
-    _lives--;
-}
+//void Game::detonate(){
+//    _detonator = true;
+//    _pac->setExploding(true);
+//    _explosion = new Explosion(_pac->getX(), _pac->getY(), _pac->getZ());
+//    _lives--;
+//}
 
 //bool Game::colision(Ghost* g){
 //    //ghost à direita do pacman
@@ -367,7 +367,6 @@ void Game::draw(){
             _ghostOne->setColor(0,0,1);
             _ghostOne->setSpeed(GHOST_NORMAL_SPEED);
         }
-//        colision(_ghostOne);
         if(!_ghostOne->getHidden()){
             _ghostOne->draw();
         }
@@ -381,7 +380,6 @@ void Game::draw(){
             _ghostTwo->setColor(1,0,0);
             _ghostTwo->setSpeed(GHOST_NORMAL_SPEED);
         }
-//        colision(_ghostTwo);
         if(!_ghostTwo->getHidden()){
             _ghostTwo->draw();
         }
@@ -395,24 +393,11 @@ void Game::draw(){
             _ghostThree->setColor(0, 1, 0);
             _ghostThree->setSpeed(GHOST_NORMAL_SPEED);
         }
-//        colision(_ghostThree);
         if(!_ghostThree->getHidden()){
             _ghostThree->draw();
         }
         
-        //desenhar a explosao OU o pacman
-        if(_detonator){
-            _explosion->draw();
-            if(!_explosion->_areThereAnyParticles){
-                _detonator = false;
-                _pac->backAgain();
-                
-            }
-        }
-        else{
-            _pac->draw();
-        }
-        
+        _pac->draw();
         
         renderBitmapString();
         

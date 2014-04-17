@@ -23,9 +23,11 @@ public:
     void setTrouble(bool trouble);
     void setHidden(bool value);
     void setColor(float a, float b, float c);
+    void setLastSymbol(char symbol);
     
     void draw();
     void update(float dt);
+    void move(float dist);
     
     void backAgain();
     

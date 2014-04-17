@@ -1,43 +1,37 @@
-#if defined (__APPLE__) || defined (MACOSX)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
 #include "Character.h"
 #include "Wizard.h"
 
 
 
-float Character::getX(){
+float Character::getX() {
     return _posX;
 }
 
-float Character::getY(){
+float Character::getY() {
     return _posY;
 }
 
-float Character::getZ(){
+float Character::getZ() {
     return _posZ;
 }
 
-float Character::getSpeed(){
+float Character::getSpeed() {
 	return _speed;
 }
 
-int Character::getDirection(){
+int Character::getDirection() {
     return _direction;
 }
 
-int Character::getAngle(){
+int Character::getAngle() {
 	return _angle;
 }
 
-void Character::setX(float x){
+void Character::setX(float x) {
     _posX = x;
 }
 
-void Character::setY(float y){
+void Character::setY(float y) {
     _posY = y;
 }
 
@@ -49,7 +43,7 @@ void Character::setAngle(int angle) {
     _angle = angle;
 }
 
-void Character::move(float dist){
+void Character::move(float dist) {
     float x = getX();
     float y = getY();
     int dir = getDirection();

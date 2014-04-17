@@ -1,14 +1,6 @@
-#if defined (__APPLE__) || defined (MACOSX)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
-#include <iostream>
 #include "Explosion.h"
 
-Explosion::Explosion(float pacX, float pacY, float pacZ){
-
+Explosion::Explosion(float pacX, float pacY, float pacZ) {
     int i;
     _areThereAnyParticles = true;
     for(i = 0; i < PARTICLES; i++){
@@ -17,9 +9,11 @@ Explosion::Explosion(float pacX, float pacY, float pacZ){
     resetParticles(pacX, pacY, pacZ);
 }
 
-Explosion::~Explosion(){}
+Explosion::~Explosion() {
 
-void Explosion::checkParticles(){
+}
+
+void Explosion::checkParticles() {
     int i;
     for(i=0; i<PARTICLES; i++){
         if(_particles[i]->_posZ > 0){
@@ -30,7 +24,7 @@ void Explosion::checkParticles(){
     _areThereAnyParticles = false;
 }
 
-void Explosion::resetParticles(float pacX, float pacY, float pacZ){
+void Explosion::resetParticles(float pacX, float pacY, float pacZ) {
 	int i;
     for(i = 0; i < PARTICLES; i++){
         if(i % 4 == 0){
@@ -60,7 +54,7 @@ void Explosion::resetParticles(float pacX, float pacY, float pacZ){
     }
 }
 
-void Explosion::moveParticles(float dt){
+void Explosion::moveParticles(float dt) {
     int i;
     float dx, dy, dz;
     for(i = 0; i < PARTICLES; i++){
@@ -72,7 +66,7 @@ void Explosion::moveParticles(float dt){
     }
 }
 
-void Explosion::draw(){
+void Explosion::draw() {
     
     glPushMatrix();
     

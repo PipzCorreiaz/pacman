@@ -1,23 +1,15 @@
-#if defined (__APPLE__) || defined (MACOSX)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
-#include <iostream>
-#include <stdio.h>
 #include "Maze.h"
 
-Maze::Maze(){
-	//_floor = new Wall();
+Maze::Maze() {
+	_section = new Section();
 }
 
-Maze::~Maze(){
-    
+Maze::~Maze() {
+    delete(_section);
 }
 
 
-void Maze::draw(){
+void Maze::draw() {
     
 	//floor
 	glColor3f(0.2f,0.2f,0.2f);
@@ -54,12 +46,6 @@ void Maze::draw(){
     
     glPopMatrix();
     
-    //_floor->resize(58, 60);
-    //_floor->intoPlace(0, 0, -0.99);
-    //_floor->draw();
-    
-    // sections 
-    
     glPushMatrix();
     
     glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
@@ -67,22 +53,14 @@ void Maze::draw(){
     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
     glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
     
-    /*
-     glBegin(GL_POLYGON); //chão
-     glVertex3f(-29, 30, 0);
-     glVertex3f(29, 30, 0);
-     glVertex3f(29, -30, 0);
-     glVertex3f(-29, -30, 0);
-     glEnd();*/
-    
-	Section* quad1 = new Section(1,1);
-	Section* quad2 = new Section(-1,1);
-	Section* quad3 = new Section(-1,-1);
-	Section* quad4 = new Section(1,-1);
-	quad1->draw();
-	quad2->draw();
-	quad3->draw();
-	quad4->draw();
+	_section->setQuadrant(1,1);
+	_section->draw();
+    _section->setQuadrant(-1,1);
+	_section->draw();
+    _section->setQuadrant(-1,-1);
+	_section->draw();
+    _section->setQuadrant(1,-1);
+	_section->draw();
     
     glPopMatrix();
 	

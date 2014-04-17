@@ -1,7 +1,11 @@
-#ifndef PacmanLove_MinerHat_h
-#define PacmanLove_MinerHat_h
+#ifndef __MINERHAT_H__
+#define __MINERHAT_H__
 
-#include <cmath>
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 
 class MinerHat {
     

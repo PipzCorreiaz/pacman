@@ -4,13 +4,13 @@
 #include <GL/glut.h>
 #endif
 
+
 #include <iostream>
-#include <time.h>
 #include "Game.h"
-#include "Constraints.h"
 #include "Gspot.h"
 #include "DayLight.h"
 #include "BMPReader.h"
+
 
 void myReshape(GLsizei w, GLsizei h) ;
 void myDisplay(void) ;
@@ -21,8 +21,10 @@ void specialUpKeys(int key, int x, int y);
 void setGhostsState(int state);
 void LoadTexture( const std::string & textureFilename);
 
+
 //Variaveis Globais
 Game* game = new Game();
+
 
 
 void LoadTexture( const std::string & textureFilename) {
@@ -51,7 +53,6 @@ void myReshape(GLsizei w, GLsizei h) {
     
 }
 
-// myDisplay : desenhar o cenario de jogo
 void myDisplay(void) {
     
     glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -61,11 +62,8 @@ void myDisplay(void) {
     glEnable(GL_LIGHTING);
     glEnable(GL_DEPTH_TEST);
     glDepthFunc(GL_LEQUAL);
-	//glEnable(GL_CULL_FACE);
-
-    glLoadIdentity();
     
-    //ACTION
+    glLoadIdentity();
     game->draw();
     
 	glutSwapBuffers(); 
@@ -93,10 +91,8 @@ void keyboard(unsigned char key, int x, int y) {
 
 
 void update() {
-    
     game->update();
 	glutPostRedisplay();
-    
 }
 
 

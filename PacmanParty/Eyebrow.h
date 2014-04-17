@@ -1,7 +1,13 @@
-#ifndef PacmanLove_Eyebrow_h
-#define PacmanLove_Eyebrow_h
+#ifndef __EYEBROW_H__
+#define __EYEBROW_H__
 
-class Eyebrow{
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
+class Eyebrow {
     
 public:
     Eyebrow();

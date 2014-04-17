@@ -1,13 +1,13 @@
-#ifndef PacmanParty_Wizard_h
-#define PacmanParty_Wizard_h
+#ifndef __WIZARD_H__
+#define __WIZARD_H__
 
-#include <iostream>
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 #include <fstream>
-#include <string>
-#include <cmath>
-#include <cstdlib>
-#include <vector>
-#include "Constraints.h"
 #include "Ghost.h"
  
 class Wizard {

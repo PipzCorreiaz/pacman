@@ -1,9 +1,3 @@
-#if defined (__APPLE__) || defined (MACOSX)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
 #include "Ghost.h"
 #include "Wizard.h"
 
@@ -16,7 +10,7 @@ Ghost::Ghost(int posx, int posy, int id) {
     _angle = DOWN_ANGLE;
     _direction = DOWN;
     _speed = GHOST_NORMAL_SPEED; // unidades do labirinto per second
-    _trouble = true;
+    _trouble = false;
     _ghostId = id;
     _hidden = false;
     

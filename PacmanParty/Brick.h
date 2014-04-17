@@ -1,5 +1,11 @@
-#ifndef PacmanParty_Brick_h
-#define PacmanParty_Brick_h
+#ifndef __BRICK_H__
+#define __BRICK_H__
+
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
 
 class Brick {
     
@@ -10,7 +16,6 @@ public:
     void resize(float width, float height);
     void intoPlace(float posx, float posy, float posz);
 	void draw();
-    
     
     
 private:

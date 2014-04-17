@@ -1,10 +1,3 @@
-#if defined (__APPLE__) || defined (MACOSX)
-#include <GLUT/glut.h>
-#else
-#include <GL/glut.h>
-#endif
-
-#include <iostream>
 #include "Wall.h"
 
 
@@ -17,24 +10,19 @@ Wall::Wall() {
 }
 
 Wall::~Wall(){
-    
+    delete(_brick);
 }
 
-// define os limites da parede
 void Wall::resize(float width, float height){
-    
     _width = width;
     _height = height;
-    
 }
 
 
 void Wall::intoPlace(float posx, float posy, float posz){
-    
     _posX = posx;
     _posY = posy;
     _posZ = posz;
-    
 }
 
 void Wall::draw(){
@@ -42,7 +30,6 @@ void Wall::draw(){
     glPushMatrix();
   
     int i, j, k;
-    
     
     glTranslatef(-_width/2, -_height/2, 0); //centrar referencia da parede
     glTranslatef(_posX, _posY, _posZ);
@@ -59,6 +46,7 @@ void Wall::draw(){
             }
         }
     }
+    
 	glPopMatrix();
 }
 

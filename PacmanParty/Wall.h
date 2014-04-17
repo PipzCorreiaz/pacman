@@ -1,8 +1,14 @@
-#ifndef PacmanLove_Wall_h
-#define PacmanLove_Wall_h
+#ifndef __WALL_H__
+#define __WALL_H__
 
-#include "Brick.h"
+#if defined (__APPLE__) || defined (MACOSX)
+#include <GLUT/glut.h>
+#else
+#include <GL/glut.h>
+#endif
+
 #include "Constraints.h"
+#include "Brick.h"
 
 
 class Wall {
@@ -18,13 +24,12 @@ public:
     
     
 private:
-    
     float _width;
     float _height;
     float _posX;
     float _posY;
     float _posZ;
-    Brick *_brick;
+    Brick* _brick;
     
     
     

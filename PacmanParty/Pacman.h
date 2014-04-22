@@ -11,6 +11,7 @@
 #include "Eyebrow.h"
 #include "Explosion.h"
 #include "MinerHat.h"
+#include "Bullet.h"
 
 class Pacman : public Character {
     
@@ -36,6 +37,7 @@ private:
 	MinerHat* _cap;
     Explosion* _explosion;
     int _balls;
+    std::vector<Bullet*> _bullets; 
 };
 
 

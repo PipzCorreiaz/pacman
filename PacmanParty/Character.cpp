@@ -3,6 +3,10 @@
 
 
 
+Character::Character() {
+    _life = 100;
+}
+
 float Character::getX() {
     return _posX;
 }

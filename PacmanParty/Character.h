@@ -14,7 +14,7 @@
 class Character {
     
 public:
-    
+    Character();
     float getX();
     float getY();
     float getZ();
@@ -49,6 +49,8 @@ protected:
     int _direction;
     int _angle;
 	Eye* _eye;
+    int _life;
+
     
 };
 

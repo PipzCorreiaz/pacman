@@ -2,7 +2,7 @@
 #include "Wizard.h"
 
 
-Ghost::Ghost(int posx, int posy, int id) {
+Ghost::Ghost(int posx, int posy, int id) : Character() {
 	_eye = new Eye();
 	_posX = posx;
     _posY = posy; 

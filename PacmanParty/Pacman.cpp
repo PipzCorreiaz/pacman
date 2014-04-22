@@ -2,7 +2,7 @@
 #include "Wizard.h"
 
 
-Pacman::Pacman() {
+Pacman::Pacman() : Character() {
     _posX = 9.0f;
 	_posY = 6.0f;
     _posZ = 1.25f;
@@ -73,7 +73,13 @@ void Pacman::draw() {
         _eyebrow->draw();
         
         glPopMatrix();
+
+        for(int i=0; i<_bullets.size(); i++) {
+            _bullets[i]->draw();
+        }
     }
+
+
     
 }
 
@@ -89,6 +95,11 @@ void Pacman::update(float dt) {
     float dist = getSpeed() * dt;
     std::vector<float> nextPosition = Character::nextPosition(dist);
     int directionBack = 0;
+
+    for(int i=0; i<_bullets.size(); i++) {
+        _bullets[i]->update(dt);
+    }
+
     
     if (_exploding) {
         _explosion->moveParticles(dt);
@@ -103,6 +114,8 @@ void Pacman::update(float dt) {
         move(dist);
     } else if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection())) {
         directionBack = turnBack();
+        _bullets.push_back(new Bullet(getX(), getY(), getZ(), getDirection()));
+        std::cout << _bullets.size() << std::endl;
         turn(directionBack);
         move(dist);
     } else if(Wizard::getInstance().canTurn(getX(), getY())) {

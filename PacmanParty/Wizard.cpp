@@ -110,14 +110,22 @@ bool Wizard::canTurn(float x, float y) {
 int Wizard::availablePosition(float x, float y) {
 	int index = positionToIndex(x, y);
 	std::vector<int> positions = availablePositions(index);
-	int lol = positions[rand() % positions.size()];
-	return lol;
-}
+    int size = positions.size(); 	
+    if(!size) {
+        std::cout << "nao encontrei posicoes" << std::endl;
+        return -1;
+    }
+    return positions[rand() % size];
+}   
 
 int Wizard::availablePosition(int index) {
 	std::vector<int> positions = availablePositions(index);
-	int lol = positions[rand() % positions.size()];
-	return lol;
+    int size = positions.size();    
+    if(!size) {
+        std::cout << "nao encontrei posicoes" << std::endl;
+        return -1;
+    }
+    return positions[rand() % size];
 }
 
 int Wizard::positionAhead(float x, float y, int direction, int nPositions) {

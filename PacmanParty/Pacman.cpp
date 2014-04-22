@@ -12,13 +12,17 @@ Pacman::Pacman() {
     _exploding = false;
 	_eyebrow = new Eyebrow();
 	_eye = new Eye();
-	_cap = new MinerHat();
     _previousX = 0.0;
     _previousY = 0.0;
+    _balls = 0;
 }
 
 bool Pacman::getExploding() {
     return _exploding;
+}
+
+int Pacman::getBalls(){
+    return _balls;
 }
 
 void Pacman::setExploding(bool value) {
@@ -39,7 +43,7 @@ void Pacman::draw() {
         glPushMatrix();
         
         glTranslatef(getX(), getY(), getZ());
-        glScalef(1.25f, 1.25f, 1.25f);
+        glScalef(1.50f, 1.50f, 1.50f);
         glRotatef(getAngle(), 0, 0, 1); // direccao do pacman
         
         //glColor3f(1, 1, 0); // Amarelo
@@ -57,9 +61,9 @@ void Pacman::draw() {
         glutSolidSphere(1, 30, 30); // pacman r=1
         
         
-        _eye->intoPlace(0.375f, -0.8f, 0.0f); //olho direito
+        _eye->intoPlace(0.375f, -0.7f, 0.0f); //olho direito
         _eye->draw();
-        _eye->intoPlace(-0.375f, -0.8f, 0.0f); //olho esquerdo
+        _eye->intoPlace(-0.375f, -0.7f, 0.0f); //olho esquerdo
         _eye->draw();
         _eyebrow->intoPlace(0.375f ,-0.848f , 0.375f); // sobranc direita
         _eyebrow->adjust(5.0f);
@@ -67,8 +71,6 @@ void Pacman::draw() {
         _eyebrow->intoPlace(-0.375f ,-0.848f , 0.375f); //sobranc esquerda
         _eyebrow->adjust(-5.0f);
         _eyebrow->draw();
-        _cap->intoPlace(0.0f, 0.0f, 0.5f);
-        _cap->draw();
         
         glPopMatrix();
     }
@@ -101,7 +103,7 @@ void Pacman::update(float dt) {
         move(dist);
     } else if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection())) {
         directionBack = turnBack();
-        //turn(directionBack);
+        turn(directionBack);
         move(dist);
     } else if(Wizard::getInstance().canTurn(getX(), getY())) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
@@ -120,7 +122,7 @@ void Pacman::backAgain() {
 	_posY = 6.0f;
     _posZ = 1.25f;
     setExploding(false);
-    setAngle(DOWN_ANGLE);
+    //setAngle(DOWN_ANGLE);
 }
 
 void Pacman::eat(float x, float y, char symbol) {
@@ -129,10 +131,12 @@ void Pacman::eat(float x, float y, char symbol) {
     switch (symbol) {
         case SMALL_BALL:
             Wizard::getInstance().changeMap(x, y, HALL);
+            _balls++;
             break;
         case BIG_BALL:
             Wizard::getInstance().changeMap(x, y, HALL);
             Wizard::getInstance().ghostsTrouble();
+            _balls++;
             break;
         case SCARED_GHOST:
             Wizard::getInstance().ghostHidden(x, y);

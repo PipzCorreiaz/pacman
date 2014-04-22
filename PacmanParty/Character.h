@@ -21,7 +21,6 @@ public:
     float getSpeed();
     int getDirection();
     int getAngle();
-    char getLastSymbol();
     
     void setX(float x);
     void setY(float y);
@@ -49,7 +48,6 @@ protected:
     float _speed;
     int _direction;
     int _angle;
-    char _lastSymbol;
 	Eye* _eye;
     
 };

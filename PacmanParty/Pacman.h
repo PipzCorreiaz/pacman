@@ -18,6 +18,7 @@ public:
     Pacman();
     
     bool getExploding();
+    int getBalls();
     void setExploding(bool value);
     
     void draw();
@@ -34,6 +35,7 @@ private:
 	Eyebrow* _eyebrow;
 	MinerHat* _cap;
     Explosion* _explosion;
+    int _balls;
 };
 
 

@@ -44,7 +44,7 @@ void Eye::draw() {
     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular_iris);
     glMaterialf(GL_FRONT, GL_SHININESS, mat_shine_iris);
     
-    glTranslatef(0.0,-0.25, 0.0);
+    glTranslatef(0.0,-0.2, 0.0);
 	glutSolidSphere(0.125f, 20, 20); //raio do olho 0.125
     
     glPopMatrix();

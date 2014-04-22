@@ -29,6 +29,10 @@ bool Ghost::getHidden() {
     return _hidden;
 }
 
+char Ghost::getLastSymbol() {
+    return _lastSymbol;
+}
+
 
 void Ghost::setSpeed(float speed){
     _speed = speed;

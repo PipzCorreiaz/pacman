@@ -27,9 +27,6 @@ int Character::getAngle() {
 	return _angle;
 }
 
-char Character::getLastSymbol() {
-    return _lastSymbol;
-}
 
 void Character::setX(float x) {
     _posX = x;

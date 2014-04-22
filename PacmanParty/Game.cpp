@@ -66,7 +66,6 @@ void Game::update() {
 void Game::ballsInspector(){ //actualiza o desenho das bolas 
     std::string map = Wizard::getInstance().getMap();
     Ball* ball = new Ball(); //evitar getBalls
-    int balls = 0;
 
 	glPushMatrix();
 	
@@ -81,13 +80,11 @@ void Game::ballsInspector(){ //actualiza o desenho das bolas
 			ball->intoPlace(x, y);
             ball->growth(1.0f);
 			ball->draw();
-            balls++;
 		}
 		if(map[i] == BIG_BALL){
 			ball->intoPlace(x, y);
 			ball->growth(2.0f);
 			ball->draw();
-            balls++;
 		}
 		
 		x = x+2;
@@ -100,8 +97,6 @@ void Game::ballsInspector(){ //actualiza o desenho das bolas
 	}
 
     glPopMatrix();
-
-    _score = _balls - balls;
 
     delete(ball);
 }
@@ -154,7 +149,7 @@ void Game::renderBitmapString(){
 	glPushMatrix();
 	glLoadIdentity();
 	
-	
+	_score = _pac->getBalls();
     std::string c = "Score: ";
     c += integerToString(_score);
     int i;

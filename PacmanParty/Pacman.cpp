@@ -29,6 +29,17 @@ void Pacman::setExploding(bool value) {
     _exploding = value;
 }
 
+void Pacman::cleanUpBullets() {
+    std::vector<Bullet*> newBullets;
+
+    for (int i = 0; i < _bullets.size(); i++) {
+        if (_bullets[i]->isActive()) {
+            newBullets.push_back(_bullets[i]);
+        }
+    }
+    _bullets = newBullets;
+}
+
 
 void Pacman::draw() {
     
@@ -96,6 +107,7 @@ void Pacman::update(float dt) {
     std::vector<float> nextPosition = Character::nextPosition(dist);
     int directionBack = 0;
 
+    cleanUpBullets();
     for(int i=0; i<_bullets.size(); i++) {
         _bullets[i]->update(dt);
     }
@@ -117,7 +129,7 @@ void Pacman::update(float dt) {
         _bullets.push_back(new Bullet(getX(), getY(), getZ(), getDirection()));
         std::cout << _bullets.size() << std::endl;
         turn(directionBack);
-        move(dist);
+        //move(dist);
     } else if(Wizard::getInstance().canTurn(getX(), getY())) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
@@ -135,7 +147,6 @@ void Pacman::backAgain() {
 	_posY = 6.0f;
     _posZ = 1.25f;
     setExploding(false);
-    //setAngle(DOWN_ANGLE);
 }
 
 void Pacman::eat(float x, float y, char symbol) {

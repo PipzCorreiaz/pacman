@@ -116,12 +116,23 @@ void Ghost::update(float dt) {
 }
 
 
-void Ghost::backAgain(){
-    setX(0.0f);
-	setY(0.0f);
+void Ghost::shoot(int i) {
+    _life -= GUN_POWER;
+    if (_life == 0) {
+        setHidden(true);
+        backAgain();
+        glutTimerFunc(5000, theComeBack, i);
+    }
 }
 
 
+void Ghost::backAgain(){
+    _life = 100;
+    setX(0.0f);
+	setY(0.0f);
+    setAngle(DOWN_ANGLE);
+    setDirection(DOWN);
+}
 
 void Ghost::draw() {
     

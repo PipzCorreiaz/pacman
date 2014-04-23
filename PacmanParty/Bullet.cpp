@@ -9,8 +9,16 @@ Bullet::Bullet(float x, float y, float z, int direction) {
     setSpeed(direction);
 }
 
+Bullet::~Bullet() {
+
+}
+
+bool Bullet::isActive() {
+    return _active;
+}
+
 void Bullet::setSpeed(int direction) {
-    float speed = 10;
+    float speed = 20;
     switch (direction) {
         case UP: 
             _vY = speed;
@@ -49,7 +57,7 @@ void Bullet::draw() {
         glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
         glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
         
-        glutSolidSphere(0.25f, 5, 5);
+        glutSolidSphere(0.5f, 5, 5);
         
         glPopMatrix();
         
@@ -61,7 +69,10 @@ void Bullet::update(float dt) {
     _y += _vY * dt;
     char symbol = Wizard::getInstance().getMapSymbol(_x, _y);
 
-    if (symbol == GHOST || symbol == WALL) {
+    if (symbol == WALL) {
+        _active = false;
+    } else if (symbol == GHOST) {
+        Wizard::getInstance().shotGhost(_x, _y);
         _active = false;
     }
 }

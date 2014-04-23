@@ -32,6 +32,8 @@ public:
 
     
 private:
+    void cleanUpBullets();
+
     bool _exploding;
 	Eyebrow* _eyebrow;
 	MinerHat* _cap;

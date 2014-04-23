@@ -1,8 +1,5 @@
 #include "Wizard.h"
 
-void backToNormal(int value);
-void theComeBack(int ghostIndex);
-
 Wizard::~Wizard() {
     
 }
@@ -171,15 +168,24 @@ bool Wizard::isBall(float x, float y) {
 }
 
 bool Wizard::isGhost(float x, float y, int direction) {
-    int ghostIndex = 0;
-    int indexAhead = positionAhead(x, y, direction, 1);
-    int indexFarAway = positionAhead(x, y, direction, 2);
-    for (int i=0; i < _ghosts.size(); i++) {
-        ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
-        if (ghostIndex == positionToIndex(x, y) || ghostIndex == indexAhead ||ghostIndex == indexFarAway) {
+    //int ghostIndex = 0;
+    //int indexAhead = positionAhead(x, y, direction, 1);
+    //int indexFarAway = positionAhead(x, y, direction, 2);
+    // for (int i=0; i < _ghosts.size(); i++) {
+    //     ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
+    //     if (ghostIndex == positionToIndex(x, y) || ghostIndex == indexAhead ||ghostIndex == indexFarAway) {
+    //         return true;
+    //     }
+    // }
+    // return false;
+
+    int maxPositions = 4;
+    for (int i = 1; i <= maxPositions; i++) {
+        if (_map[positionAhead(x, y, direction, i)] == GHOST) {
             return true;
         }
     }
+
     return false;
 }
 
@@ -199,6 +205,40 @@ bool Wizard::isGhostScared(float x, float y, int direction) {
     return false;
 }
 
+
+void Wizard::ghostsTrouble() {
+    for (int i = 0; i < _ghosts.size(); i++) {
+        _ghosts[i]->setTrouble(true);
+    }
+    glutTimerFunc(10000, backToNormal, 1);
+}
+
+void Wizard::ghostHidden(float x, float y) {
+    int ghostIndex = 0;
+    for (int i = 0; i < _ghosts.size(); i++) {
+        ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
+        if (ghostIndex == positionToIndex(x, y)) {
+            _ghosts[i]->setHidden(true);
+            _ghosts[i]->setTrouble(false);
+            _ghosts[i]->backAgain();
+            glutTimerFunc(5000, theComeBack, i);
+            return;
+        }
+    }
+    
+}
+
+void Wizard::shotGhost(float x, float y) {
+    int index = positionToIndex(x, y);
+    for(int i = 0; i < _ghosts.size(); i++) {
+        int ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
+        if (index == ghostIndex) {
+            _ghosts[i]->shoot(i);
+        }
+    }
+}
+ 
+
 void backToNormal(int value) {
     std::vector<Ghost*> ghosts = Wizard::getInstance().getGhosts();
     for (int i = 0; i < ghosts.size(); i++) {
@@ -211,26 +251,3 @@ void theComeBack(int ghostIndex) {
     Ghost* ghost = ghosts[ghostIndex];
     ghost->setHidden(false);
 }
-
-void Wizard::ghostsTrouble() {
-    for (int i = 0; i < _ghosts.size(); i++) {
-        _ghosts[i]->setTrouble(true);
-    }
-    glutTimerFunc(10000, backToNormal, 1);
-}
-
-void Wizard::ghostHidden(float x, float y) {
-    int ghostIndex = 0;
-    for (int i=0; i < _ghosts.size(); i++) {
-        ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
-        if (ghostIndex == positionToIndex(x, y)) {
-            _ghosts[i]->setHidden(true);
-            _ghosts[i]->setTrouble(false);
-            _ghosts[i]->backAgain();
-            glutTimerFunc(5000, theComeBack, i);
-            return;
-        }
-    }
-    
-}
- 

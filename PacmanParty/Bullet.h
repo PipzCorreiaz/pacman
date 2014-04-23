@@ -13,6 +13,8 @@ class Bullet {
 public:
     Bullet(float x, float y, float z, int direction);
     ~Bullet();
+    bool isActive();
+
     void draw();
     void update(float dt);
 

@@ -48,17 +48,6 @@ void Game::update() {
 	present_time = glutGet(GLUT_ELAPSED_TIME); /* in milliseconds */
 	dt = 0.001f*(present_time - last_time); /* in seconds */
     
-//    if(_detonator){
-//        _explosion->moveParticles(dt);
-//    }
-//    else {
-//        movePac(_pac->getSpeed()*dt);
-//    }
-//    
-//    moveGhost(_ghostOne, _ghostOne->getSpeed()*dt);
-//    moveGhost(_ghostTwo, _ghostTwo->getSpeed()*dt);
-//    moveGhost(_ghostThree, _ghostThree->getSpeed()*dt);
-    
     _pac->update(dt);
     _poc->update(dt);
     _ghostOne->update(dt);
@@ -69,10 +58,11 @@ void Game::update() {
 }
 
 
-void Game::ballsInspector(){ //actualiza o desenho das bolas 
+void Game::mapItemsDrawer(){ //actualiza o desenho das bolas
     std::string map = Wizard::getInstance().getMap();
     Ball* ball = new Ball(); //evitar getBalls
-
+    Ammunition* ammunition = new Ammunition();
+    
 	glPushMatrix();
 	
 	int i = 0; //i percorre matriz, j percorre balls
@@ -86,12 +76,14 @@ void Game::ballsInspector(){ //actualiza o desenho das bolas
 			ball->intoPlace(x, y);
             ball->growth(1.0f);
 			ball->draw();
-		}
-		if(map[i] == BIG_BALL){
+		} else if(map[i] == BIG_BALL){
 			ball->intoPlace(x, y);
 			ball->growth(2.0f);
 			ball->draw();
-		}
+		} else if (map[i] == AMMUNITION) {
+            ammunition->intoPlace(x, y);
+            ammunition->draw();
+        }
 		
 		x = x+2;
         
@@ -106,32 +98,6 @@ void Game::ballsInspector(){ //actualiza o desenho das bolas
 
     delete(ball);
 }
-
-
-//void Game::ghostsTrouble() {
-//    _ghostOne->setTrouble(true);
-//    _ghostTwo->setTrouble(true);
-//    _ghostThree->setTrouble(true);
-//    glutTimerFunc(10000, backToNormal, 1);
-//}
-//
-//void backToNormal(int value) {
-//	bigBalls--;
-//    if(bigBalls == 0){
-//        ghost1->setTrouble(false);
-//        ghost2->setTrouble(false);
-//        ghost3->setTrouble(false);
-//    }
-//}
-//
-//void theComeBack(int value){
-//    Ghost* g = stack->front();
-//    stack->erase(stack->begin());
-//    g->setHidden(false);
-//    g->setTrouble(false);
-//    g->backAgain();
-//}
-
 
 std::string Game::integerToString(int num){
     std::string string = "";
@@ -260,81 +226,6 @@ void Game::loserRenderBitmapString(){
     glEnable(GL_LIGHTING);
 }
 
-//void Game::detonate(){
-//    _detonator = true;
-//    _pac->setExploding(true);
-//    _explosion = new Explosion(_pac->getX(), _pac->getY(), _pac->getZ());
-//    _lives--;
-//}
-
-//bool Game::colision(Ghost* g){
-//    //ghost à direita do pacman
-//    if(!g->getHidden() && !_pac->_explodingTime && g->getX() > _pac->getX() && g->getY() == _pac->getY() && g->getX()-GHOST_RADIUS <= _pac->getX()+PAC_RADIUS){
-//        if(g->getTrouble()){
-//            g->setHidden(true);
-//            stack->push_back(g);
-//            glutTimerFunc(5000, theComeBack, 0);
-//            _score +=50;
-//            return false;
-//        }
-//        else{
-//            detonate();
-//            return true;
-//        }
-//    }
-//    //ghost à esquerda do pacman
-//    else if(!g->getHidden() && !_pac->_explodingTime && g->getX() < _pac->getX() && g->getY() == _pac->getY() && g->getX()+GHOST_RADIUS >= _pac->getX()-PAC_RADIUS){
-//
-//        if(g->getTrouble()){
-//            g->setHidden(true);
-//            stack->push_back(g);
-//            glutTimerFunc(5000, theComeBack, 0);
-//            _score +=50;
-//            return false;
-//        }
-//        else{
-//            detonate();
-//            return true;
-//        }
-//    }
-//    //mesma coluna
-//    else if(!g->getHidden() && !_pac->_explodingTime && g->getX() == _pac->getX()){
-//        //ghost acima do pacman
-//        if(!g->getHidden() && !_pac->_explodingTime && g->getY() > _pac->getY() && g->getX() == _pac->getX() && g->getY()-GHOST_RADIUS <= _pac->getY()+PAC_RADIUS){
-//
-//            if(g->getTrouble()){
-//                g->setHidden(true);
-//                stack->push_back(g);
-//                glutTimerFunc(5000, theComeBack, 0);
-//                _score +=50;
-//                return false;
-//            }
-//            else{
-//                detonate();
-//                return true;
-//            }
-//        }
-//        //ghost abaixo do pacman
-//        else if(!g->getHidden() && !_pac->_explodingTime && g->getY() < _pac->getY() && g->getX() == _pac->getX() && g->getY()+GHOST_RADIUS >= _pac->getY()-PAC_RADIUS){
-//
-//            if(g->getTrouble()){
-//                g->setHidden(true);
-//                stack->push_back(g);
-//                glutTimerFunc(5000, theComeBack, 0);
-//                _score +=50;
-//                return false;
-//            }
-//            else{
-//                detonate();
-//                return true;
-//            }
-//        }
-//        else {
-//        }
-//    }
-//    return true;
-//}
-
 void Game::draw(){
     
     glPushMatrix();
@@ -357,7 +248,7 @@ void Game::draw(){
         
         
         _maze->draw();
-        ballsInspector();
+        mapItemsDrawer();
         
         
         if(_ghostOne->getTrouble()){

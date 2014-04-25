@@ -1,6 +1,16 @@
 #include "Bullet.h"
 #include "Wizard.h"
 
+Bullet::Bullet() {
+    _x = _y = 0.0f;
+    _z = 0.5f;
+    _speed = 20;
+    _active = true;
+    _quadratics = gluNewQuadric();
+    gluQuadricNormals(_quadratics, GLU_SMOOTH);
+    _vX = _vY = 1.0f; //TROLOLOL
+}
+
 Bullet::Bullet(float x, float y, float z, int direction) {
     _x = x;
     _y = y;
@@ -14,6 +24,11 @@ Bullet::Bullet(float x, float y, float z, int direction) {
 
 Bullet::~Bullet() {
     gluDeleteQuadric(_quadratics);
+}
+
+void Bullet::intoPlace(float x, float y) {
+    _x = x;
+    _y = y;
 }
 
 bool Bullet::isActive() {
@@ -50,7 +65,7 @@ void Bullet::draw() {
         glTranslatef(_x, _y, _z);
         if (_vY == 0) {
             glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
-        } else {
+        } else if (_vX == 0) {
             glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
         }
         
@@ -64,7 +79,10 @@ void Bullet::draw() {
         glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
         glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
         
-        gluCylinder(_quadratics, 0.2f, 0.2f, 0.6f, 5, 5);
+        gluCylinder(_quadratics, 0.3f, 0.3f, 0.7f, 8, 8);
+        glTranslatef(0.0f, 0.0f, 0.7f);
+        gluCylinder(_quadratics, 0.3f, 0.0f, 0.4f, 8, 8);
+        
         glPopMatrix();
         
     }

@@ -30,6 +30,7 @@ void Pacman::init() {
     _previousX = 0.0;
     _previousY = 0.0;
     _balls = 0;
+    _ammunitions = 0;
 }
 
 bool Pacman::getExploding() {
@@ -66,6 +67,13 @@ void Pacman::cleanUpBullets() {
         }
     }
     _bullets = newBullets;
+}
+
+void Pacman::shoot() {
+    if (_ammunitions > 0) {
+        _bullets.push_back(new Bullet(getX(), getY(), getZ(), getDirection()));
+        _ammunitions--;
+    }
 }
 
 
@@ -141,10 +149,9 @@ void Pacman::update(float dt) {
 		_previousY = round(getY());
     } else if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection()) && !getSick()) {
         move(dist);
-    } else if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection()) && !getSick()) {
+    } else if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection())) {
+        shoot();
         directionBack = turnBack();
-        _bullets.push_back(new Bullet(getX(), getY(), getZ(), getDirection()));
-        std::cout << _bullets.size() << std::endl;
         turn(directionBack);
         //move(dist);
     } else if (Wizard::getInstance().isPacman(getName(), nextPosition[0], nextPosition[1], getDirection())) {
@@ -171,26 +178,29 @@ void Pacman::backAgain() {
 
 void Pacman::eat(float x, float y, char symbol) {
     
-    if (!getSick()) {
-        switch (symbol) {
-            case SMALL_BALL:
- //               Wizard::getInstance().changeMap(x, y, HALL);
-                _balls++;
-                break;
-            case BIG_BALL:
- //               Wizard::getInstance().changeMap(x, y, HALL);
-                Wizard::getInstance().ghostsTrouble();
-                _balls++;
-                break;
-            case SCARED_GHOST:
-                Wizard::getInstance().ghostHidden(x, y);
- //               Wizard::getInstance().changeMap(x, y, HALL);
-                break;
-            case GHOST:
-                detonate();
-            default:
-                break;
-        }
+    
+    switch (symbol) {
+        case SMALL_BALL:
+//            Wizard::getInstance().changeMap(x, y, HALL);
+            _balls++;
+            break;
+        case BIG_BALL:
+//            Wizard::getInstance().changeMap(x, y, HALL);
+            Wizard::getInstance().ghostsTrouble();
+            _balls++;
+            break;
+        case SCARED_GHOST:
+            Wizard::getInstance().ghostHidden(x, y);
+//            Wizard::getInstance().changeMap(x, y, HALL);
+            break;
+        case GHOST:
+            detonate();
+            break;
+        case AMMUNITION:
+            _ammunitions += BULLETS_PER_AMMUNITION;
+            break;
+        default:
+            break;
     }
 }
 

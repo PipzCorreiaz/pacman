@@ -29,6 +29,7 @@
 #define DEFAULT CAM_MODE_1
 
 #define GUN_POWER 100
+#define BULLETS_PER_AMMUNITION 3
 
 #define UP 0
 #define LEFT 1
@@ -48,5 +49,6 @@
 #define SCARED_GHOST 's'
 #define PACMAN 'p'
 #define POCMAN 'q'
+#define AMMUNITION 'a'
 
 #endif

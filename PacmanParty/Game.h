@@ -13,6 +13,7 @@
 #include "DayLight.h"
 #include "Wizard.h"
 #include "Ball.h"
+#include "Ammunition.h"
 
 void backToNormal(int value);
 void theComeBack(int value);
@@ -26,12 +27,8 @@ public:
     
     void update();
 	
-    void ballsInspector();
-        
+    void mapItemsDrawer();
     void ghostsTrouble();
-    
-//    bool colision(Ghost* g);
-//    void detonate();
     
     void renderBitmapString();
     void winnerRenderBitmapString();
@@ -43,7 +40,7 @@ public:
     
     Camera* _camera;
     Lighting * _light;
-    Pacman* _pac; //evitar getPacman
+    Pacman* _pac;
     Pacman* _poc;
     int _balls; 
     int _score;
@@ -57,7 +54,6 @@ public:
     int _ghostsNextState;
     
     bool _detonator;
-//    Explosion* _explosion;
 
 private:
     float present_time;

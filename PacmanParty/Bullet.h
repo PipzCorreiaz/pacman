@@ -11,9 +11,11 @@
 class Bullet {
 
 public:
+    Bullet();
     Bullet(float x, float y, float z, int direction);
     ~Bullet();
     bool isActive();
+    void intoPlace(float x, float y);
 
     void draw();
     void update(float dt);

@@ -40,14 +40,15 @@ public:
 private:
     void init();
     void cleanUpBullets();
+    void shoot();
 
     bool _exploding;
     bool _sick;
 	Eyebrow* _eyebrow;
-	MinerHat* _cap;
     Explosion* _explosion;
     int _balls;
     char _name;
+    int _ammunitions;
     std::vector<Bullet*> _bullets; 
 };
 

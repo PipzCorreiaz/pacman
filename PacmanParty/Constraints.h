@@ -15,8 +15,10 @@
 
 #define PARTICLES 240 //numero de particulas na explosao
 #define EXPLOSION_VEL 20 //velocidade maxima das particulas na explosao
-#define ACCELERATION 9.8;
+#define ACCELERATION 9.8
 
+#define PAC_EYE_X 0.375
+#define PAC_EYE_Y -0.7
 #define PAC_RADIUS 1.25
 #define GHOST_RADIUS 1.5
 

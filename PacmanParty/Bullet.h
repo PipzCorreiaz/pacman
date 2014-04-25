@@ -22,9 +22,11 @@ private:
     float _x;
     float _y;
     float _z;
+    float _speed;
     float _vX;
     float _vY;
     bool _active;
+    GLUquadric* _quadratics;
 
     void setSpeed(int direction);
 

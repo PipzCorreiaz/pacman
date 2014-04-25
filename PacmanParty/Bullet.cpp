@@ -5,12 +5,15 @@ Bullet::Bullet(float x, float y, float z, int direction) {
     _x = x;
     _y = y;
     _z = z;
+    _speed = 20;
     _active = true;
+    _quadratics = gluNewQuadric();
+    gluQuadricNormals(_quadratics, GLU_SMOOTH);
     setSpeed(direction);
 }
 
 Bullet::~Bullet() {
-
+    gluDeleteQuadric(_quadratics);
 }
 
 bool Bullet::isActive() {
@@ -18,23 +21,22 @@ bool Bullet::isActive() {
 }
 
 void Bullet::setSpeed(int direction) {
-    float speed = 20;
     switch (direction) {
         case UP: 
-            _vY = speed;
+            _vY = _speed;
             _vX = 0;
             break;
         case DOWN:
-            _vY = -speed;
+            _vY = -_speed;
             _vX = 0;
             break;
         case LEFT:
             _vY = 0;
-            _vX = -speed;
+            _vX = -_speed;
             break;
         case RIGHT:
             _vY = 0;
-            _vX = speed;
+            _vX = _speed;
             break;
     }
 }
@@ -46,6 +48,11 @@ void Bullet::draw() {
         glPushMatrix();
         
         glTranslatef(_x, _y, _z);
+        if (_vY == 0) {
+            glRotatef(90.0f, 0.0f, 1.0f, 0.0f);
+        } else {
+            glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
+        }
         
         GLfloat mat_ambient[] = {1, 0, 0};
         GLfloat mat_diffuse[] = {1, 0, 0};
@@ -57,16 +64,25 @@ void Bullet::draw() {
         glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
         glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
         
-        glutSolidSphere(0.5f, 5, 5);
-        
+        gluCylinder(_quadratics, 0.2f, 0.2f, 0.6f, 5, 5);
         glPopMatrix();
         
     }
 }
 
 void Bullet::update(float dt) {
+    float lastX = _x;
+    float lastY = _y;
     _x += _vX * dt;
     _y += _vY * dt;
+    int lastIndex = Wizard::getInstance().positionToIndex(lastX, lastY);
+    int index = Wizard::getInstance().positionToIndex(_x, _y);
+    
+    if ((abs(index - lastIndex) > 1 && abs(index - lastIndex) < 10)
+        || (abs(index - lastIndex) > 55 && abs(index - lastIndex) < 500)) {
+        std::cout << "SERIOUS PROBLEMS: talk to Filipa, she'll know what to do!" << std::endl;
+    }
+    
     char symbol = Wizard::getInstance().getMapSymbol(_x, _y);
 
     if (symbol == WALL) {

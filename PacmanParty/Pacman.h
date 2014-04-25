@@ -7,6 +7,7 @@
 #include <GL/glut.h>
 #endif
 
+#include "Constraints.h"
 #include "Character.h"
 #include "Eyebrow.h"
 #include "Explosion.h"

@@ -107,7 +107,7 @@ bool Wizard::canTurn(float x, float y) {
 int Wizard::availablePosition(float x, float y) {
 	int index = positionToIndex(x, y);
 	std::vector<int> positions = availablePositions(index);
-    int size = positions.size(); 	
+    int size = (int)positions.size();
     if(!size) {
         std::cout << "nao encontrei posicoes" << std::endl;
         return -1;
@@ -117,7 +117,7 @@ int Wizard::availablePosition(float x, float y) {
 
 int Wizard::availablePosition(int index) {
 	std::vector<int> positions = availablePositions(index);
-    int size = positions.size();    
+    int size = (int)positions.size();
     if(!size) {
         std::cout << "nao encontrei posicoes" << std::endl;
         return -1;

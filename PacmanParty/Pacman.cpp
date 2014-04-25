@@ -90,22 +90,23 @@ void Pacman::draw() {
         glutSolidSphere(1, 30, 30); // pacman r=1
         
         
-        _eye->intoPlace(0.375f, -0.7f, 0.0f); //olho direito
+        _eye->intoPlace(PAC_EYE_X, PAC_EYE_Y, 0.0f); //olho direito
         _eye->draw();
-        _eye->intoPlace(-0.375f, -0.7f, 0.0f); //olho esquerdo
+        _eye->intoPlace(-PAC_EYE_X, PAC_EYE_Y, 0.0f); //olho esquerdo
         _eye->draw();
-        _eyebrow->intoPlace(0.375f ,-0.848f , 0.375f); // sobranc direita
+        _eyebrow->intoPlace(PAC_EYE_X ,-0.848f , 0.375f); // sobranc direita
         _eyebrow->adjust(5.0f);
         _eyebrow->draw();
-        _eyebrow->intoPlace(-0.375f ,-0.848f , 0.375f); //sobranc esquerda
+        _eyebrow->intoPlace(-PAC_EYE_X ,-0.848f , 0.375f); //sobranc esquerda
         _eyebrow->adjust(-5.0f);
         _eyebrow->draw();
         
         glPopMatrix();
-
+        
         for(int i=0; i<_bullets.size(); i++) {
             _bullets[i]->draw();
         }
+        
     }
 
 
@@ -145,9 +146,8 @@ void Pacman::update(float dt) {
 	} else if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection())) {
         move(dist);
     } else if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection())) {
-        directionBack = turnBack();
         _bullets.push_back(new Bullet(getX(), getY(), getZ(), getDirection()));
-        std::cout << _bullets.size() << std::endl;
+        directionBack = turnBack();
         turn(directionBack);
         //move(dist);
     } else if (Wizard::getInstance().isPacman(getName(), nextPosition[0], nextPosition[1], getDirection())) {

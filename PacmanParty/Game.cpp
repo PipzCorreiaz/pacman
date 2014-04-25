@@ -155,7 +155,7 @@ void Game::renderBitmapString(){
 	glPushMatrix();
 	glLoadIdentity();
 	
-	_score = _pac->getBalls();
+	_score = _pac->getBalls() + _poc->getBalls();
     std::string c = "Score: ";
     c += integerToString(_score);
     int i;

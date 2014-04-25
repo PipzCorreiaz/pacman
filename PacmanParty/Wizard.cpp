@@ -270,6 +270,7 @@ void Wizard::shotGhost(float x, float y) {
         int ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
         if (index == ghostIndex) {
             _ghosts[i]->shoot(i);
+            _map[ghostIndex] = _ghosts[i]->getLastSymbol();
         }
     }
 }

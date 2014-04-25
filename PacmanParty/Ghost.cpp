@@ -66,7 +66,7 @@ void Ghost::setColor(float a,float b,float c){
 }
 
 void Ghost::setLastSymbol(char symbol) {
-    if (symbol != GHOST && symbol != SCARED_GHOST && symbol != PACMAN) {
+    if (symbol != GHOST && symbol != SCARED_GHOST && symbol != PACMAN && symbol != POCMAN) {
         _lastSymbol = symbol;
     }
 }

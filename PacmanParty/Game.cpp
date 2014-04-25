@@ -17,6 +17,11 @@ Game::Game(){
 	}
     
     _pac = new Pacman();
+    _poc = new Pacman(-9.0f, 6.0f);
+    
+    _pac->setName(PACMAN);
+    _poc->setName(POCMAN);
+    
     _camera = new Camera(_pac);
     _maze = new Maze();
     _ghostOne = new Ghost(25,26, 1);
@@ -55,6 +60,7 @@ void Game::update() {
 //    moveGhost(_ghostThree, _ghostThree->getSpeed()*dt);
     
     _pac->update(dt);
+    _poc->update(dt);
     _ghostOne->update(dt);
     _ghostTwo->update(dt);
     _ghostThree->update(dt);
@@ -393,6 +399,7 @@ void Game::draw(){
         }
         
         _pac->draw();
+        _poc->draw();
         
         renderBitmapString();
         

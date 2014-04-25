@@ -49,6 +49,9 @@ public:
     bool isBall(float x, float y);
     bool isGhost(float x, float y, int direction);
     bool isGhostScared(float x, float y, int direction);
+    bool isPacman(char, float, float, int);
+    
+    bool isSameIndex(float, float, float, float);
     
    
     
@@ -56,6 +59,8 @@ private:
     Wizard() {};
     Wizard(Wizard const&);
     void operator= (Wizard const&);
+    
+    void printMap();
 
     int positionAhead(float x, float y, int direction, int nPositions);
     std::vector<int> availablePositions(int index);

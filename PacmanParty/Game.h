@@ -44,6 +44,7 @@ public:
     Camera* _camera;
     Lighting * _light;
     Pacman* _pac; //evitar getPacman
+    Pacman* _poc;
     int _balls; 
     int _score;
     int _lives;

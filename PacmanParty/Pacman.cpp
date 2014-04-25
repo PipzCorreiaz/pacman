@@ -3,6 +3,20 @@
 
 
 Pacman::Pacman() : Character() {
+    init();
+}
+
+Pacman::Pacman(float x, float y) {
+    init();
+    _posX = x;
+    _posY = y;
+}
+
+void Pacman::setName(char name) {
+    _name = name;
+}
+
+void Pacman::init() {
     _posX = 9.0f;
 	_posY = 6.0f;
     _posZ = 1.25f;
@@ -23,6 +37,10 @@ bool Pacman::getExploding() {
 
 int Pacman::getBalls(){
     return _balls;
+}
+
+char Pacman::getName() {
+    return _name;
 }
 
 void Pacman::setExploding(bool value) {
@@ -99,7 +117,9 @@ void Pacman::move(float dist) {
     char symbol = Wizard::getInstance().getMapSymbol(nextPosition[0], nextPosition[1]);
     
     eat(nextPosition[0], nextPosition[1], symbol);
+    Wizard::getInstance().changeMap(getX(), getY(), HALL);
     Character::move(dist);
+    Wizard::getInstance().changeMap(getX(), getY(), getName());
 }
 
 void Pacman::update(float dt) {
@@ -130,6 +150,9 @@ void Pacman::update(float dt) {
         std::cout << _bullets.size() << std::endl;
         turn(directionBack);
         //move(dist);
+    } else if (Wizard::getInstance().isPacman(getName(), nextPosition[0], nextPosition[1], getDirection())) {
+        directionBack = turnBack();
+        turn(directionBack);
     } else if(Wizard::getInstance().canTurn(getX(), getY())) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
@@ -154,17 +177,17 @@ void Pacman::eat(float x, float y, char symbol) {
     
     switch (symbol) {
         case SMALL_BALL:
-            Wizard::getInstance().changeMap(x, y, HALL);
+//            Wizard::getInstance().changeMap(x, y, HALL);
             _balls++;
             break;
         case BIG_BALL:
-            Wizard::getInstance().changeMap(x, y, HALL);
+//            Wizard::getInstance().changeMap(x, y, HALL);
             Wizard::getInstance().ghostsTrouble();
             _balls++;
             break;
         case SCARED_GHOST:
             Wizard::getInstance().ghostHidden(x, y);
-            Wizard::getInstance().changeMap(x, y, HALL);
+//            Wizard::getInstance().changeMap(x, y, HALL);
             break;
         case GHOST:
             detonate();

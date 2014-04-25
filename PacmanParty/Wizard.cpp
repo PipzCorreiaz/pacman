@@ -155,6 +155,21 @@ char Wizard::getMapSymbol(float x, float y) {
 void Wizard::changeMap(float x, float y, char symbol) {
     int index = positionToIndex(x, y);
     _map[index] = symbol;
+//    printMap();
+}
+
+void Wizard::printMap() {
+    int limit = 0;
+    for (int i = 0; i < _map.length(); i++) {
+        std::cout << _map[i];
+        limit++;
+        if (limit == 55) {
+            std::cout << std::endl;
+            limit = 0;
+        }
+    }
+    
+    std::cout << std::endl;
 }
 
 bool Wizard::isWall(float x, float y, int direction) {
@@ -203,6 +218,27 @@ bool Wizard::isGhostScared(float x, float y, int direction) {
         }
     }
     return false;
+}
+
+bool Wizard::isPacman(char name, float x, float y, int direction) {
+
+    int maxPositions = 3;
+    for (int i = 0; i <= maxPositions; i++) {
+        int index = positionAhead(x, y, direction, i);
+        if (_map[index] != name && (_map[index] == PACMAN || _map[index] == POCMAN)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool Wizard::isSameIndex(float x1, float y1, float x2, float y2) {
+    
+    int i = positionToIndex(x1, y1);
+    int j = positionToIndex(x2, y2);
+    
+    return i == j;
 }
 
 

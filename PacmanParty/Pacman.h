@@ -17,10 +17,13 @@ class Pacman : public Character {
     
 public:
     Pacman();
+    Pacman(float, float);
     
     bool getExploding();
     int getBalls();
     void setExploding(bool value);
+    void setName(char);
+    char getName();
     
     void draw();
     void move(float);
@@ -32,6 +35,7 @@ public:
 
     
 private:
+    void init();
     void cleanUpBullets();
 
     bool _exploding;
@@ -39,6 +43,7 @@ private:
 	MinerHat* _cap;
     Explosion* _explosion;
     int _balls;
+    char _name;
     std::vector<Bullet*> _bullets; 
 };
 

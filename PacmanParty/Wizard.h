@@ -9,6 +9,11 @@
 
 #include <fstream>
 #include "Ghost.h"
+
+void backToNormal(int value);
+void theComeBack(int ghostIndex);
+
+
  
 class Wizard {
 
@@ -37,6 +42,7 @@ public:
     
     void ghostsTrouble();
     void ghostHidden(float x, float y);
+    void shotGhost(float x, float y);
 
     
     bool isWall(float, float, int);
@@ -64,5 +70,6 @@ private:
     int _mapWidth;
     int _mapHeight;
 };
+
 
 #endif

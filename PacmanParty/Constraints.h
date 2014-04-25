@@ -26,6 +26,7 @@
 #define CAM_MODE_3 2
 #define DEFAULT CAM_MODE_1
 
+#define GUN_POWER 100
 
 #define UP 0
 #define LEFT 1

@@ -39,6 +39,8 @@ public:
     void changeMap(float, float, char symbol);
     float getMapWidth();
     float getMapHeight();
+    int bigBallsCatched();
+    void setBigBallsCatched(int);
     
     void ghostsTrouble();
     void ghostHidden(float x, float y);
@@ -74,6 +76,7 @@ private:
     std::vector<Ghost*> _ghosts;
     int _mapWidth;
     int _mapHeight;
+    int _bigBallsCatched = 0;
 };
 
 

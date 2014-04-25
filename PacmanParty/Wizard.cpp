@@ -42,6 +42,14 @@ float Wizard::getMapHeight() {
     return _mapHeight;
 }
 
+int Wizard::bigBallsCatched() {
+    return _bigBallsCatched;
+}
+
+void Wizard::setBigBallsCatched(int value) {
+    _bigBallsCatched = value;
+}
+
 int Wizard::positionToIndex(float x, float y) {
     int position = (((_mapHeight - 1) / 2) - round(y)) * _mapWidth;
     position += ((_mapWidth - 1) / 2) + round(x);
@@ -243,6 +251,7 @@ bool Wizard::isSameIndex(float x1, float y1, float x2, float y2) {
 
 
 void Wizard::ghostsTrouble() {
+    _bigBallsCatched++;
     for (int i = 0; i < _ghosts.size(); i++) {
         _ghosts[i]->setTrouble(true);
     }
@@ -277,14 +286,22 @@ void Wizard::shotGhost(float x, float y) {
  
 
 void backToNormal(int value) {
-    std::vector<Ghost*> ghosts = Wizard::getInstance().getGhosts();
-    for (int i = 0; i < ghosts.size(); i++) {
-        ghosts[i]->setTrouble(false);
+    int ballsCatched = Wizard::getInstance().bigBallsCatched();
+    if (ballsCatched == 1) {
+        std::vector<Ghost*> ghosts = Wizard::getInstance().getGhosts();
+        for (int i = 0; i < ghosts.size(); i++) {
+            ghosts[i]->setTrouble(false);
+        }
     }
+    
+    Wizard::getInstance().setBigBallsCatched(ballsCatched - 1);
+    std::cout << ballsCatched - 1 << std::endl;
 }
 
 void theComeBack(int ghostIndex) {
     std::vector<Ghost*> ghosts = Wizard::getInstance().getGhosts();
     Ghost* ghost = ghosts[ghostIndex];
     ghost->setHidden(false);
+    
+    
 }

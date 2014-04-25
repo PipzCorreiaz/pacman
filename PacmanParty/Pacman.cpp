@@ -93,7 +93,6 @@ void Pacman::draw() {
 
     setColor(0,0,0,40.0);
     if(getSick()) {
-        std::cout << "estou doente" << std::endl;
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glutSolidSphere(1, 30, 30);

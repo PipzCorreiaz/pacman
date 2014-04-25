@@ -149,7 +149,7 @@ void Pacman::update(float dt) {
 		_previousY = round(getY());
     } else if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection()) && !getSick()) {
         move(dist);
-    } else if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection())) {
+    } else if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection()) && !getSick()) {
         shoot();
         directionBack = turnBack();
         turn(directionBack);

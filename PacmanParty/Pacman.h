@@ -21,8 +21,10 @@ public:
     Pacman(float, float);
     
     bool getExploding();
+    bool getSick();
     int getBalls();
     void setExploding(bool value);
+    void setSick(bool value);
     void setName(char);
     char getName();
     
@@ -40,6 +42,7 @@ private:
     void cleanUpBullets();
 
     bool _exploding;
+    bool _sick;
 	Eyebrow* _eyebrow;
 	MinerHat* _cap;
     Explosion* _explosion;

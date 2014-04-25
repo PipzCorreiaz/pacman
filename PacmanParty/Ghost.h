@@ -22,7 +22,7 @@ public:
     void setSpeed(float speed);
     void setTrouble(bool trouble);
     void setHidden(bool value);
-    void setColor(float a, float b, float c);
+   // void setColor(float a, float b, float c);
     char getLastSymbol();
     void setLastSymbol(char symbol);
     

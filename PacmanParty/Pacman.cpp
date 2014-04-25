@@ -24,6 +24,7 @@ void Pacman::init() {
     _direction = DOWN;
     _angle = DOWN_ANGLE;
     _exploding = false;
+    _sick = false;
 	_eyebrow = new Eyebrow();
 	_eye = new Eye();
     _previousX = 0.0;
@@ -33,6 +34,10 @@ void Pacman::init() {
 
 bool Pacman::getExploding() {
     return _exploding;
+}
+
+bool Pacman::getSick() {
+    return _sick;
 }
 
 int Pacman::getBalls(){
@@ -46,6 +51,11 @@ char Pacman::getName() {
 void Pacman::setExploding(bool value) {
     _exploding = value;
 }
+
+void Pacman::setSick(bool value) {
+    _sick = value;
+}
+
 
 void Pacman::cleanUpBullets() {
     std::vector<Bullet*> newBullets;
@@ -61,13 +71,6 @@ void Pacman::cleanUpBullets() {
 
 void Pacman::draw() {
     
-    if (_exploding) {
-        _explosion->draw();
-        if(!_explosion->_areThereAnyParticles){
-            setExploding(false);
-            backAgain();
-        }
-    } else {
         
         glPushMatrix();
         
@@ -76,40 +79,38 @@ void Pacman::draw() {
         glRotatef(getAngle(), 0, 0, 1); // direccao do pacman
         
         //glColor3f(1, 1, 0); // Amarelo
-        
-        GLfloat mat_ambient[] = {1, 1, 0};
-        GLfloat mat_diffuse[] = {1, 1, 0};
-        GLfloat mat_specular[] = {1, 1, 0};
-        GLfloat mat_shine = 100.0f;
-        
-        glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-        glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-        glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-        glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
-        
-        glutSolidSphere(1, 30, 30); // pacman r=1
-        
-        
-        _eye->intoPlace(PAC_EYE_X, PAC_EYE_Y, 0.0f); //olho direito
-        _eye->draw();
-        _eye->intoPlace(-PAC_EYE_X, PAC_EYE_Y, 0.0f); //olho esquerdo
-        _eye->draw();
-        _eyebrow->intoPlace(PAC_EYE_X ,-0.848f , 0.375f); // sobranc direita
-        _eyebrow->adjust(5.0f);
-        _eyebrow->draw();
-        _eyebrow->intoPlace(-PAC_EYE_X ,-0.848f , 0.375f); //sobranc esquerda
-        _eyebrow->adjust(-5.0f);
-        _eyebrow->draw();
-        
-        glPopMatrix();
-        
-        for(int i=0; i<_bullets.size(); i++) {
-            _bullets[i]->draw();
-        }
-        
+
+    _eye->intoPlace(0.375f, -0.7f, 0.0f); //olho direito
+    _eye->draw();
+    _eye->intoPlace(-0.375f, -0.7f, 0.0f); //olho esquerdo
+    _eye->draw();
+    _eyebrow->intoPlace(0.375f ,-0.848f , 0.375f); // sobranc direita
+    _eyebrow->adjust(5.0f);
+    _eyebrow->draw();
+    _eyebrow->intoPlace(-0.375f ,-0.848f , 0.375f); //sobranc esquerda
+    _eyebrow->adjust(-5.0f);
+    _eyebrow->draw();
+
+    setColor(0,0,0,40.0);
+    if(getSick()) {
+        std::cout << "estou doente" << std::endl;
+        glEnable(GL_BLEND);
+        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+        glutSolidSphere(1, 30, 30);
+        glDisable(GL_BLEND);
+    } 
+    else {
+        setColor(1,1,0,100.0);
+        glutSolidSphere(1, 30, 30);
     }
+    
+     // pacman r=1
 
+    glPopMatrix();
 
+    for(int i=0; i<_bullets.size(); i++) {
+        _bullets[i]->draw();
+    }
     
 }
 
@@ -133,21 +134,18 @@ void Pacman::update(float dt) {
         _bullets[i]->update(dt);
     }
 
-    
-    if (_exploding) {
-        _explosion->moveParticles(dt);
-    } else if (Wizard::getInstance().isWall(nextPosition[0], nextPosition[1], getDirection())) {
+    if (Wizard::getInstance().isWall(nextPosition[0], nextPosition[1], getDirection())) {
         move(dist);
 		turn(Wizard::getInstance().availablePosition(nextPosition[0], nextPosition[1]));
 		
 		_previousX = round(getX());
 		_previousY = round(getY());
-		
-	} else if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection())) {
+    } else if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection()) && !getSick()) {
         move(dist);
-    } else if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection())) {
-        _bullets.push_back(new Bullet(getX(), getY(), getZ(), getDirection()));
+    } else if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection()) && !getSick()) {
         directionBack = turnBack();
+        _bullets.push_back(new Bullet(getX(), getY(), getZ(), getDirection()));
+        std::cout << _bullets.size() << std::endl;
         turn(directionBack);
         //move(dist);
     } else if (Wizard::getInstance().isPacman(getName(), nextPosition[0], nextPosition[1], getDirection())) {
@@ -174,31 +172,34 @@ void Pacman::backAgain() {
 
 void Pacman::eat(float x, float y, char symbol) {
     
-    
-    switch (symbol) {
-        case SMALL_BALL:
-//            Wizard::getInstance().changeMap(x, y, HALL);
-            _balls++;
-            break;
-        case BIG_BALL:
-//            Wizard::getInstance().changeMap(x, y, HALL);
-            Wizard::getInstance().ghostsTrouble();
-            _balls++;
-            break;
-        case SCARED_GHOST:
-            Wizard::getInstance().ghostHidden(x, y);
-//            Wizard::getInstance().changeMap(x, y, HALL);
-            break;
-        case GHOST:
-            detonate();
-        default:
-            break;
+    if (!getSick()) {
+        switch (symbol) {
+            case SMALL_BALL:
+ //               Wizard::getInstance().changeMap(x, y, HALL);
+                _balls++;
+                break;
+            case BIG_BALL:
+ //               Wizard::getInstance().changeMap(x, y, HALL);
+                Wizard::getInstance().ghostsTrouble();
+                _balls++;
+                break;
+            case SCARED_GHOST:
+                Wizard::getInstance().ghostHidden(x, y);
+ //               Wizard::getInstance().changeMap(x, y, HALL);
+                break;
+            case GHOST:
+                detonate();
+            default:
+                break;
+        }
     }
 }
 
 void Pacman::detonate() {
-    setExploding(true);
-    _explosion = new Explosion(getX(), getY(), getZ());
+    setSick(true);
+    //setExploding(true);
+    //_explosion = new Explosion(getX(), getY(), getZ());
+
 }
 
 

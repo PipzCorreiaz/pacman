@@ -361,11 +361,11 @@ void Game::draw(){
         
         
         if(_ghostOne->getTrouble()){
-            _ghostOne->setColor(1, 1, 1);
+            _ghostOne->setColor(1, 1, 1, 0);
             _ghostOne->setSpeed(GHOST_ESCAPE_SPEED);
         }
         else {
-            _ghostOne->setColor(0,0,1);
+            _ghostOne->setColor(0,0,1,0);
             _ghostOne->setSpeed(GHOST_NORMAL_SPEED);
         }
         if(!_ghostOne->getHidden()){
@@ -374,11 +374,11 @@ void Game::draw(){
         
         
         if(_ghostTwo->getTrouble()){
-            _ghostTwo->setColor(1, 1, 1);
+            _ghostTwo->setColor(1, 1, 1,0);
             _ghostTwo->setSpeed(GHOST_ESCAPE_SPEED);
         }
         else {
-            _ghostTwo->setColor(1,0,0);
+            _ghostTwo->setColor(1,0,0,0);
             _ghostTwo->setSpeed(GHOST_NORMAL_SPEED);
         }
         if(!_ghostTwo->getHidden()){
@@ -387,11 +387,11 @@ void Game::draw(){
         
         
         if(_ghostThree->getTrouble()){
-            _ghostThree->setColor(1, 1, 1);
+            _ghostThree->setColor(1, 1, 1,0);
             _ghostThree->setSpeed(GHOST_ESCAPE_SPEED);
         }
         else {
-            _ghostThree->setColor(0, 1, 0);
+            _ghostThree->setColor(0, 1, 0,0);
             _ghostThree->setSpeed(GHOST_NORMAL_SPEED);
         }
         if(!_ghostThree->getHidden()){

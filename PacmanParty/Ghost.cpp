@@ -48,23 +48,6 @@ void Ghost::setHidden(bool value){
     _hidden = value;
 }
 
-
-void Ghost::setColor(float a,float b,float c){
-    
-    // glColor4f(a, b, c, 0.5);
-    
-    GLfloat mat_ambient[] = {a, b, c};
-    GLfloat mat_diffuse[] = {a, b, c};
-    GLfloat mat_specular[] = {a, b, c};
-    GLfloat mat_shine = 0.0f;
-    
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
-    
-}
-
 void Ghost::setLastSymbol(char symbol) {
     if (symbol != GHOST && symbol != SCARED_GHOST && symbol != PACMAN && symbol != POCMAN) {
         _lastSymbol = symbol;

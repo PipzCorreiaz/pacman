@@ -48,6 +48,22 @@ void Character::setAngle(int angle) {
     _angle = angle;
 }
 
+void Character::setColor(float a,float b,float c, float shine){
+    
+    // glColor4f(a, b, c, 0.5);
+    
+    GLfloat mat_ambient[] = {a, b, c};
+    GLfloat mat_diffuse[] = {a, b, c};
+    GLfloat mat_specular[] = {a, b, c};
+    GLfloat mat_shine = shine;
+    
+    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
+    glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
+    
+}
+
 void Character::move(float dist) {
     float x = getX();
     float y = getY();

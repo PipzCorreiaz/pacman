@@ -24,6 +24,7 @@ public:
     
     void setX(float x);
     void setY(float y);
+    void setColor(float a,float b,float c, float shine);
     void setDirection(int direction);
     void setAngle(int angle);
     

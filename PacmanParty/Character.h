@@ -27,6 +27,8 @@ public:
     void setColor(float a,float b,float c, float shine);
     void setDirection(int direction);
     void setAngle(int angle);
+    char getLastSymbol();
+    void setLastSymbol(char symbol);
     
     void move(float dist);
     void turn(int direction);
@@ -51,6 +53,7 @@ protected:
     int _angle;
 	Eye* _eye;
     int _life;
+    char _lastSymbol;
 
     
 };

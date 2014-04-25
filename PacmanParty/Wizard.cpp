@@ -295,7 +295,6 @@ void backToNormal(int value) {
     }
     
     Wizard::getInstance().setBigBallsCatched(ballsCatched - 1);
-    std::cout << ballsCatched - 1 << std::endl;
 }
 
 void theComeBack(int ghostIndex) {

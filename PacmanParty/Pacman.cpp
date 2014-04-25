@@ -31,6 +31,7 @@ void Pacman::init() {
     _previousY = 0.0;
     _balls = 0;
     _ammunitions = 0;
+    _lastSymbol = HALL;
 }
 
 bool Pacman::getExploding() {
@@ -124,11 +125,16 @@ void Pacman::draw() {
 void Pacman::move(float dist) {
     std::vector<float> nextPosition = Character::nextPosition(dist);
     char symbol = Wizard::getInstance().getMapSymbol(nextPosition[0], nextPosition[1]);
-    
+
     eat(nextPosition[0], nextPosition[1], symbol);
-    Wizard::getInstance().changeMap(getX(), getY(), HALL);
+    if (getSick()) {
+        Wizard::getInstance().changeMap(getX(), getY(), getLastSymbol());
+    } else {
+        Wizard::getInstance().changeMap(getX(), getY(), HALL);
+    }
     Character::move(dist);
     Wizard::getInstance().changeMap(getX(), getY(), getName());
+    setLastSymbol(symbol);
 }
 
 void Pacman::update(float dt) {

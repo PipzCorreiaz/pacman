@@ -31,6 +31,9 @@ int Character::getAngle() {
 	return _angle;
 }
 
+char Character::getLastSymbol() {
+    return _lastSymbol;
+}
 
 void Character::setX(float x) {
     _posX = x;
@@ -46,6 +49,12 @@ void Character::setDirection(int direction) {
 
 void Character::setAngle(int angle) {
     _angle = angle;
+}
+
+void Character::setLastSymbol(char symbol) {
+    if (symbol != GHOST && symbol != SCARED_GHOST && symbol != PACMAN && symbol != POCMAN) {
+        _lastSymbol = symbol;
+    }
 }
 
 void Character::setColor(float a,float b,float c, float shine){

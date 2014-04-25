@@ -29,11 +29,6 @@ bool Ghost::getHidden() {
     return _hidden;
 }
 
-char Ghost::getLastSymbol() {
-    return _lastSymbol;
-}
-
-
 void Ghost::setSpeed(float speed){
     _speed = speed;
 }
@@ -46,12 +41,6 @@ void Ghost::setTrouble(bool trouble){
 
 void Ghost::setHidden(bool value){
     _hidden = value;
-}
-
-void Ghost::setLastSymbol(char symbol) {
-    if (symbol != GHOST && symbol != SCARED_GHOST && symbol != PACMAN && symbol != POCMAN) {
-        _lastSymbol = symbol;
-    }
 }
 
 void Ghost::move(float dist) {

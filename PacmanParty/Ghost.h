@@ -14,7 +14,7 @@
 class Ghost : public Character {
 
 public:
-    Ghost(int posx, int posy, int id);
+    Ghost(int posx, int posy, int id, float xcolor, float ycolor, float zcolor, float shine);
     
     bool getTrouble();
     bool getHidden();
@@ -23,6 +23,8 @@ public:
     void setTrouble(bool trouble);
     void setHidden(bool value);
    // void setColor(float a, float b, float c);
+    char getLastSymbol();
+    void setLastSymbol(char symbol);
     
     void draw();
     void update(float dt);
@@ -36,6 +38,8 @@ private:
     int _ghostId;
     bool _trouble;
     bool _hidden;
+    char _lastSymbol;
+    std::vector<float> _color; 
 
 };
 

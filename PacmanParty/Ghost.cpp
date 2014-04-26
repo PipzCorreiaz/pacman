@@ -2,7 +2,7 @@
 #include "Wizard.h"
 
 
-Ghost::Ghost(int posx, int posy, int id) : Character() {
+Ghost::Ghost(int posx, int posy, int id, float xColor, float yColor, float zColor, float shine) : Character() {
 	_eye = new Eye();
 	_posX = posx;
     _posY = posy; 
@@ -17,6 +17,11 @@ Ghost::Ghost(int posx, int posy, int id) : Character() {
     _previousX = 0.0;
     _previousY = 0.0;
     _lastSymbol = SMALL_BALL;
+
+    _color.push_back(xColor);
+    _color.push_back(yColor);
+    _color.push_back(zColor);
+    _color.push_back(shine);
 }
 
 
@@ -107,199 +112,214 @@ void Ghost::backAgain(){
 }
 
 void Ghost::draw() {
-    
-    glPushMatrix();
-    
-    
-    glTranslatef(getX(),getY(), getZ()); // colocar ghost na pos (x,y,z)
-
-	glRotatef(getAngle(), 0, 0, 1); // direccao do ghost
-	
-    glBegin(GL_TRIANGLE_FAN); //topo fantasma
-    
-    glNormal3f(0.0, 0.0, 1.0);
-	glVertex3f(0.0f, 0.0f, 3.0f); //Centro
-    
-    glNormal3f(1.0, 0.0, 0.47);
-    glVertex3f(1.5f,0.0f,2.0f);  
-    
-    glNormal3f(1.0, 1.0, 0.67);
-    glVertex3f(1.06f, 1.06f, 2.0f);
-    
-    glNormal3f(0.0, 1.0, 0.47);
-    glVertex3f(0.0f, 1.5f, 2.0f);
-
-    glNormal3f(-1.0, 1.0, 0.67);
-    glVertex3f(-1.06f, 1.06f, 2.0f);
-
-    glNormal3f(-1.0, 0.0, 0.47);
-    glVertex3f(-1.5f,0.0f, 2.0f);
-    
-    glNormal3f(-1.0, -1.0, 0.67);
-    glVertex3f(-1.06f, -1.06f, 2.0f);
-
-    glNormal3f(-0.0, -1.0, 0.47);
-    glVertex3f(0.0f, -1.5f, 2.0f);
-    
-    glNormal3f(1.0, -1.0, 0.67);
-    glVertex3f(1.06f, -1.06f, 2.0f);
-    
-    glNormal3f(1.0, 0.0, 0.47);
-    glVertex3f(1.5f,0.0f,2.0f);
-    
-    glEnd();
-    
-
-    glBegin(GL_TRIANGLE_STRIP); // faces laterais
-    
-    glNormal3f(1.0, 0.0, 0.0);
-    glVertex3f(1.5f,0.0f,0.75f);
-    
-    glNormal3f(1.0, 0.0, 0.47);
-    glVertex3f(1.5f,0.0f,2.0f); 
-    
-    glNormal3f(1.0, 1.0, 0.0);
-    glVertex3f(1.06f, 1.06f, 0.75f);
-    
-    glNormal3f(1.0, 1.0, 0.67);
-    glVertex3f(1.06f, 1.06f, 2.0f);
-
-    glNormal3f(0.0, 1.0, 0.0);
-    glVertex3f(0.0f, 1.5f, 0.75f);
-    
-    glNormal3f(0.0, 1.0, 0.47);
-    glVertex3f(0.0f, 1.5f, 2.0f);
-
-    glNormal3f(-1.0, 1.0, 0.0);
-    glVertex3f(-1.06f, 1.06f, 0.75f);
-    
-    glNormal3f(-1.0, 1.0, 0.67);
-    glVertex3f(-1.06f, 1.06f, 2.0f);
-    
-    glNormal3f(-1.0, 0.0, 0.0);
-    glVertex3f(-1.5f,0.0f, 0.75f);
-    
-    glNormal3f(-1.0, 0.0, 0.47);
-    glVertex3f(-1.5f,0.0f, 2.0f);
-    
-    glNormal3f(-1.0, -1.0, 0.0);
-    glVertex3f(-1.06f, -1.06f, 0.75f);
-    
-    glNormal3f(-1.0, -1.0, 0.67);
-    glVertex3f(-1.06f, -1.06f, 2.0f);
-    
-    glNormal3f(0.0, -1.0, 0.0);
-    glVertex3f(0.0f, -1.5f, 0.75f);
-    
-    glNormal3f(0.0, -1.0, 0.47);
-    glVertex3f(0.0f, -1.5f, 2.0f);
-
-    glNormal3f(1.0, -1.0, 0.0);
-    glVertex3f(1.06f, -1.06f, 0.75f);
-    
-    glNormal3f(1.0, -1.0, 0.67);
-    glVertex3f(1.06f, -1.06f, 2.0f);
-
-    glNormal3f(1.0, 0.0, 0.0);
-    glVertex3f(1.5f,0.0f,0.75f);
-    
-    glNormal3f(1.0, 0.0, 0.47);
-    glVertex3f(1.5f,0.0f,2.0f);
 
 
-    glEnd();
-    
-    // patas
-    
-    glBegin(GL_TRIANGLES);
-    
-    glNormal3f(1.0, 1.0, 0.0);
-    glVertex3f(1.06,1.06,0.75); 
-    glNormal3f(1.06, 0.44, 0.0);
-    glVertex3f(1.39,0.57,0); 
-    glNormal3f(1.0, 0.0, 0.0);
-    glVertex3f(1.5, 0.0, 0.75);
-    glEnd();
-    
-    glBegin(GL_TRIANGLES);
-    
-    glNormal3f(0.0, 1.5, 0.0);
-    glVertex3f(0, 1.5, 0.75);
-    glNormal3f(0.44, 1.06, 0.0);
-    glVertex3f(0.57,1.39,0); 
-    glNormal3f(1.0, 1.0, 0.0);
-    glVertex3f(1.06,1.06,0.75);     
-    glEnd();
-    
-    glBegin(GL_TRIANGLES);
-    
-    glNormal3f(-1.0, 1.0, 0.0);
-    glVertex3f(-1.06,1.06,0.75); 
-    glNormal3f(-0.44, 1.06, 0.0);
-    glVertex3f(-0.57,1.39,0); 
-    glNormal3f(0.0, 1.0, 0.0);
-    glVertex3f(0, 1.5, 0.75);
-    glEnd();
-    
-    glBegin(GL_TRIANGLES);
-    
-    glNormal3f(-1.0, 1.0, 0.0);
-    glVertex3f(-1.06,1.06,0.75);
-    glNormal3f(-1.06, 0.44, 0.0);
-    glVertex3f(-1.39,0.57,0); 
-    glNormal3f(-1.0, 0.0, 0.0);
-    glVertex3f(-1.5, 0.0, 0.75);
-    glEnd();
-    
-    glBegin(GL_TRIANGLES);
-    
-    glNormal3f(-1.0, -1.0, 0.0);
-    glVertex3f(-1.06,-1.06,0.75); 
-    glNormal3f(-1.06, -0.44, 0.0);
-    glVertex3f(-1.39,-0.57,0); 
-    glNormal3f(-1.0, 0.0, 0.0);
-    glVertex3f(-1.5, 0.0, 0.75);
-    glEnd();
-    
-    glBegin(GL_TRIANGLES);
-    
-    glNormal3f(-1.0, -1.0, 0.0);
-    glVertex3f(-1.06,-1.06,0.75); 
-    glNormal3f(-0.44, -1.06, 0.0);
-    glVertex3f(-0.57,-1.39,0); 
-    glNormal3f(0.0, -1.0, 0.0);
-    glVertex3f(0.0, -1.5, 0.75);
-    glEnd();
-    
-    glBegin(GL_TRIANGLES);
+    if(!getHidden()) {
 
-    glNormal3f(0.0, -1.0, 0.0);
-    glVertex3f(0.0, -1.5, 0.75);
-    glNormal3f(0.44, -1.06, 0.0);
-    glVertex3f(0.57,-1.39,0); 
-    glNormal3f(1.0, -1.0, 0.0);
-    glVertex3f(1.06,-1.06,0.75); 
-    glEnd();
+        glPushMatrix();
+        
+        glTranslatef(getX(),getY(), getZ()); // colocar ghost na pos (x,y,z)
+
+    	glRotatef(getAngle(), 0, 0, 1); // direccao do ghost
+
+        _eye->intoPlace(0.4f, -1.28f, 2.0f); //olho direito
+        _eye->draw();
+        _eye->intoPlace(-0.4f, -1.28f, 2.0f); //olho esquerdo
+        _eye->draw();
+
+        int j=0;
     
-    glBegin(GL_TRIANGLES);
-    
-    glNormal3f(1.0, -1.0, 0.0);
-    glVertex3f(1.06,-1.06,0.75); 
-    glNormal3f(0.44, -1.06, 0.0);
-    glVertex3f(1.39,-0.57,0); 
-    glNormal3f(1.0, 0.0, 0.0);
-    glVertex3f(1.5, 0, 0.75);
-    glEnd();
-    
-    
-    
-    _eye->intoPlace(0.4f, -1.28f, 2.0f); //olho direito
-    _eye->draw();
-    _eye->intoPlace(-0.4f, -1.28f, 2.0f); //olho esquerdo
-    _eye->draw();
-	
-    
-    glPopMatrix();
+        if(getTrouble()) {
+            setColor(1, 1, 1, 100);
+        }
+        else {
+            setColor(_color[j], _color[j+1], _color[j+2], 40.0);
+            glEnable(GL_BLEND);
+            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);         
+        }
+    	
+        glBegin(GL_TRIANGLE_FAN); //topo fantasma
+      
+        glNormal3f(0.0, 0.0, 1.0);
+    	glVertex3f(0.0f, 0.0f, 3.0f); //Centro
+
+        glNormal3f(1.0, 0.0, 0.47);
+        glVertex3f(1.5f,0.0f,2.0f);  
+        
+        glNormal3f(1.0, 1.0, 0.67);
+        glVertex3f(1.06f, 1.06f, 2.0f);
+        
+        glNormal3f(0.0, 1.0, 0.47);
+        glVertex3f(0.0f, 1.5f, 2.0f);
+
+        glNormal3f(-1.0, 1.0, 0.67);
+        glVertex3f(-1.06f, 1.06f, 2.0f);
+
+        glNormal3f(-1.0, 0.0, 0.47);
+        glVertex3f(-1.5f,0.0f, 2.0f);
+        
+        glNormal3f(-1.0, -1.0, 0.67);
+        glVertex3f(-1.06f, -1.06f, 2.0f);
+
+        glNormal3f(-0.0, -1.0, 0.47);
+        glVertex3f(0.0f, -1.5f, 2.0f);
+        
+        glNormal3f(1.0, -1.0, 0.67);
+        glVertex3f(1.06f, -1.06f, 2.0f);
+        
+        glNormal3f(1.0, 0.0, 0.47);
+        glVertex3f(1.5f,0.0f,2.0f);
+        
+        glEnd();
+        
+
+        glBegin(GL_TRIANGLE_STRIP); // faces laterais
+        
+        glNormal3f(1.0, 0.0, 0.0);
+        glVertex3f(1.5f,0.0f,0.75f);
+        
+        glNormal3f(1.0, 0.0, 0.47);
+        glVertex3f(1.5f,0.0f,2.0f); 
+        
+        glNormal3f(1.0, 1.0, 0.0);
+        glVertex3f(1.06f, 1.06f, 0.75f);
+        
+        glNormal3f(1.0, 1.0, 0.67);
+        glVertex3f(1.06f, 1.06f, 2.0f);
+
+        glNormal3f(0.0, 1.0, 0.0);
+        glVertex3f(0.0f, 1.5f, 0.75f);
+        
+        glNormal3f(0.0, 1.0, 0.47);
+        glVertex3f(0.0f, 1.5f, 2.0f);
+
+        glNormal3f(-1.0, 1.0, 0.0);
+        glVertex3f(-1.06f, 1.06f, 0.75f);
+        
+        glNormal3f(-1.0, 1.0, 0.67);
+        glVertex3f(-1.06f, 1.06f, 2.0f);
+        
+        glNormal3f(-1.0, 0.0, 0.0);
+        glVertex3f(-1.5f,0.0f, 0.75f);
+        
+        glNormal3f(-1.0, 0.0, 0.47);
+        glVertex3f(-1.5f,0.0f, 2.0f);
+        
+        glNormal3f(-1.0, -1.0, 0.0);
+        glVertex3f(-1.06f, -1.06f, 0.75f);
+        
+        glNormal3f(-1.0, -1.0, 0.67);
+        glVertex3f(-1.06f, -1.06f, 2.0f);
+        
+        glNormal3f(0.0, -1.0, 0.0);
+        glVertex3f(0.0f, -1.5f, 0.75f);
+        
+        glNormal3f(0.0, -1.0, 0.47);
+        glVertex3f(0.0f, -1.5f, 2.0f);
+
+        glNormal3f(1.0, -1.0, 0.0);
+        glVertex3f(1.06f, -1.06f, 0.75f);
+        
+        glNormal3f(1.0, -1.0, 0.67);
+        glVertex3f(1.06f, -1.06f, 2.0f);
+
+        glNormal3f(1.0, 0.0, 0.0);
+        glVertex3f(1.5f,0.0f,0.75f);
+        
+        glNormal3f(1.0, 0.0, 0.47);
+        glVertex3f(1.5f,0.0f,2.0f);
+
+
+        glEnd();
+        
+        // patas
+        
+        glBegin(GL_TRIANGLES);
+        
+        glNormal3f(1.0, 1.0, 0.0);
+        glVertex3f(1.06,1.06,0.75); 
+        glNormal3f(1.06, 0.44, 0.0);
+        glVertex3f(1.39,0.57,0); 
+        glNormal3f(1.0, 0.0, 0.0);
+        glVertex3f(1.5, 0.0, 0.75);
+        glEnd();
+        
+        glBegin(GL_TRIANGLES);
+        
+        glNormal3f(0.0, 1.5, 0.0);
+        glVertex3f(0, 1.5, 0.75);
+        glNormal3f(0.44, 1.06, 0.0);
+        glVertex3f(0.57,1.39,0); 
+        glNormal3f(1.0, 1.0, 0.0);
+        glVertex3f(1.06,1.06,0.75);     
+        glEnd();
+        
+        glBegin(GL_TRIANGLES);
+        
+        glNormal3f(-1.0, 1.0, 0.0);
+        glVertex3f(-1.06,1.06,0.75); 
+        glNormal3f(-0.44, 1.06, 0.0);
+        glVertex3f(-0.57,1.39,0); 
+        glNormal3f(0.0, 1.0, 0.0);
+        glVertex3f(0, 1.5, 0.75);
+        glEnd();
+        
+        glBegin(GL_TRIANGLES);
+        
+        glNormal3f(-1.0, 1.0, 0.0);
+        glVertex3f(-1.06,1.06,0.75);
+        glNormal3f(-1.06, 0.44, 0.0);
+        glVertex3f(-1.39,0.57,0); 
+        glNormal3f(-1.0, 0.0, 0.0);
+        glVertex3f(-1.5, 0.0, 0.75);
+        glEnd();
+        
+        glBegin(GL_TRIANGLES);
+        
+        glNormal3f(-1.0, -1.0, 0.0);
+        glVertex3f(-1.06,-1.06,0.75); 
+        glNormal3f(-1.06, -0.44, 0.0);
+        glVertex3f(-1.39,-0.57,0); 
+        glNormal3f(-1.0, 0.0, 0.0);
+        glVertex3f(-1.5, 0.0, 0.75);
+        glEnd();
+        
+        glBegin(GL_TRIANGLES);
+        
+        glNormal3f(-1.0, -1.0, 0.0);
+        glVertex3f(-1.06,-1.06,0.75); 
+        glNormal3f(-0.44, -1.06, 0.0);
+        glVertex3f(-0.57,-1.39,0); 
+        glNormal3f(0.0, -1.0, 0.0);
+        glVertex3f(0.0, -1.5, 0.75);
+        glEnd();
+        
+        glBegin(GL_TRIANGLES);
+
+        glNormal3f(0.0, -1.0, 0.0);
+        glVertex3f(0.0, -1.5, 0.75);
+        glNormal3f(0.44, -1.06, 0.0);
+        glVertex3f(0.57,-1.39,0); 
+        glNormal3f(1.0, -1.0, 0.0);
+        glVertex3f(1.06,-1.06,0.75); 
+        glEnd();
+        
+        glBegin(GL_TRIANGLES);
+        
+        glNormal3f(1.0, -1.0, 0.0);
+        glVertex3f(1.06,-1.06,0.75); 
+        glNormal3f(0.44, -1.06, 0.0);
+        glVertex3f(1.39,-0.57,0); 
+        glNormal3f(1.0, 0.0, 0.0);
+        glVertex3f(1.5, 0, 0.75);
+        glEnd();
+
+        if(!getTrouble()) {
+            glDisable(GL_BLEND);
+        }
+        
+        glPopMatrix();
+    }
     
 }
 

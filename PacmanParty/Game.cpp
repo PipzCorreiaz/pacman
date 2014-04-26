@@ -29,9 +29,9 @@ Game::Game(){
     
     _camera = new Camera(_pac);
     _maze = new Maze();
-    _ghostOne = new Ghost(25,26, 1);
-    _ghostTwo = new Ghost(-25,26, 2);
-    _ghostThree = new Ghost(25,-12, 3);
+    _ghostOne = new Ghost(25,26, 1, 0, 0, 1, 0);
+    _ghostTwo = new Ghost(-25,26, 2, 1, 0, 0, 0);
+    _ghostThree = new Ghost(25,-12, 3, 0, 1, 0, 0);
     
     _ghosts.push_back(_ghostOne);
     _ghosts.push_back(_ghostTwo);
@@ -255,49 +255,35 @@ void Game::draw(){
         _maze->draw();
         mapItemsDrawer();
         
-        
+        _pac->draw();
+        _poc->draw();
+
+        renderBitmapString();
+
+        _ghostOne->draw();
         if(_ghostOne->getTrouble()){
-            _ghostOne->setColor(1, 1, 1, 0);
             _ghostOne->setSpeed(GHOST_ESCAPE_SPEED);
         }
         else {
-            _ghostOne->setColor(0,0,1,0);
             _ghostOne->setSpeed(GHOST_NORMAL_SPEED);
         }
-        if(!_ghostOne->getHidden()){
-            _ghostOne->draw();
-        }
         
-        
-        if(_ghostTwo->getTrouble()){
-            _ghostTwo->setColor(1, 1, 1,0);
+        _ghostTwo->draw();
+           if(_ghostTwo->getTrouble()){
             _ghostTwo->setSpeed(GHOST_ESCAPE_SPEED);
         }
         else {
-            _ghostTwo->setColor(1,0,0,0);
             _ghostTwo->setSpeed(GHOST_NORMAL_SPEED);
         }
-        if(!_ghostTwo->getHidden()){
-            _ghostTwo->draw();
-        }
         
-        
+        _ghostThree->draw();
         if(_ghostThree->getTrouble()){
-            _ghostThree->setColor(1, 1, 1,0);
             _ghostThree->setSpeed(GHOST_ESCAPE_SPEED);
         }
         else {
-            _ghostThree->setColor(0, 1, 0,0);
             _ghostThree->setSpeed(GHOST_NORMAL_SPEED);
-        }
-        if(!_ghostThree->getHidden()){
-            _ghostThree->draw();
-        }
+        }        
         
-        _pac->draw();
-        _poc->draw();
-        
-        renderBitmapString();
         
     }
     

@@ -3,24 +3,39 @@
 
 void moreAmmunitions(int value);
 
+/////////////SO DEVE SER USADO PARA O HUD
 Pacman::Pacman() : Character() {
-    init();
+    _eye = new Eye();
+	_eyebrow = new Eyebrow();
+    _posZ = 1.5f;
+    _angle = DOWN_ANGLE;
+    _direction = DOWN;
+    _sick = false;
 }
 
-Pacman::Pacman(float x, float y) {
+Pacman::Pacman(float x, float y, float color[3], float scarfColor[3]) : Character(color) {
     init();
     _posX = x;
     _posY = y;
+    _scarfColor[0] = scarfColor[0];
+    _scarfColor[1] = scarfColor[1];
+    _scarfColor[2] = scarfColor[2];
 }
 
 void Pacman::setName(char name) {
     _name = name;
 }
 
+void Pacman::setScarfColor(float color[3]) {
+    _scarfColor[0] = color[0];
+    _scarfColor[1] = color[1];
+    _scarfColor[2] = color[2];
+}
+
 void Pacman::init() {
     _posX = 9.0f;
 	_posY = 6.0f;
-    _posZ = 1.25f;
+    _posZ = 1.5f;
 	_speed = 10; // unidades do labirinto per second
     _direction = DOWN;
     _angle = DOWN_ANGLE;
@@ -46,14 +61,23 @@ char Pacman::getName() {
     return _name;
 }
 
+int Pacman::getAmmunitions() {
+    return _ammunitions;
+}
+
 void Pacman::setSick(bool value) {
     _sick = value;
 }
 
 
+float* Pacman::getScarfColor() {
+    return _scarfColor;
+}
+
+
 void Pacman::cleanUpBullets() {
     std::vector<Bullet*> newBullets;
-
+    
     for (int i = 0; i < _bullets.size(); i++) {
         if (_bullets[i]->isActive()) {
             newBullets.push_back(_bullets[i]);
@@ -72,15 +96,18 @@ void Pacman::shoot() {
 
 void Pacman::draw() {
     
-        
-        glPushMatrix();
-        
-        glTranslatef(getX(), getY(), getZ());
-        glScalef(1.50f, 1.50f, 1.50f);
-        glRotatef(getAngle(), 0, 0, 1); // direccao do pacman
-        
-        //glColor3f(1, 1, 0); // Amarelo
-
+    
+    glPushMatrix();
+    
+    glTranslatef(getX(), getY(), getZ());
+    glScalef(1.50f, 1.50f, 1.50f);
+    
+    if (_drawingHUD) {
+        glRotatef(-90, 1, 0, 0);
+    } else {
+        glRotatef(getAngle(), 0, 0, 1);
+    }
+    
     _eye->intoPlace(0.375f, -0.7f, 0.0f); //olho direito
     _eye->draw();
     _eye->intoPlace(-0.375f, -0.7f, 0.0f); //olho esquerdo
@@ -91,24 +118,26 @@ void Pacman::draw() {
     _eyebrow->intoPlace(-0.375f ,-0.848f , 0.375f); //sobranc esquerda
     _eyebrow->adjust(-5.0f);
     _eyebrow->draw();
-
     
     if(getSick()) {
-        setColor(0,0,0,40.0);
+        colorize(_color);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glutSolidSphere(1, 30, 30);
+        glutSolidSphere(1.0f, 30.0f, 30.0f);
         glDisable(GL_BLEND);
-    } 
+    }
     else {
-        setColor(1,1,0,100.0);
-        glutSolidSphere(1, 30, 30);
+        colorize(_color);
+        glutSolidSphere(1.0f, 30.0f, 30.0f);
     }
     
-     // pacman r=1
-
+    colorize(_scarfColor);
+    glTranslatef(0.0f, 0.0f, 0.65f);
+    glutSolidTorus(0.15f, 0.7f, 5, 12);
+    
+    
     glPopMatrix();
-
+    
     for(int i=0; i<_bullets.size(); i++) {
         _bullets[i]->draw();
     }
@@ -118,7 +147,7 @@ void Pacman::draw() {
 void Pacman::move(float dist) {
     std::vector<float> nextPosition = Character::nextPosition(dist);
     char symbol = Wizard::getInstance().getMapSymbol(nextPosition[0], nextPosition[1]);
-
+    
     if (getSick()) {
         Wizard::getInstance().changeMap(getX(), getY(), getLastSymbol());
     } else {
@@ -134,12 +163,12 @@ void Pacman::update(float dt) {
     float dist = getSpeed() * dt;
     std::vector<float> nextPosition = Character::nextPosition(dist);
     int directionBack = 0;
-
+    
     cleanUpBullets();
     for(int i=0; i<_bullets.size(); i++) {
         _bullets[i]->update(dt);
     }
-
+    
     if (Wizard::getInstance().isWall(nextPosition[0], nextPosition[1], getDirection())) {
         move(dist);
 		turn(Wizard::getInstance().availablePosition(nextPosition[0], nextPosition[1]));
@@ -207,6 +236,14 @@ void moreAmmunitions(int value) {
 
 void Pacman::detonate() {
     setSick(true);
+    float black[3] = {0.0f, 0.0f, 0.0f};
+    setColor(black);
+}
+
+void Pacman::treat() {
+    setSick(false);
+    float yellow[3] = {1.0f, 1.0f, 0.0f};
+    setColor(yellow);
 }
 
 

@@ -24,7 +24,6 @@ private:
     float _posZ;
     float _angle;
     
-    
 };
 
 #endif

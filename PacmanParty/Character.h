@@ -8,13 +8,14 @@
 #endif
 
 #include <vector>
-#include "Constraints.h"
 #include "Eye.h"
+#include "Constraints.h"
 
 class Character {
     
 public:
-    Character();
+    Character(); //SO DEVE SER USADO PARA O HUD
+    Character(float color[3]);
     float getX();
     float getY();
     float getZ();
@@ -22,12 +23,14 @@ public:
     int getDirection();
     int getAngle();
     int getLife();
+    float* getColor();
     
     void setX(float x);
     void setY(float y);
-    void setColor(float a,float b,float c, float shine);
     void setDirection(int direction);
     void setAngle(int angle);
+    void setLife(int life);
+    void setColor(float color[3]);
     char getLastSymbol();
     void setLastSymbol(char symbol);
     
@@ -37,9 +40,9 @@ public:
     std::vector<float> nextPosition(float dist);
     
     void virtual draw() = 0;
-    void drawOnHUD(float x, float y);
     void virtual update(float dt) = 0;
     
+    void colorize(float c[3]);
     void virtual backAgain() = 0;
     
     
@@ -53,6 +56,8 @@ protected:
     float _speed;
     int _direction;
     int _angle;
+    float _color[3];
+    float _shine;
 	Eye* _eye;
     int _life;
     char _lastSymbol;

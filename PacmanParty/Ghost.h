@@ -10,11 +10,13 @@
 #include <iostream>
 #include <cmath>
 #include "Character.h"
+#include "Constraints.h"
 
 class Ghost : public Character {
 
 public:
-    Ghost(int posx, int posy, int id, float xcolor, float ycolor, float zcolor, float shine);
+    Ghost(); //SO DEVE SER USADO PARA O HUD
+    Ghost(int posx, int posy, int id, float color[3]);
     
     bool getTrouble();
     bool getHidden();
@@ -36,7 +38,6 @@ private:
     bool _trouble;
     bool _hidden;
     char _lastSymbol;
-    std::vector<float> _color; 
 
 };
 

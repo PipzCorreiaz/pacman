@@ -1,11 +1,20 @@
 #include "Character.h"
 #include "Wizard.h"
 
-
-
+/////////Este construtor so deve ser chamado para os characters do HUD!!
 Character::Character() {
     _life = 100;
+    _drawingHUD = true;
+    _shine = 40.0f;
+}
+
+Character::Character(float color[3]) {
+    _life = 100;
     _drawingHUD = false;
+    _color[0] = color[0];
+    _color[1] = color[1];
+    _color[2] = color[2];
+    _shine = 40.0f;
 }
 
 float Character::getX() {
@@ -32,6 +41,10 @@ int Character::getAngle() {
 	return _angle;
 }
 
+float* Character::getColor() {
+    return _color;
+}
+
 char Character::getLastSymbol() {
     return _lastSymbol;
 }
@@ -56,38 +69,34 @@ void Character::setAngle(int angle) {
     _angle = angle;
 }
 
+void Character::setLife(int life) {
+    _life = life;
+}
+
 void Character::setLastSymbol(char symbol) {
     if (symbol != GHOST && symbol != SCARED_GHOST && symbol != PACMAN && symbol != POCMAN) {
         _lastSymbol = symbol;
     }
 }
 
-void Character::setColor(float a,float b,float c, float shine){
-    
-    // glColor4f(a, b, c, 0.5);
-    
-    GLfloat mat_ambient[] = {a, b, c};
-    GLfloat mat_diffuse[] = {a, b, c};
-    GLfloat mat_specular[] = {a, b, c};
-    GLfloat mat_shine = shine;
-    
-    glMaterialfv(GL_FRONT, GL_AMBIENT, mat_ambient);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, mat_diffuse);
-    glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
-    glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
-    
+void Character::setColor(float color[3]) {
+    _color[0] = color[0];
+    _color[1] = color[1];
+    _color[2] = color[2];
 }
 
-void Character::drawOnHUD(float x, float y) {
-    _drawingHUD = true;
-    float tempX = getX();
-    float tempY = getY();
-    setX(x);
-    setY(y);
-    draw();
-    setX(tempX);
-    setY(tempY);
-    _drawingHUD = false;
+void Character::colorize(float c[3]) {
+    float red = c[0];
+    float green = c[1];
+    float blue = c[2];
+    
+    GLfloat color[] = {red, green, blue};
+    GLfloat shine = _shine;
+    
+    glMaterialfv(GL_FRONT, GL_AMBIENT, color);
+    glMaterialfv(GL_FRONT, GL_DIFFUSE, color);
+    glMaterialfv(GL_FRONT, GL_SPECULAR, color);
+    glMaterialf(GL_FRONT, GL_SHININESS, shine);
 }
 
 void Character::move(float dist) {
@@ -95,7 +104,7 @@ void Character::move(float dist) {
     float y = getY();
     int dir = getDirection();
     float limit = ((Wizard::getInstance().getMapWidth()) / 2);
-
+    
     if (x <= -limit && dir == LEFT && y == 0) {
         setX(limit);
     } else if (x >= limit && dir == RIGHT && y == 0) {
@@ -120,13 +129,13 @@ void Character::move(float dist) {
     }
 }
 
- 
+
 void Character::turn(int direction) {
 	
 	setX(round(getX()));
 	setY(round(getY()));
 	
-    switch (direction) {    
+    switch (direction) {
         case UP:
             setDirection(UP);
             setAngle(UP_ANGLE);
@@ -176,10 +185,10 @@ int Character::turnBack(){
 std::vector<float> Character::nextPosition(float dist) {
     
     std::vector<float> coords(2);
-
+    
     coords[0] = getX();
     coords[1] = getY();
-
+    
     switch (getDirection()) {
         case UP:
             coords[1] += dist;

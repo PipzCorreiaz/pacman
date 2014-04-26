@@ -7,7 +7,6 @@
 #include <GL/glut.h>
 #endif
 
-#include "Constraints.h"
 #include "Character.h"
 #include "Eyebrow.h"
 #include "Bullet.h"
@@ -15,14 +14,18 @@
 class Pacman : public Character {
     
 public:
-    Pacman();
-    Pacman(float, float);
+    Pacman(); //SO DEVE SER USADO PARA O HUD
+    Pacman(float x, float y, float color[3], float scarfColor[3]);
     
     bool getSick();
     int getBalls();
     void setSick(bool value);
-    void setName(char);
     char getName();
+    int getAmmunitions();
+    float* getScarfColor();
+    
+    void setName(char);
+    void setScarfColor(float color[3]);
     
     void draw();
     void move(float);
@@ -31,19 +34,20 @@ public:
     void backAgain();
     void eat(float x, float y, char symbol);
     void detonate();
-
+    void treat();
     
 private:
     void init();
     void cleanUpBullets();
     void shoot();
 
+    float _scarfColor[3];
     bool _sick;
 	Eyebrow* _eyebrow;
     int _balls;
     char _name;
     int _ammunitions;
-    std::vector<Bullet*> _bullets; 
+    std::vector<Bullet*> _bullets;
 };
 
 

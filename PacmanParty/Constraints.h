@@ -1,8 +1,6 @@
 #ifndef __CONSTRAINTS_H__
 #define __CONSTRAINTS_H__
 
-/* Ghost Constraints */
-
 #define WALL_HOWBIG 1 // preferencialmente inteiro
 
 #define GHOST_STATE_NORMAL 1 // Deprecated
@@ -22,13 +20,12 @@
 #define PAC_RADIUS 1.25
 #define GHOST_RADIUS 1.5
 
-
 #define CAM_MODE_1 0
 #define CAM_MODE_2 1
 #define CAM_MODE_3 2
 #define DEFAULT CAM_MODE_1
 
-#define GUN_POWER 100
+#define GUN_POWER 25
 #define BULLETS_PER_AMMUNITION 3
 
 #define UP 0

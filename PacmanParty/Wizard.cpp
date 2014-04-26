@@ -263,7 +263,7 @@ void Wizard::treatIfSick(char name, float x, float y, int direction) {
     
     for (int i = 0; i < _pacmen.size(); i++) {
         if (_pacmen[i]->getName() == symbol && _pacmen[i]->getSick()) {
-            _pacmen[i]->setSick(false);
+            _pacmen[i]->treat();
         }
     }
 }
@@ -342,6 +342,5 @@ void theComeBack(int ghostIndex) {
     std::vector<Ghost*> ghosts = Wizard::getInstance().getGhosts();
     Ghost* ghost = ghosts[ghostIndex];
     ghost->setHidden(false);
-    
-    
+    ghost->setLife(100);
 }

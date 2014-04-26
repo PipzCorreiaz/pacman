@@ -1,6 +1,7 @@
 #include "Bullet.h"
 #include "Wizard.h"
 
+
 Bullet::Bullet() {
     _x = _y = 0.0f;
     _z = 0.5f;

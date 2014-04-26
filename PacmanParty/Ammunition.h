@@ -7,7 +7,6 @@
 #include <GL/glut.h>
 #endif
 
-#include "Constraints.h"
 #include "Bullet.h"
 
 class Ammunition {

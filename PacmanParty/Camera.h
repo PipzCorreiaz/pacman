@@ -8,7 +8,6 @@
 #endif
 
 #include "Pacman.h"
-#include "Constraints.h"
 
 class Camera {
     

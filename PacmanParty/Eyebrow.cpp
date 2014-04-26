@@ -1,7 +1,7 @@
 #include "Eyebrow.h"
 
 Eyebrow::Eyebrow() {
-	_posX= _posY = _posZ = 0; 
+	_posX= _posY = _posZ = 0;
 }
 
 Eyebrow::~Eyebrow() {
@@ -17,7 +17,6 @@ void Eyebrow::intoPlace(float posX, float posY, float posZ) {
 void Eyebrow::adjust(float angle) {
 	_angle = angle;
 }
-
 
 void Eyebrow::draw() {
 

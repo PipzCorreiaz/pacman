@@ -1,8 +1,17 @@
 #include "Ghost.h"
 #include "Wizard.h"
 
+/////////////SO DEVE SER USADO PARA O HUD
+Ghost::Ghost() : Character() {
+    _eye = new Eye();
+    _posZ = 0;
+    _angle = DOWN_ANGLE;
+    _direction = DOWN;
+    _trouble = false;
+    _hidden = false;
+}
 
-Ghost::Ghost(int posx, int posy, int id, float xColor, float yColor, float zColor, float shine) : Character() {
+Ghost::Ghost(int posx, int posy, int id, float color[3]) : Character(color) {
 	_eye = new Eye();
 	_posX = posx;
     _posY = posy; 
@@ -17,11 +26,6 @@ Ghost::Ghost(int posx, int posy, int id, float xColor, float yColor, float zColo
     _previousX = 0.0;
     _previousY = 0.0;
     _lastSymbol = SMALL_BALL;
-
-    _color.push_back(xColor);
-    _color.push_back(yColor);
-    _color.push_back(zColor);
-    _color.push_back(shine);
 }
 
 
@@ -104,7 +108,6 @@ void Ghost::shoot(int i) {
 
 
 void Ghost::backAgain(){
-    _life = 100;
     setX(0.0f);
 	setY(0.0f);
     setAngle(DOWN_ANGLE);
@@ -118,24 +121,28 @@ void Ghost::draw() {
 
         glPushMatrix();
         
-        glTranslatef(getX(),getY(), getZ()); // colocar ghost na pos (x,y,z)
+        glTranslatef(getX(),getY(), getZ());
 
-    	glRotatef(getAngle(), 0, 0, 1); // direccao do ghost
-
-        _eye->intoPlace(0.4f, -1.28f, 2.0f); //olho direito
+        if (_drawingHUD) {
+            glRotatef(-90, 1, 0, 0);
+        } else {
+            glRotatef(getAngle(), 0, 0, 1);
+        }
+        
+        _eye->intoPlace(0.4f, -1.28f, 2.0f);
         _eye->draw();
-        _eye->intoPlace(-0.4f, -1.28f, 2.0f); //olho esquerdo
+        _eye->intoPlace(-0.4f, -1.28f, 2.0f);
         _eye->draw();
 
-        int j=0;
     
         if(getTrouble()) {
-            setColor(1, 1, 1, 100);
+            float white[3] = {1.0f, 1.0f, 1.0f};
+            colorize(white);
         }
         else {
-            setColor(_color[j], _color[j+1], _color[j+2], 40.0);
-            glEnable(GL_BLEND);
-            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);         
+            colorize(_color);
+//            glEnable(GL_BLEND);
+//            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);         
         }
     	
         glBegin(GL_TRIANGLE_FAN); //topo fantasma
@@ -314,9 +321,9 @@ void Ghost::draw() {
         glVertex3f(1.5, 0, 0.75);
         glEnd();
 
-        if(!getTrouble()) {
-            glDisable(GL_BLEND);
-        }
+//        if(!getTrouble()) {
+//            glDisable(GL_BLEND);
+//        }
         
         glPopMatrix();
     }

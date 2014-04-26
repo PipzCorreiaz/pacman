@@ -6,7 +6,6 @@
 #else
 #include <GL/glut.h>
 #endif
-#include "Constraints.h"
 
 class Bullet {
 

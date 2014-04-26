@@ -86,7 +86,7 @@ private:
     int _mapWidth;
     int _mapHeight;
     int _bigBallsCatched = 0;
-    std::queue<std::vector<float>> _ammunitionsQueue;
+    std::queue<std::vector<float> > _ammunitionsQueue;
 };
 
 

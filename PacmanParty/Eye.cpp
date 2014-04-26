@@ -2,11 +2,10 @@
 
 Eye::Eye() {
 	_posX = _posY = _posZ = 0;
-    
 }
 
 Eye::~Eye() {
-
+    
 }
 
 void Eye::intoPlace(float posX, float posY, float posZ) {

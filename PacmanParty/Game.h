@@ -30,7 +30,7 @@ public:
     void mapItemsDrawer();
     void ghostsTrouble();
     
-    void renderBitmapString();
+    void drawHUD();
     void winnerRenderBitmapString();
     void loserRenderBitmapString();
     std::string integerToString(int num);
@@ -48,6 +48,8 @@ public:
     Ghost* _ghostOne;
     Ghost* _ghostTwo;
     Ghost* _ghostThree;
+    Ghost* _ghostHUD;
+    Pacman* _pacmanHUD;
     std::vector<Ghost*> _ghosts;
     std::vector<Pacman*> _pacmen;
     int _ghostsState;

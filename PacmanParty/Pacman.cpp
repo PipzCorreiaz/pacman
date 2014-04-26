@@ -206,27 +206,29 @@ void Pacman::backAgain() {
 
 void Pacman::eat(float x, float y, char symbol) {
     
-    switch (symbol) {
-        case SMALL_BALL:
-            _balls++;
-            break;
-        case BIG_BALL:
-            Wizard::getInstance().ghostsTrouble();
-            _balls++;
-            break;
-        case SCARED_GHOST:
-            Wizard::getInstance().ghostHidden(x, y);
-            break;
-        case GHOST:
-            detonate();
-            break;
-        case AMMUNITION:
-            _ammunitions += BULLETS_PER_AMMUNITION;
-            Wizard::getInstance().addAmmunitionToQueue(x, y);
-            glutTimerFunc(10000, moreAmmunitions, 0);
-            break;
-        default:
-            break;
+    if (!getSick()) {
+        switch (symbol) {
+            case SMALL_BALL:
+                _balls++;
+                break;
+            case BIG_BALL:
+                Wizard::getInstance().ghostsTrouble();
+                _balls++;
+                break;
+            case SCARED_GHOST:
+                Wizard::getInstance().ghostHidden(x, y);
+                break;
+            case GHOST:
+                detonate();
+                break;
+            case AMMUNITION:
+                _ammunitions += BULLETS_PER_AMMUNITION;
+                Wizard::getInstance().addAmmunitionToQueue(x, y);
+                glutTimerFunc(10000, moreAmmunitions, 0);
+                break;
+            default:
+                break;
+        }
     }
 }
 

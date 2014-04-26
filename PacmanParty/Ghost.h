@@ -37,7 +37,6 @@ private:
     int _ghostId;
     bool _trouble;
     bool _hidden;
-    char _lastSymbol;
 
 };
 

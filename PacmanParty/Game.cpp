@@ -79,7 +79,7 @@ void Game::mapItemsDrawer(){ //actualiza o desenho das bolas
     Ball* ball = new Ball(); //evitar getBalls
     Ammunition* ammunition = new Ammunition();
     
-    int balls = 0;
+    int balls = _balls;
     
 	glPushMatrix();
 	
@@ -94,12 +94,12 @@ void Game::mapItemsDrawer(){ //actualiza o desenho das bolas
 			ball->intoPlace(x, y);
             ball->growth(1.0f);
 			ball->draw();
-            balls++;
+            balls--;
 		} else if(map[i] == BIG_BALL){
 			ball->intoPlace(x, y);
 			ball->growth(2.0f);
 			ball->draw();
-            balls++;
+            balls--;
 		} else if (map[i] == AMMUNITION) {
             ammunition->intoPlace(x, y);
             ammunition->draw();

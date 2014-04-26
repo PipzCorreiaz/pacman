@@ -22,6 +22,11 @@ Game::Game(){
     _pac->setName(PACMAN);
     _poc->setName(POCMAN);
     
+    _pacmen.push_back(_pac);
+    _pacmen.push_back(_poc);
+    
+    Wizard::getInstance().setPacmen(_pacmen);
+    
     _camera = new Camera(_pac);
     _maze = new Maze();
     _ghostOne = new Ghost(25,26, 1);

@@ -161,6 +161,7 @@ void Pacman::update(float dt) {
         turn(directionBack);
         //move(dist);
     } else if (Wizard::getInstance().isPacman(getName(), nextPosition[0], nextPosition[1], getDirection())) {
+        Wizard::getInstance().treatIfSick(getName(), nextPosition[0], nextPosition[1], getDirection());
         directionBack = turnBack();
         turn(directionBack);
     } else if(Wizard::getInstance().canTurn(getX(), getY())) {

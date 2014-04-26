@@ -50,6 +50,7 @@ public:
     Ghost* _ghostTwo;
     Ghost* _ghostThree;
     std::vector<Ghost*> _ghosts;
+    std::vector<Pacman*> _pacmen;
     int _ghostsState;
     int _ghostsNextState;
     

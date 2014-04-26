@@ -9,6 +9,7 @@
 
 #include <fstream>
 #include "Ghost.h"
+#include "Pacman.h"
 
 void backToNormal(int value);
 void theComeBack(int ghostIndex);
@@ -28,7 +29,9 @@ public:
  
     void loadMap(std::string fileName);
     void setGhosts(std::vector<Ghost*> ghosts);
+    void setPacmen(std::vector<Pacman*> pacmen);
     std::vector<Ghost*> getGhosts();
+    std::vector<Pacman*> getPacmen();
     std::string getMap();
     int positionToIndex(float x, float y);
     std::vector<float> indexToPosition(int index);
@@ -52,6 +55,7 @@ public:
     bool isGhost(float x, float y, int direction);
     bool isGhostScared(float x, float y, int direction);
     bool isPacman(char, float, float, int);
+    void treatIfSick(char, float, float, int);
     
     bool isSameIndex(float, float, float, float);
     
@@ -74,6 +78,7 @@ private:
 
     std::string _map;
     std::vector<Ghost*> _ghosts;
+    std::vector<Pacman*> _pacmen;
     int _mapWidth;
     int _mapHeight;
     int _bigBallsCatched = 0;

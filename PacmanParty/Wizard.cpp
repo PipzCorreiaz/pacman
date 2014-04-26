@@ -26,9 +26,18 @@ void Wizard::setGhosts(std::vector<Ghost*> ghosts) {
     _ghosts = ghosts;
 }
 
+void Wizard::setPacmen(std::vector<Pacman*> pacmen) {
+    _pacmen = pacmen;
+}
+
 std::vector<Ghost*> Wizard::getGhosts() {
     return _ghosts;
 }
+
+std::vector<Pacman*> Wizard::getPacmen() {
+    return _pacmen;
+}
+
 
 std::string Wizard::getMap() {
     return _map;
@@ -239,6 +248,24 @@ bool Wizard::isPacman(char name, float x, float y, int direction) {
     }
 
     return false;
+}
+
+void Wizard::treatIfSick(char name, float x, float y, int direction) {
+    int maxPositions = 3;
+    char symbol = HALL;
+    for (int i = 0; i <= maxPositions; i++) {
+        int index = positionAhead(x, y, direction, i);
+        symbol = _map[index];
+        if (symbol != name && (symbol == PACMAN || symbol == POCMAN)) {
+            break;
+        }
+    }
+    
+    for (int i = 0; i < _pacmen.size(); i++) {
+        if (_pacmen[i]->getName() == symbol && _pacmen[i]->getSick()) {
+            _pacmen[i]->setSick(false);
+        }
+    }
 }
 
 bool Wizard::isSameIndex(float x1, float y1, float x2, float y2) {

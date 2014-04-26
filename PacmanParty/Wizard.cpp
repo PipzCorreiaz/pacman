@@ -276,6 +276,20 @@ bool Wizard::isSameIndex(float x1, float y1, float x2, float y2) {
     return i == j;
 }
 
+void Wizard::addAmmunitionToQueue(float x, float y) {
+    std::vector<float> coords;
+    coords.push_back(x);
+    coords.push_back(y);
+    
+    _ammunitionsQueue.push(coords);
+}
+
+void Wizard::removeAmmunitionFromQueue() {
+    std::vector<float> coords = _ammunitionsQueue.front();
+    _ammunitionsQueue.pop();
+    changeMap(coords[0], coords[1], AMMUNITION);
+}
+
 
 void Wizard::ghostsTrouble() {
     _bigBallsCatched++;

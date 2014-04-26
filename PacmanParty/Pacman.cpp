@@ -1,6 +1,7 @@
 #include "Pacman.h"
 #include "Wizard.h"
 
+void moreAmmunitions(int value);
 
 Pacman::Pacman() : Character() {
     init();
@@ -186,7 +187,6 @@ void Pacman::backAgain() {
 
 void Pacman::eat(float x, float y, char symbol) {
     
-    
     switch (symbol) {
         case SMALL_BALL:
 //            Wizard::getInstance().changeMap(x, y, HALL);
@@ -206,10 +206,16 @@ void Pacman::eat(float x, float y, char symbol) {
             break;
         case AMMUNITION:
             _ammunitions += BULLETS_PER_AMMUNITION;
+            Wizard::getInstance().addAmmunitionToQueue(x, y);
+            glutTimerFunc(10000, moreAmmunitions, 0);
             break;
         default:
             break;
     }
+}
+
+void moreAmmunitions(int value) {
+    Wizard::getInstance().removeAmmunitionFromQueue();
 }
 
 void Pacman::detonate() {

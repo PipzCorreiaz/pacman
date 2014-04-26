@@ -8,6 +8,7 @@
 #endif
 
 #include <fstream>
+#include <queue>
 #include "Ghost.h"
 #include "Pacman.h"
 
@@ -59,6 +60,9 @@ public:
     
     bool isSameIndex(float, float, float, float);
     
+    void addAmmunitionToQueue(float, float);
+    void removeAmmunitionFromQueue();
+    
    
     
 private:
@@ -82,6 +86,7 @@ private:
     int _mapWidth;
     int _mapHeight;
     int _bigBallsCatched = 0;
+    std::queue<std::vector<float>> _ammunitionsQueue;
 };
 
 

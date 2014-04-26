@@ -238,6 +238,7 @@ void moreAmmunitions(int value) {
 
 void Pacman::detonate() {
     setSick(true);
+    _ammunitions = 0;
     float black[3] = {0.0f, 0.0f, 0.0f};
     setColor(black);
 }

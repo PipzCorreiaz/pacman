@@ -40,7 +40,6 @@ Game::Game(){
     _light = new DayLight();
     bigBalls = 0;
     _score = 0;
-    _lives = 3;
     _balls = 276;
     _detonator = false;
     present_time = 0;
@@ -120,7 +119,7 @@ void Game::renderBitmapString(){
 	glPushMatrix();
     glLoadIdentity();
 	
-	glOrtho(-32.0f, 32.0f, -32.0f, 32.0f, -32.0f, 32.0f);
+    glOrtho(-35.0f, 35.0f, -35.0f, 35.0f, -35.0f, 35.0f);
 	
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
@@ -133,15 +132,29 @@ void Game::renderBitmapString(){
 
     glColor3f(1.0f, 0.0f, 0.5f);//color
 
-    glRasterPos2f(-29, 32);
+    glRasterPos2f(-30, 33);
     for (i = 0; c[i] != '\0'; i++){
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)c[i]);
     }
     
-    c = "Lives: ";
-    c += integerToString(_lives);
     
-    glRasterPos2f(22, 32);
+    _ghostOne->drawOnHUD(-15, 32);
+    c = integerToString(_ghostOne->getLife());
+    glRasterPos2f(-12, 33);
+    for (i = 0; c[i] != '\0'; i++){
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)c[i]);
+    }
+    
+    _ghostTwo->drawOnHUD(-5, 32);
+    c = integerToString(_ghostTwo->getLife());
+    glRasterPos2f(-2, 33);
+    for (i = 0; c[i] != '\0'; i++){
+        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)c[i]);
+    }
+    
+    _ghostThree->drawOnHUD(5, 32);
+    c = integerToString(_ghostThree->getLife());
+    glRasterPos2f(8, 33);
     for (i = 0; c[i] != '\0'; i++){
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)c[i]);
     }
@@ -160,7 +173,7 @@ void Game::winnerRenderBitmapString(){
 	glPushMatrix();
     glLoadIdentity();
 	
-	glOrtho(-32.0f, 32.0f, -32.0f, 32.0f, -32.0f, 32.0f);
+    glOrtho(-35.0f, 35.0f, -35.0f, 35.0f, -35.0f, 35.0f);
 	
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
@@ -200,7 +213,7 @@ void Game::loserRenderBitmapString(){
 	glPushMatrix();
     glLoadIdentity();
 	
-	glOrtho(-32.0f, 32.0f, -32.0f, 32.0f, -32.0f, 32.0f);
+	glOrtho(-35.0f, 35.0f, -35.0f, 35.0f, -35.0f, 35.0f);
 	
 	glMatrixMode(GL_MODELVIEW);
 	glPushMatrix();
@@ -235,16 +248,16 @@ void Game::draw(){
     
     glPushMatrix();
 	
-    if(!_balls && !_pac->getExploding()){
-        winnerRenderBitmapString();
-    }
+//    if(!_balls && !_pac->getExploding()){
+//        winnerRenderBitmapString();
+//    }
+//    
+//    else if(!_pac->getExploding()){
+//        loserRenderBitmapString();
+//    }
+//    
+//    else{
     
-    else if(!_lives && !_pac->getExploding()){
-        loserRenderBitmapString();
-    }
-    
-    else{
-        
         //Camera
         _camera->setLookAt();
         
@@ -285,7 +298,7 @@ void Game::draw(){
         }        
         
         
-    }
+//    }
     
     glPopMatrix();
 }

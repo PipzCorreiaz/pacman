@@ -21,6 +21,7 @@ public:
     float getSpeed();
     int getDirection();
     int getAngle();
+    int getLife();
     
     void setX(float x);
     void setY(float y);
@@ -36,6 +37,7 @@ public:
     std::vector<float> nextPosition(float dist);
     
     void virtual draw() = 0;
+    void drawOnHUD(float x, float y);
     void virtual update(float dt) = 0;
     
     void virtual backAgain() = 0;
@@ -54,7 +56,7 @@ protected:
 	Eye* _eye;
     int _life;
     char _lastSymbol;
-
+    bool _drawingHUD;
     
 };
 

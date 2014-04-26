@@ -44,7 +44,6 @@ public:
     Pacman* _poc;
     int _balls; 
     int _score;
-    int _lives;
     Maze* _maze;
     Ghost* _ghostOne;
     Ghost* _ghostTwo;

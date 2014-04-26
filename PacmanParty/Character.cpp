@@ -5,6 +5,7 @@
 
 Character::Character() {
     _life = 100;
+    _drawingHUD = false;
 }
 
 float Character::getX() {
@@ -33,6 +34,10 @@ int Character::getAngle() {
 
 char Character::getLastSymbol() {
     return _lastSymbol;
+}
+
+int Character::getLife() {
+	return _life;
 }
 
 void Character::setX(float x) {
@@ -71,6 +76,18 @@ void Character::setColor(float a,float b,float c, float shine){
     glMaterialfv(GL_FRONT, GL_SPECULAR, mat_specular);
     glMaterialf(GL_FRONT, GL_SHININESS, mat_shine);
     
+}
+
+void Character::drawOnHUD(float x, float y) {
+    _drawingHUD = true;
+    float tempX = getX();
+    float tempY = getY();
+    setX(x);
+    setY(y);
+    draw();
+    setX(tempX);
+    setY(tempY);
+    _drawingHUD = false;
 }
 
 void Character::move(float dist) {

@@ -22,7 +22,6 @@ public:
     void setSpeed(float speed);
     void setTrouble(bool trouble);
     void setHidden(bool value);
-   // void setColor(float a, float b, float c);
     
     void draw();
     void update(float dt);

@@ -29,14 +29,14 @@ void Camera::setProjection(double aspect_ratio) {
     switch(_mode){
         case CAM_MODE_1:
             if (aspect_ratio >= 1.0) {
-                glOrtho(-32.0f * aspect_ratio, 32.0f * aspect_ratio, -32.0f, 32.0f, -32.0f, 32.0f);
+                glOrtho(-35.0f * aspect_ratio, 35.0f * aspect_ratio, -35.0f, 35.0f, -35.0f, 35.0f);
             } else {
-                glOrtho(-32.0f, 32.0f, -32.0f / aspect_ratio, 32.0f / aspect_ratio, -32.0f, 32.0f);
+                glOrtho(-35.0f, 35.0f, -35.0f / aspect_ratio, 35.0f / aspect_ratio, -35.0f, 35.0f);
             }
             break;
             
         case CAM_MODE_2:
-            glOrtho(-32.0f * aspect_ratio, 32.0f * aspect_ratio, -32.0f, 32.0f, -32.0f, 32.0f);
+            glOrtho(-35.0f * aspect_ratio, 35.0f * aspect_ratio, -35.0f, 35.0f, -35.0f, 35.0f);
             break;
             
         case CAM_MODE_3: 
@@ -44,7 +44,7 @@ void Camera::setProjection(double aspect_ratio) {
             break;
 
         default:
-            glOrtho(-32.0f, 32.0f, -32.0f / aspect_ratio, 32.0f / aspect_ratio, -32.0f, 32.0f);
+            glOrtho(-35.0f, 35.0f, -35.0f / aspect_ratio, 35.0f / aspect_ratio, -35.0f, 35.0f);
             break;
     }
     

@@ -24,7 +24,6 @@ void Pacman::init() {
 	_speed = 10; // unidades do labirinto per second
     _direction = DOWN;
     _angle = DOWN_ANGLE;
-    _exploding = false;
     _sick = false;
 	_eyebrow = new Eyebrow();
 	_eye = new Eye();
@@ -33,10 +32,6 @@ void Pacman::init() {
     _balls = 0;
     _ammunitions = 0;
     _lastSymbol = HALL;
-}
-
-bool Pacman::getExploding() {
-    return _exploding;
 }
 
 bool Pacman::getSick() {
@@ -49,10 +44,6 @@ int Pacman::getBalls(){
 
 char Pacman::getName() {
     return _name;
-}
-
-void Pacman::setExploding(bool value) {
-    _exploding = value;
 }
 
 void Pacman::setSick(bool value) {
@@ -128,11 +119,11 @@ void Pacman::move(float dist) {
     std::vector<float> nextPosition = Character::nextPosition(dist);
     char symbol = Wizard::getInstance().getMapSymbol(nextPosition[0], nextPosition[1]);
 
-    eat(nextPosition[0], nextPosition[1], symbol);
     if (getSick()) {
         Wizard::getInstance().changeMap(getX(), getY(), getLastSymbol());
     } else {
         Wizard::getInstance().changeMap(getX(), getY(), HALL);
+        eat(nextPosition[0], nextPosition[1], symbol);
     }
     Character::move(dist);
     Wizard::getInstance().changeMap(getX(), getY(), getName());
@@ -182,24 +173,20 @@ void Pacman::backAgain() {
     _posX = 9.0f;
 	_posY = 6.0f;
     _posZ = 1.25f;
-    setExploding(false);
 }
 
 void Pacman::eat(float x, float y, char symbol) {
     
     switch (symbol) {
         case SMALL_BALL:
-//            Wizard::getInstance().changeMap(x, y, HALL);
             _balls++;
             break;
         case BIG_BALL:
-//            Wizard::getInstance().changeMap(x, y, HALL);
             Wizard::getInstance().ghostsTrouble();
             _balls++;
             break;
         case SCARED_GHOST:
             Wizard::getInstance().ghostHidden(x, y);
-//            Wizard::getInstance().changeMap(x, y, HALL);
             break;
         case GHOST:
             detonate();
@@ -220,9 +207,6 @@ void moreAmmunitions(int value) {
 
 void Pacman::detonate() {
     setSick(true);
-    //setExploding(true);
-    //_explosion = new Explosion(getX(), getY(), getZ());
-
 }
 
 

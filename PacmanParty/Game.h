@@ -60,6 +60,7 @@ public:
 private:
     float present_time;
     float last_time;
+    bool _done;
     
 };
 

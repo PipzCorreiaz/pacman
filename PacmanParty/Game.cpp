@@ -54,6 +54,8 @@ Game::Game(){
     _detonator = false;
     present_time = 0;
     last_time = 0;
+    
+    _done = false;
 
 }
 
@@ -77,6 +79,8 @@ void Game::mapItemsDrawer(){ //actualiza o desenho das bolas
     Ball* ball = new Ball(); //evitar getBalls
     Ammunition* ammunition = new Ammunition();
     
+    int balls = 0;
+    
 	glPushMatrix();
 	
 	int i = 0; //i percorre matriz, j percorre balls
@@ -90,10 +94,12 @@ void Game::mapItemsDrawer(){ //actualiza o desenho das bolas
 			ball->intoPlace(x, y);
             ball->growth(1.0f);
 			ball->draw();
+            balls++;
 		} else if(map[i] == BIG_BALL){
 			ball->intoPlace(x, y);
 			ball->growth(2.0f);
 			ball->draw();
+            balls++;
 		} else if (map[i] == AMMUNITION) {
             ammunition->intoPlace(x, y);
             ammunition->draw();
@@ -107,6 +113,10 @@ void Game::mapItemsDrawer(){ //actualiza o desenho das bolas
 			y = y - 2;
 		}
 	}
+    
+    if ((_balls - balls) == 0) {
+        _done = true;
+    }
 
     glPopMatrix();
 
@@ -267,7 +277,7 @@ void Game::loserRenderBitmapString(){
 	glLoadIdentity();
 	
 	
-    std::string c = "E PRECISO SERES BUE INTELIGENTE PARA GANHAR";
+    std::string c = "YOUR PACMEN ARE NOT CLEVER ENOUGH";
     int i;
     
     glColor3f(1.0f, 0.0f, 0.5f);//color
@@ -278,7 +288,7 @@ void Game::loserRenderBitmapString(){
     }
     
     
-    c = "DESCULPA AI";
+    c = "YOU LOSE";
     glRasterPos2f(-8, -5);
     for (i = 0; c[i] != '\0'; i++){
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)c[i]);
@@ -294,16 +304,13 @@ void Game::loserRenderBitmapString(){
 void Game::draw(){
     
     glPushMatrix();
-	
-//    if(!_balls && !_pac->getExploding()){
-//        winnerRenderBitmapString();
-//    }
-//    
-//    else if(!_pac->getExploding()){
-//        loserRenderBitmapString();
-//    }
-//    
-//    else{
+
+    
+    if (_done) {
+        winnerRenderBitmapString();
+    } else if (_pac->getSick() && _poc->getSick()) {
+        loserRenderBitmapString();
+    } else {
     
         //Camera
         _camera->setLookAt();
@@ -345,7 +352,7 @@ void Game::draw(){
         }        
         
         
-//    }
+    }
     
     glPopMatrix();
 }

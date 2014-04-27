@@ -120,7 +120,8 @@ void Pacman::draw() {
     _eyebrow->draw();
     
     if(getSick()) {
-        colorize(_color);
+        float black[3] = {0.0f, 0.0f, 0.0f};
+        colorize(black);
         glEnable(GL_BLEND);
         glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
         glutSolidSphere(1.0f, 30.0f, 30.0f);
@@ -239,14 +240,10 @@ void moreAmmunitions(int value) {
 void Pacman::detonate() {
     setSick(true);
     _ammunitions = 0;
-    float black[3] = {0.0f, 0.0f, 0.0f};
-    setColor(black);
 }
 
 void Pacman::treat() {
     setSick(false);
-    float yellow[3] = {1.0f, 1.0f, 0.0f};
-    setColor(yellow);
 }
 
 

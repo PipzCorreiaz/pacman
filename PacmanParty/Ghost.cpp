@@ -132,21 +132,28 @@ void Ghost::draw() {
             glRotatef(getAngle(), 0, 0, 1);
         }
         
+        
+        
+        if (!getTrouble()) {
+            glEnable(GL_BLEND);
+            glBlendFunc (GL_ONE, GL_ONE_MINUS_DST_COLOR);
+        }
+        
         _eye->intoPlace(0.4f, -1.28f, 2.0f);
         _eye->draw();
         _eye->intoPlace(-0.4f, -1.28f, 2.0f);
         _eye->draw();
 
     
-        if(getTrouble()) {
-            float white[3] = {1.0f, 1.0f, 1.0f};
-            colorize(white);
-        }
-        else {
-            colorize(_color);
-//            glEnable(GL_BLEND);
-//            glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);         
-        }
+//        if(getTrouble()) {
+//            float white[3] = {1.0f, 1.0f, 1.0f};
+//            colorize(white);
+//        }
+//        else {
+//            colorize(_color);
+//        }
+        
+        colorize(_color);
     	
         glBegin(GL_TRIANGLE_FAN); //topo fantasma
       
@@ -324,9 +331,9 @@ void Ghost::draw() {
         glVertex3f(1.5, 0, 0.75);
         glEnd();
 
-//        if(!getTrouble()) {
-//            glDisable(GL_BLEND);
-//        }
+        if(!getTrouble()) {
+            glDisable(GL_BLEND);
+        }
         
         glPopMatrix();
     }

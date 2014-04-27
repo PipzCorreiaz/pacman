@@ -118,6 +118,10 @@ void Pacman::draw() {
         glRotatef(getAngle(), 0, 0, 1);
     }
     
+    if (getSick()) {
+        glEnable(GL_BLEND);
+        glBlendFunc (GL_ONE, GL_DST_COLOR);
+    }
     _eye->intoPlace(0.375f, -0.7f, 0.0f); //olho direito
     _eye->draw();
     _eye->intoPlace(-0.375f, -0.7f, 0.0f); //olho esquerdo
@@ -130,18 +134,14 @@ void Pacman::draw() {
     _eyebrow->draw();
     
     if(getSick()) {
-        float black[3] = {0.0f, 0.0f, 0.0f};
-        colorize(black);
-        glEnable(GL_BLEND);
-        glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-        glutSolidSphere(1.0f, 30.0f, 30.0f);
-        glDisable(GL_BLEND);
+        float zombieGreen[3] = {0.1f, 0.4f, 0.2f};
+        colorize(zombieGreen);
     }
     else {
         colorize(_color);
-        glutSolidSphere(1.0f, 30.0f, 30.0f);
     }
     
+    glutSolidSphere(1.0f, 30.0f, 30.0f);
     colorize(_scarfColor);
     glTranslatef(0.0f, 0.0f, 0.65f);
     glutSolidTorus(0.15f, 0.7f, 5, 12);
@@ -151,6 +151,10 @@ void Pacman::draw() {
     
     for(int i=0; i<_bullets.size(); i++) {
         _bullets[i]->draw();
+    }
+    
+    if (getSick()) {
+        glDisable(GL_BLEND);
     }
     
 }

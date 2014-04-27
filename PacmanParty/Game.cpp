@@ -319,44 +319,22 @@ void Game::draw(){
         loserRenderBitmapString();
     } else {
     
-        //Camera
+
         _camera->setLookAt();
-        
-        //Lights
         _light->lightUs(_pac);
         
         
         _maze->draw();
         mapItemsDrawer();
+
+        drawHUD();
         
         _pac->draw();
         _poc->draw();
-
-        drawHUD();
-
+        
         _ghostOne->draw();
-        if(_ghostOne->getTrouble()){
-            _ghostOne->setSpeed(GHOST_ESCAPE_SPEED);
-        }
-        else {
-            _ghostOne->setSpeed(GHOST_NORMAL_SPEED);
-        }
-        
         _ghostTwo->draw();
-           if(_ghostTwo->getTrouble()){
-            _ghostTwo->setSpeed(GHOST_ESCAPE_SPEED);
-        }
-        else {
-            _ghostTwo->setSpeed(GHOST_NORMAL_SPEED);
-        }
-        
         _ghostThree->draw();
-        if(_ghostThree->getTrouble()){
-            _ghostThree->setSpeed(GHOST_ESCAPE_SPEED);
-        }
-        else {
-            _ghostThree->setSpeed(GHOST_NORMAL_SPEED);
-        }        
         
         
     }

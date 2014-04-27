@@ -295,6 +295,7 @@ void Wizard::ghostsTrouble() {
     _bigBallsCatched++;
     for (int i = 0; i < _ghosts.size(); i++) {
         _ghosts[i]->setTrouble(true);
+        _ghosts[i]->setSpeed(GHOST_ESCAPE_SPEED);
     }
     glutTimerFunc(10000, backToNormal, 1);
 }
@@ -334,6 +335,7 @@ void backToNormal(int value) {
         std::vector<Ghost*> ghosts = Wizard::getInstance().getGhosts();
         for (int i = 0; i < ghosts.size(); i++) {
             ghosts[i]->setTrouble(false);
+            ghosts[i]->setSpeed(GHOST_NORMAL_SPEED);
         }
     }
     

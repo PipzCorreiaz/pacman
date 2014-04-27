@@ -16,8 +16,8 @@ Game::Game(){
 		exit(-1);
 	}
     
-    float yellow[3] = {1.0f, 1.0f, 0.0f};
-    float blue[3] = {0.0f, 0.0f, 1.0f};
+    float yellow[3] = {1.0f, 0.8f, 0.0f};
+    float blue[3] = {0.4f, 0.4f, 1.0f};
     float red[3] = {1.0f, 0.0f, 0.0f};
     float green[3] = {0.0f, 1.0f, 0.0f};
     float pink[3] = {1.0f, 0.4f, 0.8f};

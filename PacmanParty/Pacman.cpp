@@ -122,6 +122,7 @@ void Pacman::draw() {
         glEnable(GL_BLEND);
         glBlendFunc (GL_ONE, GL_DST_COLOR);
     }
+    
     _eye->intoPlace(0.375f, -0.7f, 0.0f); //olho direito
     _eye->draw();
     _eye->intoPlace(-0.375f, -0.7f, 0.0f); //olho esquerdo

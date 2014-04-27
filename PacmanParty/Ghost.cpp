@@ -7,7 +7,7 @@ Ghost::Ghost() : Character() {
     _posZ = 0;
     _angle = DOWN_ANGLE;
     _direction = DOWN;
-    _trouble = false;
+    _trouble = true;
     _hidden = false;
 }
 
@@ -136,7 +136,7 @@ void Ghost::draw() {
         
         if (!getTrouble()) {
             glEnable(GL_BLEND);
-            glBlendFunc (GL_ONE, GL_ONE_MINUS_DST_COLOR);
+            glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_COLOR);
         }
         
         _eye->intoPlace(0.4f, -1.28f, 2.0f);
@@ -144,14 +144,6 @@ void Ghost::draw() {
         _eye->intoPlace(-0.4f, -1.28f, 2.0f);
         _eye->draw();
 
-    
-//        if(getTrouble()) {
-//            float white[3] = {1.0f, 1.0f, 1.0f};
-//            colorize(white);
-//        }
-//        else {
-//            colorize(_color);
-//        }
         
         colorize(_color);
     	

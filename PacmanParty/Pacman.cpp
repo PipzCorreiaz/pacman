@@ -237,9 +237,9 @@ void Pacman::eat(float x, float y, char symbol) {
                 Wizard::getInstance().ghostHidden(x, y);
                 setGhostCatched();
 				break;
-            case GHOST:
-                detonate();
-                break;
+//            case GHOST:
+//                detonate();
+//                break;
             case AMMUNITION:
                 _ammunitions += BULLETS_PER_AMMUNITION;
                 Wizard::getInstance().addAmmunitionToQueue(x, y);

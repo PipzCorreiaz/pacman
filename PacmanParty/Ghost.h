@@ -28,6 +28,7 @@ public:
     void draw();
     void update(float dt);
     void move(float dist);
+    void eat(float x, float y, char symbol);
     int shoot(int i);
 
     void backAgain();

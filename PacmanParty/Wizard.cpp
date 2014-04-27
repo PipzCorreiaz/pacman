@@ -172,7 +172,6 @@ char Wizard::getMapSymbol(float x, float y) {
 void Wizard::changeMap(float x, float y, char symbol) {
     int index = positionToIndex(x, y);
     _map[index] = symbol;
-//    printMap();
 }
 
 void Wizard::printMap() {
@@ -200,18 +199,8 @@ bool Wizard::isBall(float x, float y) {
 }
 
 bool Wizard::isGhost(float x, float y, int direction) {
-    //int ghostIndex = 0;
-    //int indexAhead = positionAhead(x, y, direction, 1);
-    //int indexFarAway = positionAhead(x, y, direction, 2);
-    // for (int i=0; i < _ghosts.size(); i++) {
-    //     ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
-    //     if (ghostIndex == positionToIndex(x, y) || ghostIndex == indexAhead ||ghostIndex == indexFarAway) {
-    //         return true;
-    //     }
-    // }
-    // return false;
-
     int maxPositions = 4;
+
     for (int i = 1; i <= maxPositions; i++) {
         if (_map[positionAhead(x, y, direction, i)] == GHOST) {
             return true;
@@ -327,7 +316,16 @@ int Wizard::shotGhost(float x, float y) {
     }
     return deadGhost;
 }
- 
+
+
+void Wizard::killPacman(char pacman) {
+    for(int i = 0; i < _pacmen.size(); i++) {
+        if (pacman == _pacmen[i]->getName()) {
+            _pacmen[i]->detonate();
+        }
+    }
+}
+
 
 void backToNormal(int value) {
     int ballsCatched = Wizard::getInstance().bigBallsCatched();

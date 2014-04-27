@@ -49,6 +49,7 @@ public:
     void ghostsTrouble();
     void ghostHidden(float x, float y);
     int shotGhost(float x, float y);
+    void killPacman(char pacman);
 
     
     bool isWall(float, float, int);

@@ -17,7 +17,7 @@ Game::Game(){
 	}
     
     float yellow[3] = {1.0f, 0.8f, 0.0f};
-    float blue[3] = {0.4f, 0.4f, 1.0f};
+    float blue[3] = {0.2f, 0.2f, 1.0f};
     float red[3] = {1.0f, 0.0f, 0.0f};
     float green[3] = {0.0f, 1.0f, 0.0f};
     float pink[3] = {1.0f, 0.4f, 0.8f};
@@ -230,7 +230,7 @@ void Game::drawHUD() {
 	glPopMatrix();
 }
 
-void Game::winnerRenderBitmapString(){
+void Game::winnerBitmap(){
     glDisable(GL_LIGHTING);
 	
 	glMatrixMode(GL_PROJECTION);
@@ -243,23 +243,12 @@ void Game::winnerRenderBitmapString(){
 	glPushMatrix();
 	glLoadIdentity();
 	
-	
-    std::string c = "GANHASTE, SORTE DE PRINCIPIANTE";
-    int i;
+    std::string c = "PACMAN TEAM WON!";
     
-    glColor3f(1.0f, 0.0f, 0.5f);//color
+    glColor3f(0.0f, 0.0f, 0.0f);
     
-    glRasterPos2f(-15, 10);
-    for (i = 0; c[i] != '\0'; i++){
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)c[i]);
-    }
-    
-    c = "So ";
-    c += integerToString(_score);
-    c += " pontos???";
-    
-    glRasterPos2f(-15, -10);
-    for (i = 0; c[i] != '\0'; i++){
+    glRasterPos2f(-5, 5);
+    for (int i = 0; c[i] != '\0'; i++){
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)c[i]);
     }
 	
@@ -270,7 +259,7 @@ void Game::winnerRenderBitmapString(){
     glEnable(GL_LIGHTING);
 }
 
-void Game::loserRenderBitmapString(){
+void Game::loserBitmap(){
     glDisable(GL_LIGHTING);
 	
 	glMatrixMode(GL_PROJECTION);
@@ -283,21 +272,12 @@ void Game::loserRenderBitmapString(){
 	glPushMatrix();
 	glLoadIdentity();
 	
-	
-    std::string c = "YOUR PACMEN ARE NOT CLEVER ENOUGH";
-    int i;
+    std::string c = "GHOST TEAM WON!";
     
-    glColor3f(1.0f, 0.0f, 0.5f);//color
+    glColor3f(0.0f, 0.0f, 0.0f);
     
-    glRasterPos2f(-25, 5);
-    for (i = 0; c[i] != '\0'; i++){
-        glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)c[i]);
-    }
-    
-    
-    c = "YOU LOSE";
-    glRasterPos2f(-8, -5);
-    for (i = 0; c[i] != '\0'; i++){
+    glRasterPos2f(-5, 5);
+    for (int i = 0; c[i] != '\0'; i++){
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)c[i]);
     }
     
@@ -314,9 +294,9 @@ void Game::draw(){
 
     
     if (_done) {
-        winnerRenderBitmapString();
+        winnerBitmap();
     } else if (_pac->getSick() && _poc->getSick()) {
-        loserRenderBitmapString();
+        loserBitmap();
     } else {
     
 

@@ -84,9 +84,6 @@ void keyboard(unsigned char key, int x, int y) {
 	if(key == '2'){
         game->_light = new Gspot();
     }
-	if(key == 'l'){
-        game->winnerRenderBitmapString();
-    }
 }
 
 

@@ -38,11 +38,11 @@ public:
     void turn(int direction);
     int turnBack();
     std::vector<float> nextPosition(float dist);
+    void colorize(float c[3]);
     
     void virtual draw() = 0;
     void virtual update(float dt) = 0;
-    
-    void colorize(float c[3]);
+    void virtual eat(float x, float y, char symbol) = 0;
     void virtual backAgain() = 0;
     
     

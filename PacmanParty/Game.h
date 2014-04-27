@@ -31,8 +31,8 @@ public:
     void ghostsTrouble();
     
     void drawHUD();
-    void winnerRenderBitmapString();
-    void loserRenderBitmapString();
+    void winnerBitmap();
+    void loserBitmap();
     std::string integerToString(int num);
     void setScore();
     void draw();

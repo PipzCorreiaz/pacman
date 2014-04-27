@@ -243,7 +243,7 @@ void Pacman::eat(float x, float y, char symbol) {
             case AMMUNITION:
                 _ammunitions += BULLETS_PER_AMMUNITION;
                 Wizard::getInstance().addAmmunitionToQueue(x, y);
-                glutTimerFunc(10000, moreAmmunitions, 0);
+                glutTimerFunc(30000, moreAmmunitions, 0);
                 break;
             default:
                 break;

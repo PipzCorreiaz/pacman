@@ -247,7 +247,7 @@ void Game::winnerBitmap(){
     
     glColor3f(0.0f, 0.0f, 0.0f);
     
-    glRasterPos2f(-5, 5);
+    glRasterPos2f(-10, 5);
     for (int i = 0; c[i] != '\0'; i++){
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)c[i]);
     }
@@ -276,7 +276,7 @@ void Game::loserBitmap(){
     
     glColor3f(0.0f, 0.0f, 0.0f);
     
-    glRasterPos2f(-5, 5);
+    glRasterPos2f(-10, 5);
     for (int i = 0; c[i] != '\0'; i++){
         glutBitmapCharacter(GLUT_BITMAP_HELVETICA_18, (int)c[i]);
     }

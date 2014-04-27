@@ -34,6 +34,7 @@ public:
     void winnerRenderBitmapString();
     void loserRenderBitmapString();
     std::string integerToString(int num);
+    void setScore();
     void draw();
         
 public:

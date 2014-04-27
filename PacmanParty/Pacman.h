@@ -23,9 +23,11 @@ public:
     char getName();
     int getAmmunitions();
     float* getScarfColor();
+    int getGhostCatched();
     
     void setName(char);
     void setScarfColor(float color[3]);
+    void setGhostCatched();
     
     void draw();
     void move(float);
@@ -47,6 +49,7 @@ private:
     int _balls;
     char _name;
     int _ammunitions;
+    int _ghostCatched;
     std::vector<Bullet*> _bullets;
 };
 

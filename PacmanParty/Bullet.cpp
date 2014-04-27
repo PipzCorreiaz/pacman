@@ -89,7 +89,8 @@ void Bullet::draw() {
     }
 }
 
-void Bullet::update(float dt) {
+int Bullet::update(float dt) {
+    int deadGhost = 0;
     float lastX = _x;
     float lastY = _y;
     _x += _vX * dt;
@@ -107,7 +108,8 @@ void Bullet::update(float dt) {
     if (symbol == WALL) {
         _active = false;
     } else if (symbol == GHOST) {
-        Wizard::getInstance().shotGhost(_x, _y);
+        deadGhost = Wizard::getInstance().shotGhost(_x, _y);
         _active = false;
     }
+    return deadGhost;
 }

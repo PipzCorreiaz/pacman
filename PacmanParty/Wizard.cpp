@@ -314,15 +314,17 @@ void Wizard::ghostHidden(float x, float y) {
     
 }
 
-void Wizard::shotGhost(float x, float y) {
+int Wizard::shotGhost(float x, float y) {
+    int deadGhost = 0;
     int index = positionToIndex(x, y);
     for(int i = 0; i < _ghosts.size(); i++) {
         int ghostIndex = positionToIndex(_ghosts[i]->getX(), _ghosts[i]->getY());
         if (index == ghostIndex) {
-            _ghosts[i]->shoot(i);
+            deadGhost = _ghosts[i]->shoot(i);
             _map[ghostIndex] = _ghosts[i]->getLastSymbol();
         }
     }
+    return deadGhost;
 }
  
 

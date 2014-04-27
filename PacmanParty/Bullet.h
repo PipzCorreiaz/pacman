@@ -17,7 +17,7 @@ public:
     void intoPlace(float x, float y);
 
     void draw();
-    void update(float dt);
+    int update(float dt);
 
 private:
     float _x;

@@ -97,13 +97,16 @@ void Ghost::update(float dt) {
 }
 
 
-void Ghost::shoot(int i) {
+int Ghost::shoot(int i) {
     _life -= GUN_POWER;
+    int deadGhost = 0;
     if (_life == 0) {
         setHidden(true);
         backAgain();
         glutTimerFunc(5000, theComeBack, i);
+        deadGhost = 1;
     }
+    return deadGhost;
 }
 
 

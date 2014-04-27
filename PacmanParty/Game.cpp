@@ -131,6 +131,11 @@ std::string Game::integerToString(int num){
     return string + '\0';
 }
 
+void Game::setScore() {
+    int catchedGhosts = _pac->getGhostCatched() + _poc->getGhostCatched();
+    _score = _pac->getBalls() + _poc->getBalls() + (catchedGhosts*30);
+}
+
 
 void Game::drawHUD() {
 	glDisable(GL_LIGHTING);
@@ -145,9 +150,11 @@ void Game::drawHUD() {
 	glPushMatrix();
 	glLoadIdentity();
 	
-	_score = _pac->getBalls() + _poc->getBalls();
+	setScore();
+
     std::string c = "Score: ";
     c += integerToString(_score);
+
     int i;
 
     glColor3f(0.0f, 0.0f, 0.0f);

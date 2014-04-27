@@ -11,6 +11,7 @@ Pacman::Pacman() : Character() {
     _angle = DOWN_ANGLE;
     _direction = DOWN;
     _sick = false;
+    _ghostCatched = 0;
 }
 
 Pacman::Pacman(float x, float y, float color[3], float scarfColor[3]) : Character(color) {
@@ -32,6 +33,10 @@ void Pacman::setScarfColor(float color[3]) {
     _scarfColor[2] = color[2];
 }
 
+void Pacman::setGhostCatched() {
+    _ghostCatched = _ghostCatched + 1;
+}
+
 void Pacman::init() {
     _posX = 9.0f;
 	_posY = 6.0f;
@@ -47,6 +52,7 @@ void Pacman::init() {
     _balls = 0;
     _ammunitions = 0;
     _lastSymbol = HALL;
+    _ghostCatched = 0;
 }
 
 bool Pacman::getSick() {
@@ -72,6 +78,10 @@ void Pacman::setSick(bool value) {
 
 float* Pacman::getScarfColor() {
     return _scarfColor;
+}
+
+int Pacman::getGhostCatched() {
+    return _ghostCatched;
 }
 
 
@@ -167,7 +177,9 @@ void Pacman::update(float dt) {
     
     cleanUpBullets();
     for(int i=0; i<_bullets.size(); i++) {
-        _bullets[i]->update(dt);
+        if(_bullets[i]->update(dt) == 1) {
+            setGhostCatched();
+        }
     }
     
     if (Wizard::getInstance().isWall(nextPosition[0], nextPosition[1], getDirection())) {
@@ -218,7 +230,8 @@ void Pacman::eat(float x, float y, char symbol) {
                 break;
             case SCARED_GHOST:
                 Wizard::getInstance().ghostHidden(x, y);
-                break;
+                setGhostCatched();
+				break;
             case GHOST:
                 detonate();
                 break;

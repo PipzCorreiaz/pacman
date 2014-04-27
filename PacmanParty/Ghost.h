@@ -28,7 +28,7 @@ public:
     void draw();
     void update(float dt);
     void move(float dist);
-    void shoot(int i);
+    int shoot(int i);
 
     void backAgain();
     

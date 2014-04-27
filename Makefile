@@ -1,5 +1,5 @@
 CC=g++
-CFLAGS= -lglut -lGLU -g
+CFLAGS= -lGL -lglut -lGLU -g
 PROGRAM=pacman
 PROGSRCDIR=PacmanParty
 PROGSRC=$(wildcard $(PROGSRCDIR)/*.cpp)

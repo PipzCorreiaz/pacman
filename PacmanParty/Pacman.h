@@ -43,7 +43,7 @@ public:
     void deliberative(float dt);
     void update(float dt);
     
-    void runaway();
+    void runaway(float dt);
     void transferAmmunition(float dt);
     void backAgain();
     void eat(float x, float y, char symbol);

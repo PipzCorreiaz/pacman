@@ -351,7 +351,7 @@ void Pacman::plan(float dt) {
             killGhost(dt);
             break;
         case RUNAWAY:
-            runaway();
+            runaway(dt);
             break;
         case HEAL_PACMAN:
             break;
@@ -453,20 +453,22 @@ void Pacman::update(float dt) {
 }
 
 
-void Pacman::runaway() {
+void Pacman::runaway(float dt) {
+    float dist = getSpeed() * dt;
     int directionBack = turnBack();
     turn(directionBack);
+    move(dist);
     _hasPlan = false;
 }
 
 
 void Pacman::transferAmmunition(float dt) {
+    float dist = getSpeed() * dt;
     if (_beliefs[PACMAN]) {
         Wizard::getInstance().shareAmmunitions();
         _hasPlan = false;
-    } else {
-        move(dt);
     }
+    move(dist);
 }
 
 

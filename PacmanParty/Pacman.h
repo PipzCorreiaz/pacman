@@ -29,6 +29,7 @@ public:
     void setName(char);
     void setScarfColor(float color[3]);
     void setGhostCatched();
+    void setAmmunitions(int value);
     
     void draw();
     void move(float);
@@ -42,6 +43,8 @@ public:
     void deliberative(float dt);
     void update(float dt);
     
+    void runaway();
+    void transferAmmunition(float dt);
     void backAgain();
     void eat(float x, float y, char symbol);
     void detonate();

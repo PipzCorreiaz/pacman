@@ -37,6 +37,10 @@ void Pacman::setGhostCatched() {
     _ghostCatched = _ghostCatched + 1;
 }
 
+void Pacman::setAmmunitions(int value) {
+    _ammunitions = value;
+}
+
 void Pacman::init() {
     _posX = 9.0f;
 	_posY = 6.0f;
@@ -336,7 +340,6 @@ int Pacman::filter() {
 }
 
 void Pacman::plan(float dt) {
-
     _hasPlan = true;
 
     switch (_intention) {
@@ -345,23 +348,19 @@ void Pacman::plan(float dt) {
             be_healed(dt);
             break;
         case KILL_GHOST:
-            std::cout << "kill_ghost" << std::endl;
             killGhost(dt);
             break;
         case RUNAWAY:
-            std::cout << "runaway" << std::endl;
+            runaway();
             break;
         case HEAL_PACMAN:
-            std::cout << "heal_pacman" << std::endl;
             break;
         case EAT_BIG_BALL:
-            std::cout << "eat_big_ball" << std::endl;
             break;
         case TRANSFER_AMMUNITION:
-            std::cout << "transfer_ammunition" << std::endl;
+            transferAmmunition(dt);
             break;
         default:
-            std::cout << "eat_small_ball" << std::endl;
             eatSmallBall(dt);
             break;
     }
@@ -453,6 +452,24 @@ void Pacman::update(float dt) {
     deliberative(dt);
 }
 
+
+void Pacman::runaway() {
+    int directionBack = turnBack();
+    turn(directionBack);
+    _hasPlan = false;
+}
+
+
+void Pacman::transferAmmunition(float dt) {
+    if (_beliefs[PACMAN]) {
+        Wizard::getInstance().shareAmmunitions();
+        _hasPlan = false;
+    } else {
+        move(dt);
+    }
+}
+
+
 void Pacman::backAgain() {
     _posX = 9.0f;
 	_posY = 6.0f;
@@ -474,9 +491,6 @@ void Pacman::eat(float x, float y, char symbol) {
                 Wizard::getInstance().ghostHidden(x, y);
                 setGhostCatched();
 				break;
-//            case GHOST:
-//                detonate();
-//                break;
             case AMMUNITION:
                 _ammunitions += BULLETS_PER_AMMUNITION;
                 Wizard::getInstance().addAmmunitionToQueue(x, y);

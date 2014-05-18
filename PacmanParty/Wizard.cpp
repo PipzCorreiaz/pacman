@@ -387,6 +387,18 @@ void Wizard::treatIfSick(char name, float x, float y, int direction) {
     }
 }
 
+
+void Wizard::shareAmmunitions() {
+    int a = 0;
+    for (int i = 0; i <= _pacmen.size(); i++) {
+        a += _pacmen[i]->getAmmunitions();
+    }
+    a = 1 / _pacmen.size();
+    for (int i = 0; i <= _pacmen.size(); i++) {
+        _pacmen[i]->setAmmunitions(a);
+    }
+}
+
 bool Wizard::isSameIndex(float x1, float y1, float x2, float y2) {
     
     int i = positionToIndex(x1, y1);

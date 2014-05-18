@@ -65,10 +65,12 @@ public:
     bool isBigBall(float x, float y, int direction);
     bool isPacmanSick(char name, float x, float y, int direction);
     bool isGhostTrail(float x, float y);
+    
     float distance(float x, float y, float x2, float y2);
     int friendDirection(char name);
     bool pacmanVision(char name, float x, float y);
     void treatIfSick(char, float, float, int);
+    void shareAmmunitions();
     
     bool isSameIndex(float, float, float, float);
     bool isSameColumn(float y1, float y2);

@@ -344,7 +344,6 @@ void Pacman::plan(float dt) {
 
     switch (_intention) {
         case BE_HEALED:
-            std::cout << "be_healed" << std::endl;
             be_healed(dt);
             break;
         case KILL_GHOST:
@@ -354,9 +353,9 @@ void Pacman::plan(float dt) {
             runaway(dt);
             break;
         case HEAL_PACMAN:
-            break;
+            //break;
         case EAT_BIG_BALL:
-            break;
+            //break;
         case TRANSFER_AMMUNITION:
             transferAmmunition(dt);
             break;

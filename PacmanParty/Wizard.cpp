@@ -235,8 +235,59 @@ bool Wizard::isPacman(char name, float x, float y, int direction) {
             return true;
         }
     }
-
     return false;
+}
+
+bool Wizard::isAmmunition(float x, float y, int direction) {
+    int maxPositions = 3;
+
+    for (int i = 1; i <= maxPositions; i++) {
+        if (_map[positionAhead(x, y, direction, i)] == AMMUNITION) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Wizard::isBigBall(float x, float y, int direction) {
+    int maxPositions = 3;
+
+    for (int i = 1; i <= maxPositions; i++) {
+        if (_map[positionAhead(x, y, direction, i)] == BIG_BALL) {
+            return true;
+        }
+    }
+    return false;
+}
+
+bool Wizard::isPacmanSick(char name, float x, float y, int direction) {
+    int maxPositions = 3;
+   
+    for (int i = 0; i <= maxPositions; i++) {
+        int index = positionAhead(x, y, direction, i);
+        if (_map[index] != name && (_map[index] == PACMAN || _map[index] == POCMAN)) {
+            for(int i = 0; i<_pacmen.size(); i++) {
+                if (_pacmen[i]->getName() != name && _pacmen[i]->getSick()) {
+                    return true;
+                }
+            }
+        }
+    }
+    return false;
+}
+
+bool Wizard::isGhostTrail(float x, float y) {
+
+    for (int i=0; i < _ghosts.size(); i++) {
+        if(distance(x, y, _ghosts[i]->getX(), _ghosts[i]->getY()) < TRAIL_THRESHOLD) {
+            return true;
+        } 
+    }
+    return false;
+}
+
+float Wizard::distance(float x, float y, float x2, float y2) {
+    return sqrt((x - x2)*(x - x2) + (y - y2)*(y - y2));
 }
 
 void Wizard::treatIfSick(char name, float x, float y, int direction) {

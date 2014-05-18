@@ -47,5 +47,19 @@
 #define PACMAN 'p'
 #define POCMAN 'q'
 #define AMMUNITION 'a'
+#define PACMAN_SICK 'i'
+#define CROSSING 'c'
+#define TRAIL 't'
+
+#define TRAIL_THRESHOLD 10
+
+#define KILL_GHOST 100
+#define RUNAWAY 101
+#define EAT_BIG_BALL 102
+#define HEAL_PACMAN 103
+#define BE_HEALED 104
+#define TRANSFER_AMMUNITION 105
+#define EAT_SMALL_BALL 106
+
 
 #endif

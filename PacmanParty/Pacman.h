@@ -7,6 +7,7 @@
 #include <GL/glut.h>
 #endif
 
+#include <map>
 #include "Character.h"
 #include "Eyebrow.h"
 #include "Bullet.h"
@@ -31,6 +32,11 @@ public:
     
     void draw();
     void move(float);
+    void percept(float dt);
+    void options();
+    int filter();
+    void reactive(float dt);
+    void deliberative(float dt);
     void update(float dt);
     
     void backAgain();
@@ -51,6 +57,10 @@ private:
     int _ammunitions;
     int _ghostCatched;
     std::vector<Bullet*> _bullets;
+
+    std::map<char, bool> _beliefs;
+    std::map<int, bool> _desires;
+    int _intention;
 };
 
 

@@ -9,6 +9,7 @@
 
 #include <fstream>
 #include <queue>
+#include <cmath>
 #include "Ghost.h"
 #include "Pacman.h"
 
@@ -57,6 +58,11 @@ public:
     bool isGhost(float x, float y, int direction);
     bool isGhostScared(float x, float y, int direction);
     bool isPacman(char, float, float, int);
+    bool isAmmunition(float x, float y, int direction);
+    bool isBigBall(float x, float y, int direction);
+    bool isPacmanSick(char name, float x, float y, int direction);
+    bool isGhostTrail(float x, float y);
+    float distance(float x, float y, float x2, float y2);
     void treatIfSick(char, float, float, int);
     
     bool isSameIndex(float, float, float, float);

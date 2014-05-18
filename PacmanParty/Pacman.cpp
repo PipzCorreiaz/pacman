@@ -175,24 +175,20 @@ void Pacman::move(float dist) {
     setLastSymbol(symbol);
 }
 
-void Pacman::update(float dt) {
+
+
+
+void Pacman::reactive(float dt) {
     float dist = getSpeed() * dt;
     std::vector<float> nextPosition = Character::nextPosition(dist);
     int directionBack = 0;
     
-    cleanUpBullets();
-    for(int i=0; i<_bullets.size(); i++) {
-        if(_bullets[i]->update(dt) == 1) {
-            setGhostCatched();
-        }
-    }
-    
     if (Wizard::getInstance().isWall(nextPosition[0], nextPosition[1], getDirection())) {
         move(dist);
-		turn(Wizard::getInstance().availablePosition(nextPosition[0], nextPosition[1]));
-		
-		_previousX = round(getX());
-		_previousY = round(getY());
+        turn(Wizard::getInstance().availablePosition(nextPosition[0], nextPosition[1]));
+        
+        _previousX = round(getX());
+        _previousY = round(getY());
     } else if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection()) && !getSick()) {
         move(dist);
     } else if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection()) && !getSick()) {
@@ -213,7 +209,146 @@ void Pacman::update(float dt) {
         move(dist);
     } else {
         move(dist);
+    } 
+}
+
+void Pacman::percept(float dt) {
+    float dist = getSpeed() * dt;
+    std::vector<float> nextPosition = Character::nextPosition(dist);
+
+    if (Wizard::getInstance().isWall(nextPosition[0], nextPosition[1], getDirection())) {
+        _beliefs[WALL] = true;
+    } else {
+        _beliefs[WALL] = false;
     }
+
+    if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection())) {
+        _beliefs[SCARED_GHOST] = true;
+    } else {
+        _beliefs[SCARED_GHOST] = false;
+    }        
+
+    if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection())) {
+        _beliefs[GHOST] = true;
+    } else {
+        _beliefs[GHOST] = false;
+    }
+
+    if (Wizard::getInstance().isPacman(getName(), nextPosition[0], nextPosition[1], getDirection())) {
+        _beliefs[PACMAN] = true;
+    } else {
+        _beliefs[PACMAN] = false;
+    }
+    if (Wizard::getInstance().isPacmanSick(getName(), nextPosition[0], nextPosition[1], getDirection())) {
+        _beliefs[PACMAN_SICK] = true;
+    } else {
+        _beliefs[PACMAN_SICK] = false;
+    }
+
+    if (Wizard::getInstance().isAmmunition(nextPosition[0], nextPosition[1], getDirection())) {
+        _beliefs[AMMUNITION] = true;
+    } else {
+        _beliefs[AMMUNITION] = false;
+    }
+
+    if (Wizard::getInstance().isBigBall(nextPosition[0], nextPosition[1], getDirection())) {
+        _beliefs[BIG_BALL] = true;
+    } else {
+        _beliefs[BIG_BALL] = false;
+    }
+
+    if (Wizard::getInstance().canTurn(nextPosition[0], nextPosition[1])) {
+        _beliefs[CROSSING] = true;
+    } else {
+        _beliefs[CROSSING] = false;
+    }
+
+    if (Wizard::getInstance().isGhostTrail(nextPosition[0], nextPosition[1])) {
+        _beliefs[TRAIL] = true;
+    } else {
+        _beliefs[TRAIL] = false;
+    }
+
+ 
+}
+
+void Pacman::options() {
+
+    if (_beliefs[BIG_BALL] || _beliefs[AMMUNITION] || _ammunitions != 0 || _beliefs[SCARED_GHOST]) {
+        _desires[KILL_GHOST] = true;
+    } else {
+        _desires[KILL_GHOST] = false;
+    }
+
+    if (!_beliefs[AMMUNITION] && _ammunitions == 0 || _beliefs[GHOST]) {
+        _desires[RUNAWAY] = true;
+    } else {
+        _desires[RUNAWAY] = false;
+    }
+
+    if (_beliefs[BIG_BALL] && _beliefs[TRAIL] && !_beliefs[SCARED_GHOST]) {
+        _desires[EAT_BIG_BALL] = true;
+    } else {
+        _desires[EAT_BIG_BALL] = false;
+    }
+
+    if (_beliefs[PACMAN_SICK]) {
+        _desires[HEAL_PACMAN] = true;
+    } else {
+        _desires[HEAL_PACMAN] = false;
+    }
+
+    if (getSick()) {
+        _desires[BE_HEALED] = true;
+    } else {
+        _desires[BE_HEALED] = false;
+    }
+
+    if (_ammunitions != 0 && _beliefs[PACMAN]) {
+        _desires[TRANSFER_AMMUNITION] = true;
+    } else {
+        _desires[TRANSFER_AMMUNITION] = false;
+    }
+}
+
+int Pacman::filter() {
+
+    if (_desires[BE_HEALED]) {
+        return BE_HEALED;
+    }
+    if (_desires[KILL_GHOST]) {
+        return KILL_GHOST;
+    }
+    if (_desires[RUNAWAY]) {
+        return RUNAWAY;
+    }
+    if (_desires[HEAL_PACMAN]) {
+        return HEAL_PACMAN;
+    }
+    if (_desires[EAT_BIG_BALL]) {
+        return EAT_BIG_BALL;
+    }
+    if (_desires[TRANSFER_AMMUNITION]) {
+        return TRANSFER_AMMUNITION;
+    }
+    return EAT_SMALL_BALL;
+}
+
+
+void Pacman::deliberative(float dt) {
+    percept(dt);
+    options();
+    _intention = filter();
+}
+
+void Pacman::update(float dt) {
+    cleanUpBullets();
+    for(int i=0; i<_bullets.size(); i++) {
+        if(_bullets[i]->update(dt) == 1) {
+            setGhostCatched();
+        }
+    }
+    reactive(dt);
 }
 
 void Pacman::backAgain() {

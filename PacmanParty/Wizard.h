@@ -42,6 +42,7 @@ public:
     int availablePosition(float x, float y);
     int availablePositionWithBall(float x, float y);
     int availablePositionWithGhost(float x, float y);
+    bool isAvailableDirection(float x, float y, int direction);
     int availablePosition(int index);
     char getMapSymbol(float x, float y);
     void changeMap(float, float, char symbol);

@@ -36,6 +36,7 @@ public:
     void percept(float dt);
     void options();
     int filter();
+    bool reconsider(float dt);
     void plan(float dt);
     void be_healed(float dt);
     void heal_pacman(float dt);

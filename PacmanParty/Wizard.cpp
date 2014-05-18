@@ -137,6 +137,21 @@ int Wizard::availablePosition(float x, float y) {
     return positions[rand() % size];
 }
 
+bool Wizard::isAvailableDirection(float x, float y, int direction) {
+    int index = positionToIndex(x, y);
+    std::vector<int> positions = availablePositions(index);
+    int size = (int)positions.size();
+
+    for (int i = 0; i < size; i++) {
+        if (direction == positions[i]) {
+            return true;
+        }
+    }
+
+    return false;
+
+}
+
 int Wizard::availablePositionWithBall(float x, float y) {
     int index = positionToIndex(x, y);
     int newIndex = 0;
@@ -361,7 +376,7 @@ bool Wizard::pacmanVision(char name, float x, float y) {
 int Wizard::friendDirection(char name) {
     for (int i = 0; i < _pacmen.size(); i++) {
         if (_pacmen[i]->getName() != name) {
-            return _pacmen[i]->getDirection();
+            return (_pacmen[i]->getDirection() + 2) % 4;
         }
     }
     return 1000;
@@ -390,11 +405,11 @@ void Wizard::treatIfSick(char name, float x, float y, int direction) {
 
 void Wizard::shareAmmunitions() {
     int a = 0;
-    for (int i = 0; i <= _pacmen.size(); i++) {
+    for (int i = 0; i < _pacmen.size(); i++) {
         a += _pacmen[i]->getAmmunitions();
     }
-    a = 1 / _pacmen.size();
-    for (int i = 0; i <= _pacmen.size(); i++) {
+    a = a / _pacmen.size();
+    for (int i = 0; i < _pacmen.size(); i++) {
         _pacmen[i]->setAmmunitions(a);
     }
 }

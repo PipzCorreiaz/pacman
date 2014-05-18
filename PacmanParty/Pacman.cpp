@@ -258,7 +258,7 @@ void Pacman::percept(float dt) {
         _beliefs[BIG_BALL] = false;
     }
 
-    if (Wizard::getInstance().canTurn(nextPosition[0], nextPosition[1])) {
+    if (Wizard::getInstance().canTurn(getX(), getY(), getDirection())) {
         _beliefs[CROSSING] = true;
     } else {
         _beliefs[CROSSING] = false;
@@ -336,10 +336,14 @@ int Pacman::filter() {
 }
 
 void Pacman::plan(float dt) {
+
+    _hasPlan = true;
+
     switch (_intention) {
         case BE_HEALED:
             break;
         case KILL_GHOST:
+            killGhost(dt);
             break;
         case RUNAWAY:
             break;
@@ -353,8 +357,6 @@ void Pacman::plan(float dt) {
             eatSmallBall(dt);
             break;
     }
-
-    _hasPlan = true;
 }
 
 void Pacman::eatSmallBall(float dt) {
@@ -363,6 +365,32 @@ void Pacman::eatSmallBall(float dt) {
     if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
             turn(Wizard::getInstance().availablePositionWithBall(getX(), getY()));
+        }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
+    } else {
+        move(dist);
+    }
+}
+
+void Pacman::killGhost(float dt) {
+    float dist = getSpeed() * dt;
+
+    if (_beliefs[GHOST]) {
+        float bulletsNeeded = 100 / GUN_POWER;
+        if (_ammunitions > bulletsNeeded) {
+            for (int i = 0; i < bulletsNeeded; i++) {
+                shoot();
+            }
+        } else {
+            for (int i = 0; i < _ammunitions; i++) {
+                shoot();
+            }
+        }
+    } else if (_beliefs[CROSSING]) {
+        if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+            turn(Wizard::getInstance().availablePositionWithGhost(getX(), getY()));
         }
         _previousX = round(getX());
         _previousY = round(getY());
@@ -390,7 +418,8 @@ void Pacman::update(float dt) {
             setGhostCatched();
         }
     }
-    reactive(dt);
+    //reactive(dt);
+    deliberative(dt);
 }
 
 void Pacman::backAgain() {

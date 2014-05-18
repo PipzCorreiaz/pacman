@@ -51,6 +51,7 @@ private:
     void shoot();
 
     void eatSmallBall(float dt);
+    void killGhost(float dt);
 
     float _scarfColor[3];
     bool _sick;

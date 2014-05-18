@@ -281,7 +281,7 @@ void Pacman::options() {
         _desires[KILL_GHOST] = false;
     }
 
-    if (!_beliefs[AMMUNITION] && _ammunitions == 0 || _beliefs[GHOST]) {
+    if (!_beliefs[AMMUNITION] && _ammunitions == 0 && _beliefs[GHOST]) {
         _desires[RUNAWAY] = true;
     } else {
         _desires[RUNAWAY] = false;
@@ -341,20 +341,27 @@ void Pacman::plan(float dt) {
 
     switch (_intention) {
         case BE_HEALED:
+            std::cout << "be_healed" << std::endl;
             be_healed(dt);
             break;
         case KILL_GHOST:
+            std::cout << "kill_ghost" << std::endl;
             killGhost(dt);
             break;
         case RUNAWAY:
+            std::cout << "runaway" << std::endl;
             break;
         case HEAL_PACMAN:
+            std::cout << "heal_pacman" << std::endl;
             break;
         case EAT_BIG_BALL:
+            std::cout << "eat_big_ball" << std::endl;
             break;
         case TRANSFER_AMMUNITION:
+            std::cout << "transfer_ammunition" << std::endl;
             break;
         default:
+            std::cout << "eat_small_ball" << std::endl;
             eatSmallBall(dt);
             break;
     }
@@ -414,7 +421,10 @@ void Pacman::be_healed(float dt) {
             _previousX = round(getX());
             _previousY = round(getY());
             move(dist);
+            _hasPlan = false;
         }
+    } else {
+        move(dist);
     }
 }
 

@@ -130,7 +130,33 @@ int Wizard::availablePosition(float x, float y) {
         return -1;
     }
     return positions[rand() % size];
-}   
+}
+
+int Wizard::availablePositionWithBall(float x, float y) {
+    int index = positionToIndex(x, y);
+    int newIndex = 0;
+    
+    newIndex = leftPosition(index, 2);
+    if(_map[newIndex] == SMALL_BALL) {
+        return LEFT; 
+    }
+    newIndex = rightPosition(index, 2);
+    if(_map[newIndex] == SMALL_BALL) {
+        return RIGHT; 
+    }
+    
+    newIndex = upPosition(index, 2);
+    if(_map[newIndex] == SMALL_BALL) {
+        return UP; 
+    }
+    
+    newIndex = downPosition(index, 2);
+    if(_map[newIndex] == SMALL_BALL) {
+        return DOWN; 
+    }
+    
+    return availablePosition(x, y);
+}
 
 int Wizard::availablePosition(int index) {
 	std::vector<int> positions = availablePositions(index);

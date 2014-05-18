@@ -39,6 +39,7 @@ public:
     std::vector<float> indexToPosition(int index);
     bool canTurn(float x, float y);
     int availablePosition(float x, float y);
+    int availablePositionWithBall(float x, float y);
     int availablePosition(int index);
     char getMapSymbol(float x, float y);
     void changeMap(float, float, char symbol);

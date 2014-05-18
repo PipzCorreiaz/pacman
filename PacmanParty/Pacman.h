@@ -50,6 +50,8 @@ private:
     void cleanUpBullets();
     void shoot();
 
+    void eatSmallBall();
+
     float _scarfColor[3];
     bool _sick;
 	Eyebrow* _eyebrow;

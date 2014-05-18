@@ -335,7 +335,7 @@ int Pacman::filter() {
     return EAT_SMALL_BALL;
 }
 
-void Pacman::plan() {
+void Pacman::plan(dt) {
     switch (_intention) {
         case BE_HEALED:
             break;
@@ -350,10 +350,26 @@ void Pacman::plan() {
         case TRANSFER_AMMUNITION:
             break;
         default:
+            eatSmallBall(dt);
             break;
     }
 
     _hasPlan = true;
+}
+
+void Pacman::eatSmallBall(dt) {
+    float dist = getSpeed() * dt;
+
+    if (_beliefs[CROSSING]) {
+        if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+            turn(Wizard::getInstance().availablePositionWithBall(getX(), getY()));
+        }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
+    } else {
+        move(dist);
+    }
 }
 
 void Pacman::deliberative(float dt) {
@@ -364,7 +380,7 @@ void Pacman::deliberative(float dt) {
         _intention = filter();
     }
 
-    plan();
+    plan(dt);
 }
 
 void Pacman::update(float dt) {

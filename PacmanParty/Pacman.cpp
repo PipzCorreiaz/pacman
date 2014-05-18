@@ -53,6 +53,7 @@ void Pacman::init() {
     _ammunitions = 0;
     _lastSymbol = HALL;
     _ghostCatched = 0;
+    _hasPlan = false;
 }
 
 bool Pacman::getSick() {
@@ -334,11 +335,36 @@ int Pacman::filter() {
     return EAT_SMALL_BALL;
 }
 
+void Pacman::plan() {
+    switch (_intention) {
+        case BE_HEALED:
+            break;
+        case KILL_GHOST:
+            break;
+        case RUNAWAY:
+            break;
+        case HEAL_PACMAN:
+            break;
+        case EAT_BIG_BALL:
+            break;
+        case TRANSFER_AMMUNITION:
+            break;
+        default:
+            break;
+    }
+
+    _hasPlan = true;
+}
 
 void Pacman::deliberative(float dt) {
     percept(dt);
-    options();
-    _intention = filter();
+    
+    if (!_hasPlan) {
+        options();
+        _intention = filter();
+    }
+
+    plan();
 }
 
 void Pacman::update(float dt) {

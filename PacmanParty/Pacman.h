@@ -35,6 +35,7 @@ public:
     void percept(float dt);
     void options();
     int filter();
+    void plan();
     void reactive(float dt);
     void deliberative(float dt);
     void update(float dt);
@@ -61,6 +62,7 @@ private:
     std::map<char, bool> _beliefs;
     std::map<int, bool> _desires;
     int _intention;
+    bool _hasPlan;
 };
 
 

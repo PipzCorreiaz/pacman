@@ -35,7 +35,7 @@ public:
     void percept(float dt);
     void options();
     int filter();
-    void plan();
+    void plan(float dt);
     void reactive(float dt);
     void deliberative(float dt);
     void update(float dt);
@@ -50,7 +50,7 @@ private:
     void cleanUpBullets();
     void shoot();
 
-    void eatSmallBall();
+    void eatSmallBall(float dt);
 
     float _scarfColor[3];
     bool _sick;

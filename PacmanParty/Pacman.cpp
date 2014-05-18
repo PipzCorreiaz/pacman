@@ -335,7 +335,7 @@ int Pacman::filter() {
     return EAT_SMALL_BALL;
 }
 
-void Pacman::plan(dt) {
+void Pacman::plan(float dt) {
     switch (_intention) {
         case BE_HEALED:
             break;
@@ -357,7 +357,7 @@ void Pacman::plan(dt) {
     _hasPlan = true;
 }
 
-void Pacman::eatSmallBall(dt) {
+void Pacman::eatSmallBall(float dt) {
     float dist = getSpeed() * dt;
 
     if (_beliefs[CROSSING]) {

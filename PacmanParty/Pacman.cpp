@@ -341,6 +341,7 @@ void Pacman::plan(float dt) {
 
     switch (_intention) {
         case BE_HEALED:
+            be_healed(dt);
             break;
         case KILL_GHOST:
             killGhost(dt);
@@ -398,6 +399,26 @@ void Pacman::killGhost(float dt) {
     } else {
         move(dist);
     }
+}
+
+void Pacman::be_healed(float dt) {
+    float dist = getSpeed() * dt;
+    int friendDirection = 0;
+
+    if(getSick() && _beliefs[CROSSING]) {
+        if (Wizard::getInstance().pacmanVision(getName(), getX(), getY())) {
+            friendDirection = Wizard::getInstance().friendDirection(getName());
+            if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+                turn(friendDirection);
+            }
+            _previousX = round(getX());
+            _previousY = round(getY());
+            move(dist);
+        }
+    }
+}
+
+void Pacman::heal_pacman(float dt) {
 }
 
 void Pacman::deliberative(float dt) {

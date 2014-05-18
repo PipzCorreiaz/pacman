@@ -66,9 +66,13 @@ public:
     bool isPacmanSick(char name, float x, float y, int direction);
     bool isGhostTrail(float x, float y);
     float distance(float x, float y, float x2, float y2);
+    int friendDirection(char name);
+    bool pacmanVision(char name, float x, float y);
     void treatIfSick(char, float, float, int);
     
     bool isSameIndex(float, float, float, float);
+    bool isSameColumn(float y1, float y2);
+    bool isSameLine(float x1, float x2);
     
     void addAmmunitionToQueue(float, float);
     void removeAmmunitionFromQueue();

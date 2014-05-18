@@ -347,6 +347,28 @@ float Wizard::distance(float x, float y, float x2, float y2) {
     return sqrt((x - x2)*(x - x2) + (y - y2)*(y - y2));
 }
 
+bool Wizard::pacmanVision(char name, float x, float y) {
+     for (int i = 0; i < _pacmen.size(); i++) {
+        if (_pacmen[i]->getName() != name) {
+            if(isSameLine(x, _pacmen[i]->getX()) || isSameColumn(y, _pacmen[i]->getY())) {
+                return true;
+            }  
+        }
+    }
+    return false;
+}
+
+int Wizard::friendDirection(char name) {
+    for (int i = 0; i < _pacmen.size(); i++) {
+        if (_pacmen[i]->getName() != name) {
+            return _pacmen[i]->getDirection();
+        }
+    }
+    return 1000;
+}
+
+
+
 void Wizard::treatIfSick(char name, float x, float y, int direction) {
     int maxPositions = 3;
     char symbol = HALL;
@@ -371,6 +393,20 @@ bool Wizard::isSameIndex(float x1, float y1, float x2, float y2) {
     int j = positionToIndex(x2, y2);
     
     return i == j;
+}
+
+bool Wizard::isSameColumn(float y1, float y2) {
+    if(y1 == y2 ) {
+       return true; 
+    }
+    return false;
+}
+
+bool Wizard::isSameLine(float x1, float x2) {
+    if(x1 == x2) {
+        return true;
+    }
+    return false;
 }
 
 void Wizard::addAmmunitionToQueue(float x, float y) {

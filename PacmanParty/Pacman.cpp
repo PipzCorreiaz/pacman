@@ -330,14 +330,14 @@ int Pacman::filter() {
     if (_desires[BE_HEALED]) {
         return BE_HEALED;
     }
+    if (_desires[RUNAWAY]) {
+        return RUNAWAY;
+    }
     if (_desires[KILL_GHOST]) {
         return KILL_GHOST;
     }
     if (_desires[EAT_GHOST]) {
         return EAT_GHOST;
-    }
-    if (_desires[RUNAWAY]) {
-        return RUNAWAY;
     }
     if (_desires[HEAL_PACMAN]) {
         return HEAL_PACMAN;
@@ -461,8 +461,6 @@ void Pacman::killGhost(float dt) {
         move(dist);
     } else if (_beliefs[GHOST]) {
         shoot();
-        // int dir = turnBack();
-        // turn(dir);
         move(dist);
     } else if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
@@ -568,7 +566,18 @@ void Pacman::update(float dt) {
 void Pacman::runaway(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
-    turn(directionBack);
+    if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+        if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+            turn(directionBack);
+        } else {
+            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+        }
+    }
+
+    _previousX = round(getX());
+    _previousY = round(getY());
+    move(dist);
+    // turn(directionBack);
     // move(dist);
     _hasPlan = false;
 }

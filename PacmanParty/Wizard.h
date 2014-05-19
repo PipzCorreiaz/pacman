@@ -72,7 +72,7 @@ public:
     bool isGhostOnSight(float x, float y, int direction);
     float distance(float x, float y, float x2, float y2);
     int friendDirection(char name);
-    bool directionToTurn(char name, float x, float y);
+    int directionToTurn(char name, float x, float y);
     bool pacmanVision(char name, float x, float y);
     void treatIfSick(char, float, float, int);
     void shareAmmunitions();

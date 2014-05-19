@@ -362,50 +362,50 @@ bool Wizard::isPacmanOnSights(char name, float x, float y, int direction) {
 }
 
 bool Wizard::isPacmanOnAnyDirection(char name, float x, float y) {
-    bool continue1 = true;
-    bool continue2 = true;
-    bool continue3 = true;
-    bool continue4 = true;
-    int index1 = 0;
-    int index2 = 0;
-    int index3 = 0;
-    int index4 = 0;
+    bool continueUp = true;
+    bool continueDown = true;
+    bool continueLeft = true;
+    bool continueRight = true;
+    int indexUp = 0;
+    int indexDown = 0;
+    int indexLeft = 0;
+    int indexRight = 0;
 
-    for (int i = 0; (continue1 || continue2 || continue3 || continue4) ; i++) {
+    for (int i = 0; (continueUp || continueDown || continueLeft || continueRight) ; i++) {
 
-        if(continue1) {
-            index1 = upPosition(positionToIndex(x, y), i);    
+        if(continueUp) {
+            indexUp = upPosition(positionToIndex(x, y), i);    
         }
-        if(continue2) {
-            index2 = downPosition(positionToIndex(x, y), i);
+        if(continueDown) {
+            indexDown = downPosition(positionToIndex(x, y), i);
         }
-        if(continue1) {
-            index1 = leftPosition(positionToIndex(x, y), i);
+        if(continueLeft) {
+            indexLeft = leftPosition(positionToIndex(x, y), i);
         }
-        if(continue2) {
-            index2 = rightPosition(positionToIndex(x, y), i);
+        if(continueRight) {
+            indexRight = rightPosition(positionToIndex(x, y), i);
         }
         
-        if (continue1 && (_map[index1] != name && (_map[index1] == PACMAN || _map[index1] == POCMAN))) {
+        if (continueUp && (_map[indexUp] != name && (_map[indexUp] == PACMAN || _map[indexUp] == POCMAN))) {
             return true;
-        } else if (_map[index1] == WALL || _map[index1] == ' ') {
-            continue1 = false;
+        } else if (_map[indexUp] == WALL || _map[indexUp] == ' ') {
+            continueUp = false;
         }
 
-        if (continue2 && (_map[index2] != name && (_map[index2] == PACMAN || _map[index2] == POCMAN)))  {
+        if (continueDown && (_map[indexDown] != name && (_map[indexDown] == PACMAN || _map[indexDown] == POCMAN)))  {
             return true;
-        } else if (_map[index2] == WALL || _map[index2] == ' ') {
-            continue2 = false;
+        } else if (_map[indexDown] == WALL || _map[indexDown] == ' ') {
+            continueDown = false;
         }
-        if (continue3 && (_map[index3] != name && (_map[index3] == PACMAN || _map[index3] == POCMAN)))  {
+        if (continueLeft && (_map[indexLeft] != name && (_map[indexLeft] == PACMAN || _map[indexLeft] == POCMAN)))  {
             return true;
-        } else if (_map[index3] == WALL || _map[index3] == ' ') {
-            continue3 = false;
+        } else if (_map[indexLeft] == WALL || _map[indexLeft] == ' ') {
+            continueLeft = false;
         }
-        if (continue4 && (_map[index4] != name && (_map[index4] == PACMAN || _map[index4] == POCMAN)))  {
+        if (continueRight && (_map[indexRight] != name && (_map[indexRight] == PACMAN || _map[indexRight] == POCMAN)))  {
             return true;
-        } else if (_map[index4] == WALL || _map[index4] == ' ') {
-            continue4 = false;
+        } else if (_map[indexRight] == WALL || _map[indexRight] == ' ') {
+            continueRight = false;
         }
     }
     return false;
@@ -485,25 +485,29 @@ int Wizard::friendDirection(char name) {
     return 1000;
 }
 
-bool Wizard::directionToTurn(char name, float x, float y) {
+int Wizard::directionToTurn(char name, float x, float y) {
     for (int i = 0; i < _pacmen.size(); i++) {
         if (_pacmen[i]->getName() != name) {
-            if(_pacmen[i]->getX() > x) { //esta a direita
-                return RIGHT;
+            if (Wizard::getInstance().isSameLine(y, _pacmen[i]->getY())) {
+                if(_pacmen[i]->getX() > x) { //esta a direita
+                    return RIGHT;
+                }
+                if(_pacmen[i]->getX() < x) { //esta a esquerda
+                    return LEFT;
+                }
             }
-            if(_pacmen[i]->getX() < x) { //esta a esquerda
-                return LEFT;
-            }
-            if(_pacmen[i]->getY() > y) { //esta acima
-                return UP;
-            }
-            
-            if(_pacmen[i]->getY() < y) { //esta abaixo
-                return DOWN;
+            if (Wizard::getInstance().isSameColumn(x, _pacmen[i]->getX())) {
+                if(_pacmen[i]->getY() > y) { //esta acima
+                    return UP;
+                }
+                
+                if(_pacmen[i]->getY() < y) { //esta abaixo
+                    return DOWN;
+                }
             }
         }
     }
-    return false;
+    return 1000;
 }
 
 void Wizard::treatIfSick(char name, float x, float y, int direction) {
@@ -545,14 +549,14 @@ bool Wizard::isSameIndex(float x1, float y1, float x2, float y2) {
 }
 
 bool Wizard::isSameColumn(float x1, float x2) {
-    if(x1 == x2 ) {
+    if(abs(x1 - x2) < 0.4) {
        return true; 
     }
     return false;
 }
 
 bool Wizard::isSameLine(float y1, float y2) {
-    if(y1 == y2) {
+    if(abs(y1 - y2) < 0.4) {
         return true;
     }
     return false;

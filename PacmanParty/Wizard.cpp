@@ -1,5 +1,6 @@
 #include "Wizard.h"
 
+
 Wizard::~Wizard() {
     
 }
@@ -365,7 +366,8 @@ float Wizard::distance(float x, float y, float x2, float y2) {
 bool Wizard::pacmanVision(char name, float x, float y) {
      for (int i = 0; i < _pacmen.size(); i++) {
         if (_pacmen[i]->getName() != name) {
-            if(isSameLine(x, _pacmen[i]->getX()) || isSameColumn(y, _pacmen[i]->getY())) {
+            if(isSameLine(y, _pacmen[i]->getY()) || isSameColumn(x, _pacmen[i]->getX())) {
+                std::cout << "vi um pacman saudavel" << std::endl;
                 return true;
             }  
         }
@@ -376,13 +378,32 @@ bool Wizard::pacmanVision(char name, float x, float y) {
 int Wizard::friendDirection(char name) {
     for (int i = 0; i < _pacmen.size(); i++) {
         if (_pacmen[i]->getName() != name) {
-            return (_pacmen[i]->getDirection() + 2) % 4;
+            return (_pacmen[i]->getDirection());
         }
     }
     return 1000;
 }
 
-
+bool Wizard::directionToTurn(char name, float x, float y) {
+    for (int i = 0; i < _pacmen.size(); i++) {
+        if (_pacmen[i]->getName() != name) {
+            if(_pacmen[i]->getX() > x) { //esta a direita
+                return RIGHT;
+            }
+            if(_pacmen[i]->getX() < x) { //esta a esquerda
+                return LEFT;
+            }
+            if(_pacmen[i]->getY() > y) { //esta acima
+                return UP;
+            }
+            
+            if(_pacmen[i]->getY() < y) { //esta abaixo
+                return DOWN;
+            }
+        }
+    }
+    return false;
+}
 
 void Wizard::treatIfSick(char name, float x, float y, int direction) {
     int maxPositions = 3;
@@ -422,15 +443,15 @@ bool Wizard::isSameIndex(float x1, float y1, float x2, float y2) {
     return i == j;
 }
 
-bool Wizard::isSameColumn(float y1, float y2) {
-    if(y1 == y2 ) {
+bool Wizard::isSameColumn(float x1, float x2) {
+    if(x1 == x2 ) {
        return true; 
     }
     return false;
 }
 
-bool Wizard::isSameLine(float x1, float x2) {
-    if(x1 == x2) {
+bool Wizard::isSameLine(float y1, float y2) {
+    if(y1 == y2) {
         return true;
     }
     return false;

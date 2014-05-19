@@ -390,26 +390,26 @@ void Pacman::plan(float dt) {
     switch (_intention) {
         case BE_HEALED:
             be_healed(dt);
-            // std::cout << _name << ": BE HEALED" << std::endl;
+            //std::cout << _name << ": BE HEALED" << std::endl;
             break;
         case KILL_GHOST:
             killGhost(dt);
-            // std::cout << _name << ": KILL GHOST" << std::endl;
+            //std::cout << _name << ": KILL GHOST" << std::endl;
             break;
         case RUNAWAY:
             runaway(dt);
-            // std::cout << _name << ": RUNAWAY" << std::endl;
+            //std::cout << _name << ": RUNAWAY" << std::endl;
             break;
         case HEAL_PACMAN:
             heal_pacman(dt);
-            // std::cout << _name << ": HEAL PACMAN" << std::endl;
+            //std::cout << _name << ": HEAL PACMAN" << std::endl;
             break;
         case EAT_BIG_BALL:
-            // std::cout << _name << ": EAT BIG BALL" << std::endl;
-            // break;
+            //std::cout << _name << ": EAT BIG BALL" << std::endl;
+            break;
         case TRANSFER_AMMUNITION:
             transferAmmunition(dt);
-            // std::cout << _name << ": TRANSFER AMMUNITION" << std::endl;
+            //std::cout << _name << ": TRANSFER AMMUNITION" << std::endl;
             break;
         default:
             eatSmallBall(dt);
@@ -460,14 +460,15 @@ void Pacman::killGhost(float dt) {
 
 void Pacman::be_healed(float dt) {
     float dist = getSpeed() * dt;
-    int friendDirection = 0;
+    int direction = 0;
 
     if(getSick() && _beliefs[CROSSING]) {
         if (Wizard::getInstance().pacmanVision(getName(), getX(), getY())) {
-            friendDirection = Wizard::getInstance().friendDirection(getName());
+            direction = Wizard::getInstance().directionToTurn(getName(), getX(), getY());
+
             if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
-                if (Wizard::getInstance().isAvailableDirection(getX(), getY(), friendDirection)) {
-                    turn(friendDirection);
+                if (Wizard::getInstance().isAvailableDirection(getX(), getY(), direction)) {
+                    turn(direction);
                 } else {
                     turn(Wizard::getInstance().availablePosition(getX(), getY()));
                 }
@@ -491,6 +492,13 @@ void Pacman::heal_pacman(float dt) {
     std::vector<float> nextPosition = Character::nextPosition(dist);
     Wizard::getInstance().treatIfSick(getName(), nextPosition[0], nextPosition[1], getDirection());
     int directionBack = turnBack();
+
+    if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+        turn(directionBack);
+    } else {
+        turn(Wizard::getInstance().availablePosition(getX(), getY()));
+    }
+
     turn(directionBack);
 }
 

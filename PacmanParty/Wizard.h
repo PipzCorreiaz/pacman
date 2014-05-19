@@ -12,6 +12,7 @@
 #include <cmath>
 #include "Ghost.h"
 #include "Pacman.h"
+#include "Constraints.h"
 
 void backToNormal(int value);
 void theComeBack(int ghostIndex);
@@ -69,13 +70,14 @@ public:
     
     float distance(float x, float y, float x2, float y2);
     int friendDirection(char name);
+    bool directionToTurn(char name, float x, float y);
     bool pacmanVision(char name, float x, float y);
     void treatIfSick(char, float, float, int);
     void shareAmmunitions();
     
     bool isSameIndex(float, float, float, float);
-    bool isSameColumn(float y1, float y2);
-    bool isSameLine(float x1, float x2);
+    bool isSameColumn(float x1, float x2);
+    bool isSameLine(float y1, float y2);
     
     void addAmmunitionToQueue(float, float);
     void removeAmmunitionFromQueue();

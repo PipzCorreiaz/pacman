@@ -182,24 +182,36 @@ int Wizard::availablePositionWithBall(float x, float y) {
 int Wizard::availablePositionWithGhost(float x, float y) {
     int index = positionToIndex(x, y);
     int newIndex = 0;
+    bool stopLeft, stopRight, stopUp, stopDown = false;
     
-    newIndex = leftPosition(index, 2);
-    if(_map[newIndex] == SCARED_GHOST || _map[newIndex] == GHOST) {
-        return LEFT; 
-    }
-    newIndex = rightPosition(index, 2);
-    if(_map[newIndex] == SCARED_GHOST || _map[newIndex] == GHOST) {
-        return RIGHT; 
-    }
-    
-    newIndex = upPosition(index, 2);
-    if(_map[newIndex] == SCARED_GHOST || _map[newIndex] == GHOST) {
-        return UP; 
-    }
-    
-    newIndex = downPosition(index, 2);
-    if(_map[newIndex] == SCARED_GHOST || _map[newIndex] == GHOST) {
-        return DOWN; 
+    for (int i = 0; ; i++) {
+        newIndex = leftPosition(index, 2);
+        if(!stopLeft && (_map[newIndex] == SCARED_GHOST || _map[newIndex] == GHOST)) {
+            return LEFT; 
+        }
+        if (_map[newIndex] == WALL || _map[newIndex] == ' ') stopLeft = true;
+
+        newIndex = rightPosition(index, 2);
+        if(!stopRight && (_map[newIndex] == SCARED_GHOST || _map[newIndex] == GHOST)) {
+            return RIGHT; 
+        }
+        if (_map[newIndex] == WALL || _map[newIndex] == ' ') stopRight = true;
+
+        newIndex = upPosition(index, 2);
+        if(!stopUp && (_map[newIndex] == SCARED_GHOST || _map[newIndex] == GHOST)) {
+            return UP; 
+        }
+        if (_map[newIndex] == WALL || _map[newIndex] == ' ') stopUp = true;
+
+        newIndex = downPosition(index, 2);
+        if(!stopDown && (_map[newIndex] == SCARED_GHOST || _map[newIndex] == GHOST)) {
+            return DOWN; 
+        }
+        if (_map[newIndex] == WALL || _map[newIndex] == ' ') stopDown = true;
+
+        if (stopLeft && stopDown && stopUp && stopRight) {
+            break;
+        }
     }
     
     return availablePosition(x, y);
@@ -454,6 +466,36 @@ bool Wizard::isSameLine(float y1, float y2) {
     if(y1 == y2) {
         return true;
     }
+    return false;
+}
+
+bool Wizard::isGhostOnSight(float x, float y, int direction) {
+    int index;
+    for (int i = 0; ; i++) {
+        switch (direction) {    
+            case UP:
+            index = upPosition(positionToIndex(x, y), i);
+            break;
+            case LEFT:
+            index = leftPosition(positionToIndex(x, y), i);
+            break;
+            case DOWN:
+            index = downPosition(positionToIndex(x, y), i);
+            break;
+            case RIGHT:
+            index = rightPosition(positionToIndex(x, y), i);
+            break;
+            default:
+            return false;
+        }
+
+        if (_map[index] == GHOST) {
+            return true;
+        } else if (_map[index] == WALL || _map[index] == ' ') {
+            return false;
+        }
+    }
+
     return false;
 }
 

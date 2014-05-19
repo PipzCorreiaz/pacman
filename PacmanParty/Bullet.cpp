@@ -5,7 +5,7 @@
 Bullet::Bullet() {
     _x = _y = 0.0f;
     _z = 0.5f;
-    _speed = 20;
+    _speed = 80;
     _active = true;
     _quadratics = gluNewQuadric();
     gluQuadricNormals(_quadratics, GLU_SMOOTH);

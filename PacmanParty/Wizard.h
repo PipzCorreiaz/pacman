@@ -67,6 +67,8 @@ public:
     bool isBigBall(float x, float y, int direction);
     bool isPacmanSick(char name, float x, float y, int direction);
     bool isGhostTrail(float x, float y);
+
+    bool isGhostOnSight(float x, float y, int direction);
     
     float distance(float x, float y, float x2, float y2);
     int friendDirection(char name);

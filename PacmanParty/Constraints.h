@@ -60,6 +60,7 @@
 #define BE_HEALED 104
 #define TRANSFER_AMMUNITION 105
 #define EAT_SMALL_BALL 106
+#define EAT_GHOST 107
 
 
 #endif

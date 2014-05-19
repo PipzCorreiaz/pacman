@@ -233,7 +233,8 @@ void Pacman::percept(float dt) {
         _beliefs[SCARED_GHOST] = false;
     }        
 
-    if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection())) {
+    //if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection())) {
+    if (Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection())) {
         _beliefs[GHOST] = true;
     } else {
         _beliefs[GHOST] = false;
@@ -279,6 +280,13 @@ void Pacman::percept(float dt) {
 
 void Pacman::options() {
 
+    
+    if (!_beliefs[AMMUNITION] && _ammunitions == 0 && _beliefs[GHOST]) {
+        _desires[RUNAWAY] = true;
+    } else {
+        _desires[RUNAWAY] = false;
+    }
+
     //if (_beliefs[BIG_BALL] || _beliefs[AMMUNITION] || _ammunitions != 0 || _beliefs[SCARED_GHOST]) {
     if (_beliefs[GHOST]) {
         _desires[KILL_GHOST] = true;
@@ -286,10 +294,10 @@ void Pacman::options() {
         _desires[KILL_GHOST] = false;
     }
 
-    if (!_beliefs[AMMUNITION] && _ammunitions == 0 && _beliefs[GHOST]) {
-        _desires[RUNAWAY] = true;
+    if (_beliefs[SCARED_GHOST]) {
+        _desires[EAT_GHOST] = true;
     } else {
-        _desires[RUNAWAY] = false;
+        _desires[EAT_GHOST] = false;
     }
 
     if (_beliefs[BIG_BALL] && _beliefs[TRAIL] && !_beliefs[SCARED_GHOST]) {
@@ -325,6 +333,9 @@ int Pacman::filter() {
     if (_desires[KILL_GHOST]) {
         return KILL_GHOST;
     }
+    if (_desires[EAT_GHOST]) {
+        return EAT_GHOST;
+    }
     if (_desires[RUNAWAY]) {
         return RUNAWAY;
     }
@@ -352,7 +363,8 @@ bool Pacman::reconsider(float dt) {
         return true;
     }        
 
-    if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection()) != _beliefs[GHOST]) {
+    //if(Wizard::getInstance().isGhost(nextPosition[0], nextPosition[1], getDirection()) != _beliefs[GHOST]) {
+    if(Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection()) != _beliefs[GHOST]) {
         return true;
     }
 
@@ -396,6 +408,9 @@ void Pacman::plan(float dt) {
             killGhost(dt);
             //std::cout << _name << ": KILL GHOST" << std::endl;
             break;
+        case EAT_GHOST:
+            eatGhost(dt);
+            break;
         case RUNAWAY:
             runaway(dt);
             //std::cout << _name << ": RUNAWAY" << std::endl;
@@ -435,17 +450,37 @@ void Pacman::eatSmallBall(float dt) {
 void Pacman::killGhost(float dt) {
     float dist = getSpeed() * dt;
 
-    if (_beliefs[GHOST]) {
-        float bulletsNeeded = 100 / GUN_POWER;
-        if (_ammunitions > bulletsNeeded) {
-            for (int i = 0; i < bulletsNeeded; i++) {
-                shoot();
-            }
-        } else {
-            for (int i = 0; i < _ammunitions; i++) {
-                shoot();
-            }
+    if (_beliefs[GHOST] && _beliefs[CROSSING]) {
+
+       shoot();
+       if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+            turn(Wizard::getInstance().availablePosition(getX(), getY()));
         }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
+    } else if (_beliefs[GHOST]) {
+        shoot();
+        int dir = turnBack();
+        turn(dir);
+        move(dist);
+    } else if (_beliefs[CROSSING]) {
+        if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+        }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
+    } else {
+        move(dist);
+    }
+}
+
+void Pacman::eatGhost(float dt) {
+    float dist = getSpeed() * dt;
+
+    if (_beliefs[SCARED_GHOST]) {
+        move(dist);
     } else if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
             turn(Wizard::getInstance().availablePositionWithGhost(getX(), getY()));

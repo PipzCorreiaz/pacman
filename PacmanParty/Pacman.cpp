@@ -401,7 +401,7 @@ void Pacman::plan(float dt) {
 
     switch (_intention) {
         case BE_HEALED:
-            be_healed(dt);
+            beHealed(dt);
             //std::cout << _name << ": BE HEALED" << std::endl;
             break;
         case KILL_GHOST:
@@ -451,9 +451,8 @@ void Pacman::killGhost(float dt) {
     float dist = getSpeed() * dt;
 
     if (_beliefs[GHOST] && _beliefs[CROSSING]) {
-
-       shoot();
-       if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+        shoot();
+        if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
         }
         _previousX = round(getX());
@@ -491,12 +490,12 @@ void Pacman::eatGhost(float dt) {
     }
 }
 
-void Pacman::be_healed(float dt) {
+void Pacman::beHealed(float dt) {
     float dist = getSpeed() * dt;
     int direction = 0;
 
     if(getSick() && _beliefs[CROSSING]) {
-        if (Wizard::getInstance().pacmanVision(getName(), getX(), getY())) {
+        if (Wizard::getInstance().isPacmanOnAnyDirection(getName(), getX(), getY())) {
             direction = Wizard::getInstance().directionToTurn(getName(), getX(), getY());
 
             if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
@@ -515,8 +514,24 @@ void Pacman::be_healed(float dt) {
         _previousX = round(getX());
         _previousY = round(getY());
         move(dist);
-    } else {
+    } else if(getSick()){
+        if (Wizard::getInstance().isPacmanOnSights(getName(), getX(), getY(), getDirection())) {
+            direction = Wizard::getInstance().directionToTurn(getName(), getX(), getY());
+            if(direction != getDirection()) {
+
+                if (Wizard::getInstance().isAvailableDirection(getX(), getY(), direction)) {
+                    turn(direction);
+                } else {
+                    int dir = Wizard::getInstance().availablePosition(getX(), getY());
+                    if(dir == getDirection()){
+                    }
+                    turn(dir);
+                }
+            }
+        }
         move(dist);
+    } else {
+        _hasPlan = false;
     }
 }
 

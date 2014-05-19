@@ -66,8 +66,7 @@ void Ghost::move(float dist) {
     } else {
         setLastSymbol(Wizard::getInstance().getMapSymbol(getX(), getY()));
         Wizard::getInstance().changeMap(getX(), getY(), GHOST);
-    }
-    
+    }  
 }
 
 void Ghost::update(float dt) {

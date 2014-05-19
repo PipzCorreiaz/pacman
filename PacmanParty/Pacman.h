@@ -38,7 +38,7 @@ public:
     int filter();
     bool reconsider(float dt);
     void plan(float dt);
-    void be_healed(float dt);
+    void beHealed(float dt);
     void heal_pacman(float dt);
     void reactive(float dt);
     void deliberative(float dt);

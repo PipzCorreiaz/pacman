@@ -29,6 +29,7 @@ Game::Game(){
     
     _pac->setName(PACMAN);
     _poc->setName(POCMAN);
+    _poc->setSick(true);
     
     _pacmen.push_back(_pac);
     _pacmen.push_back(_poc);

@@ -379,7 +379,6 @@ bool Wizard::pacmanVision(char name, float x, float y) {
      for (int i = 0; i < _pacmen.size(); i++) {
         if (_pacmen[i]->getName() != name) {
             if(isSameLine(y, _pacmen[i]->getY()) || isSameColumn(x, _pacmen[i]->getX())) {
-                std::cout << "vi um pacman saudavel" << std::endl;
                 return true;
             }  
         }

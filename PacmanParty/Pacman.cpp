@@ -461,8 +461,8 @@ void Pacman::killGhost(float dt) {
         move(dist);
     } else if (_beliefs[GHOST]) {
         shoot();
-        int dir = turnBack();
-        turn(dir);
+        // int dir = turnBack();
+        // turn(dir);
         move(dist);
     } else if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {

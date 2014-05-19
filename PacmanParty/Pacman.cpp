@@ -406,7 +406,7 @@ void Pacman::plan(float dt) {
             break;
         case KILL_GHOST:
             killGhost(dt);
-            //std::cout << _name << ": KILL GHOST" << std::endl;
+            std::cout << _name << ": KILL GHOST" << std::endl;
             break;
         case EAT_GHOST:
             eatGhost(dt);
@@ -496,7 +496,7 @@ void Pacman::be_healed(float dt) {
     int direction = 0;
 
     if(getSick() && _beliefs[CROSSING]) {
-        if (Wizard::getInstance().pacmanVision(getName(), getX(), getY())) {
+        if (Wizard::getInstance().isPacmanOnAnyDirection(getName(), getX(), getY())) {
             direction = Wizard::getInstance().directionToTurn(getName(), getX(), getY());
 
             if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
@@ -515,7 +515,15 @@ void Pacman::be_healed(float dt) {
         _previousX = round(getX());
         _previousY = round(getY());
         move(dist);
-    } else {
+    } else if(getSick()){
+        if (Wizard::getInstance().isPacmanOnSights(getName(), getX(), getY(), getDirection())) {
+            direction = Wizard::getInstance().directionToTurn(getName(), getX(), getY());
+            if (Wizard::getInstance().isAvailableDirection(getX(), getY(), direction)) {
+                turn(direction);
+            } else {
+                turn(Wizard::getInstance().availablePosition(getX(), getY()));
+            }
+        }
         move(dist);
     }
 }

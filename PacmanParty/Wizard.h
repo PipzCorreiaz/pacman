@@ -63,13 +63,13 @@ public:
     bool isGhost(float x, float y, int direction);
     bool isGhostScared(float x, float y, int direction);
     bool isPacman(char, float, float, int);
+    bool isPacmanOnSights(char name, float x, float y, int direction);
+    bool isPacmanOnAnyDirection(char name, float x, float y);
     bool isAmmunition(float x, float y, int direction);
     bool isBigBall(float x, float y, int direction);
     bool isPacmanSick(char name, float x, float y, int direction);
     bool isGhostTrail(float x, float y);
-
     bool isGhostOnSight(float x, float y, int direction);
-    
     float distance(float x, float y, float x2, float y2);
     int friendDirection(char name);
     bool directionToTurn(char name, float x, float y);

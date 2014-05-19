@@ -323,6 +323,96 @@ bool Wizard::isPacman(char name, float x, float y, int direction) {
     return false;
 }
 
+bool Wizard::isPacmanOnSights(char name, float x, float y, int direction) {
+    bool continue1 = true;
+    bool continue2 = true;
+    int index1 = 0;
+    int index2 = 0;
+
+    for (int i = 0; (continue1 || continue2) ; i++) {
+        if(direction == UP || direction == DOWN) {
+            if(continue1) {
+                index1 = upPosition(positionToIndex(x, y), i);    
+            }
+            if(continue2) {
+                index2 = downPosition(positionToIndex(x, y), i);
+            }
+        } else if (direction == RIGHT || direction == LEFT){
+            if(continue1) {
+                index1 = leftPosition(positionToIndex(x, y), i);
+            }
+            if(continue2) {
+                index2 = rightPosition(positionToIndex(x, y), i);
+            }
+        }
+
+        if (continue1 && (_map[index1] != name && (_map[index1] == PACMAN || _map[index1] == POCMAN))) {
+            return true;
+        } else if (_map[index1] == WALL || _map[index1] == ' ') {
+            continue1 = false;
+        }
+
+        if (continue2 && (_map[index2] != name && (_map[index2] == PACMAN || _map[index2] == POCMAN)))  {
+            return true;
+        } else if (_map[index2] == WALL || _map[index2] == ' ') {
+            continue2 = false;
+        }
+    }
+    return false;
+}
+
+bool Wizard::isPacmanOnAnyDirection(char name, float x, float y) {
+    bool continue1 = true;
+    bool continue2 = true;
+    bool continue3 = true;
+    bool continue4 = true;
+    int index1 = 0;
+    int index2 = 0;
+    int index3 = 0;
+    int index4 = 0;
+
+    for (int i = 0; (continue1 || continue2 || continue3 || continue4) ; i++) {
+
+        if(continue1) {
+            index1 = upPosition(positionToIndex(x, y), i);    
+        }
+        if(continue2) {
+            index2 = downPosition(positionToIndex(x, y), i);
+        }
+        if(continue1) {
+            index1 = leftPosition(positionToIndex(x, y), i);
+        }
+        if(continue2) {
+            index2 = rightPosition(positionToIndex(x, y), i);
+        }
+        
+        if (continue1 && (_map[index1] != name && (_map[index1] == PACMAN || _map[index1] == POCMAN))) {
+            return true;
+        } else if (_map[index1] == WALL || _map[index1] == ' ') {
+            continue1 = false;
+        }
+
+        if (continue2 && (_map[index2] != name && (_map[index2] == PACMAN || _map[index2] == POCMAN)))  {
+            return true;
+        } else if (_map[index2] == WALL || _map[index2] == ' ') {
+            continue2 = false;
+        }
+        if (continue3 && (_map[index3] != name && (_map[index3] == PACMAN || _map[index3] == POCMAN)))  {
+            return true;
+        } else if (_map[index3] == WALL || _map[index3] == ' ') {
+            continue3 = false;
+        }
+        if (continue4 && (_map[index4] != name && (_map[index4] == PACMAN || _map[index4] == POCMAN)))  {
+            return true;
+        } else if (_map[index4] == WALL || _map[index4] == ' ') {
+            continue4 = false;
+        }
+    }
+    return false;
+}
+
+
+
 bool Wizard::isAmmunition(float x, float y, int direction) {
     int maxPositions = 3;
 

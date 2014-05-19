@@ -182,7 +182,8 @@ int Wizard::availablePositionWithBall(float x, float y) {
 int Wizard::availablePositionWithGhost(float x, float y) {
     int index = positionToIndex(x, y);
     int newIndex = 0;
-    bool stopLeft, stopRight, stopUp, stopDown = false;
+    bool stopLeft, stopRight, stopUp, stopDown;
+    stopLeft = stopRight = stopUp = stopDown = false;
     
     for (int i = 0; ; i++) {
         newIndex = leftPosition(index, 2);

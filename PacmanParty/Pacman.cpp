@@ -547,7 +547,7 @@ void Pacman::heal_pacman(float dt) {
         turn(Wizard::getInstance().availablePosition(getX(), getY()));
     }
 
-    turn(directionBack);
+    //turn(directionBack);
 }
 
 void Pacman::deliberative(float dt) {
@@ -581,29 +581,35 @@ void Pacman::update(float dt) {
 void Pacman::runaway(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
-    if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+    //if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
             turn(directionBack);
         } else {
-            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+            int dir = Wizard::getInstance().availablePosition(getX(), getY());
+            turn(dir);
         }
-    }
+    //}
 
     _previousX = round(getX());
     _previousY = round(getY());
     move(dist);
     // turn(directionBack);
     // move(dist);
-    _hasPlan = false;
+    //_hasPlan = false;
 }
 
 
 void Pacman::transferAmmunition(float dt) {
     float dist = getSpeed() * dt;
-    if (_beliefs[PACMAN]) {
-        Wizard::getInstance().shareAmmunitions();
-        _hasPlan = false;
+    
+    if (_beliefs[CROSSING]) {
+        if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+        }
     }
+
+    Wizard::getInstance().shareAmmunitions();
+    //_hasPlan = false;
     move(dist);
 }
 

@@ -582,6 +582,13 @@ void Pacman::heal_pacman(float dt) {
     //turn(directionBack);
 }
 
+void Pacman::analyseMessage(Message msg) {
+    switch (msg.getMessage()) {
+        default:
+        break;
+    }
+}
+
 void Pacman::sendMessage(int message) {
     Message msg(_name, getX(), getY(), message);
     Wizard::getInstance().broadcastMessage(msg);
@@ -592,6 +599,7 @@ Message Pacman::receiveMessage() {
     while (true) {
         if (!_inbox.empty()) {
             Message msg = _inbox.front();
+            analyseMessage(msg);
             _inbox.pop();
 
             std::cout << "> " << msg.toString() << std::endl;

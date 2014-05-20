@@ -68,6 +68,8 @@ private:
     void killGhost(float dt);
     void eatGhost(float dt);
 
+    void analyseMessage(Message msg);
+
 
     float _scarfColor[3];
     bool _sick;

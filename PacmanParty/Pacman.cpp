@@ -458,7 +458,14 @@ void Pacman::eatSmallBall(float dt) {
 void Pacman::killGhost(float dt) {
     float dist = getSpeed() * dt;
 
-    if (_beliefs[GHOST] && _beliefs[CROSSING]) {
+    int directionBack = turnBack();
+    if(_beliefs[PACMAN]) {
+        if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+            turn(directionBack);
+        }else {
+            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+        }
+    } else if (_beliefs[GHOST] && _beliefs[CROSSING]) {
         shoot();
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
             turn(Wizard::getInstance().availablePosition(getX(), getY(), getDirection()));
@@ -484,7 +491,14 @@ void Pacman::killGhost(float dt) {
 void Pacman::eatGhost(float dt) {
     float dist = getSpeed() * dt;
 
-    if (_beliefs[SCARED_GHOST]) {
+    int directionBack = turnBack();
+    if(_beliefs[PACMAN]) {
+        if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+            turn(directionBack);
+        }else {
+            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+        }
+    } else if (_beliefs[SCARED_GHOST]) {
         move(dist);
     } else if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
@@ -501,8 +515,15 @@ void Pacman::eatGhost(float dt) {
 void Pacman::beHealed(float dt) {
     float dist = getSpeed() * dt;
     int direction = 0;
-
-    if(getSick() && _beliefs[CROSSING]) {
+    int directionBack = turnBack();
+    
+    if(getSick() && _beliefs[PACMAN]) {
+        if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+            turn(directionBack);
+        }else {
+            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+        }
+    } else if(getSick() && _beliefs[CROSSING]) {
         if (Wizard::getInstance().isPacmanOnAnyDirection(getName(), getX(), getY())) {
             direction = Wizard::getInstance().directionToTurn(getName(), getX(), getY());
 
@@ -531,8 +552,6 @@ void Pacman::beHealed(float dt) {
                     turn(direction);
                 } else {
                     int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
-                    if(dir == getDirection()){
-                    }
                     turn(dir);
                 }
             }
@@ -609,11 +628,12 @@ void Pacman::runaway(float dt) {
 
 void Pacman::transferAmmunition(float dt) {
     float dist = getSpeed() * dt;
-    
-    if (_beliefs[CROSSING]) {
-        if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
-            turn(Wizard::getInstance().availablePosition(getX(), getY(), getDirection()));
-        }
+    int directionBack = turnBack();
+
+    if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+        turn(directionBack);
+    }else {
+        turn(Wizard::getInstance().availablePosition(getX(), getY()));
     }
 
     Wizard::getInstance().shareAmmunitions();

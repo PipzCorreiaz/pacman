@@ -115,6 +115,7 @@ int Ghost::shoot(int i) {
 void Ghost::backAgain(){
     setX(0.0f);
 	setY(0.0f);
+    setSpeed(GHOST_NORMAL_SPEED);
     setAngle(DOWN_ANGLE);
     setDirection(DOWN);
 }

@@ -428,14 +428,22 @@ void Pacman::plan(float dt) {
             break;
         default:
             eatSmallBall(dt);
+            //std::cout << _name << ": EAT SMALL BALL" << std::endl;
             break;
     }
 }
 
 void Pacman::eatSmallBall(float dt) {
     float dist = getSpeed() * dt;
-
-    if (_beliefs[CROSSING]) {
+    int directionBack = turnBack();
+    if(_beliefs[PACMAN]) {
+        if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+            turn(directionBack);
+        }else {
+            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+        }
+    } 
+    else if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
             turn(Wizard::getInstance().availablePositionWithBall(getX(), getY()));
         }
@@ -443,7 +451,7 @@ void Pacman::eatSmallBall(float dt) {
         _previousY = round(getY());
         move(dist);
     } else {
-        move(dist);
+        move(dist); 
     }
 }
 

@@ -138,6 +138,24 @@ int Wizard::availablePosition(float x, float y) {
     return positions[rand() % size];
 }
 
+int Wizard::availablePosition(float x, float y, int dir) {
+    int index = positionToIndex(x, y);
+    std::vector<int> positions = availablePositions(index);
+    int size = (int)positions.size();
+    if(!size) {
+        std::cout << "nao encontrei posicoes" << std::endl;
+        return -1;
+    }
+    int chosenDir = positions[rand() % size];
+    int back = (chosenDir + 2) % 4;
+    while (size != 1 && back == dir) {
+        chosenDir = positions[rand() % size];
+        back = (chosenDir + 2) % 4;
+    }
+
+    return chosenDir;
+}
+
 bool Wizard::isAvailableDirection(float x, float y, int direction) {
     int index = positionToIndex(x, y);
     std::vector<int> positions = availablePositions(index);

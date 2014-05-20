@@ -453,7 +453,7 @@ void Pacman::killGhost(float dt) {
     if (_beliefs[GHOST] && _beliefs[CROSSING]) {
         shoot();
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
-            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+            turn(Wizard::getInstance().availablePosition(getX(), getY(), getDirection()));
         }
         _previousX = round(getX());
         _previousY = round(getY());
@@ -463,7 +463,7 @@ void Pacman::killGhost(float dt) {
         move(dist);
     } else if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
-            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+            turn(Wizard::getInstance().availablePosition(getX(), getY(), getDirection()));
         }
         _previousX = round(getX());
         _previousY = round(getY());
@@ -502,12 +502,12 @@ void Pacman::beHealed(float dt) {
                 if (Wizard::getInstance().isAvailableDirection(getX(), getY(), direction)) {
                     turn(direction);
                 } else {
-                    turn(Wizard::getInstance().availablePosition(getX(), getY()));
+                    turn(Wizard::getInstance().availablePosition(getX(), getY(), getDirection()));
                 }
             }
         } else {
             if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
-                turn(Wizard::getInstance().availablePosition(getX(), getY()));
+                turn(Wizard::getInstance().availablePosition(getX(), getY(), getDirection()));
             }
         }
 
@@ -522,7 +522,7 @@ void Pacman::beHealed(float dt) {
                 if (Wizard::getInstance().isAvailableDirection(getX(), getY(), direction)) {
                     turn(direction);
                 } else {
-                    int dir = Wizard::getInstance().availablePosition(getX(), getY());
+                    int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
                     if(dir == getDirection()){
                     }
                     turn(dir);
@@ -544,7 +544,7 @@ void Pacman::heal_pacman(float dt) {
     if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
         turn(directionBack);
     } else {
-        turn(Wizard::getInstance().availablePosition(getX(), getY()));
+        turn(Wizard::getInstance().availablePosition(getX(), getY(), getDirection()));
     }
 
     //turn(directionBack);
@@ -585,7 +585,7 @@ void Pacman::runaway(float dt) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
             turn(directionBack);
         } else {
-            int dir = Wizard::getInstance().availablePosition(getX(), getY());
+            int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
             turn(dir);
         }
     //}
@@ -604,7 +604,7 @@ void Pacman::transferAmmunition(float dt) {
     
     if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
-            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+            turn(Wizard::getInstance().availablePosition(getX(), getY(), getDirection()));
         }
     }
 

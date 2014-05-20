@@ -25,6 +25,8 @@ public:
     void setTrouble(bool trouble);
     void setHidden(bool value);
     
+    void drawCircle(float cx, float cy, float r, int num_segments);
+
     void draw();
     void update(float dt);
     void move(float dist);

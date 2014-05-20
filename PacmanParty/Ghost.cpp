@@ -120,6 +120,19 @@ void Ghost::backAgain(){
     setDirection(DOWN);
 }
 
+void Ghost::drawCircle(float cx, float cy, float r, int num_segments) {
+    float twicePi = 2.0f * 3.145;
+    
+    glBegin(GL_TRIANGLE_FAN);
+    glVertex2f(cx, cy);   
+    for(int i = 0; i <= num_segments; i++) { 
+        glVertex2f(cx + (r * cos(i *  twicePi / num_segments)),
+            cy + (r * sin(i * twicePi / num_segments)));
+    }
+    glEnd();
+
+}
+
 void Ghost::draw() {
     
     
@@ -135,8 +148,6 @@ void Ghost::draw() {
             glRotatef(getAngle(), 0, 0, 1);
         }
         
-        
-        
         if (!getTrouble()) {
             glEnable(GL_BLEND);
             glBlendFunc (GL_ONE, GL_ONE_MINUS_SRC_COLOR);
@@ -149,6 +160,11 @@ void Ghost::draw() {
         
         
         colorize(_color);
+
+        if (!_drawingHUD && !getTrouble()) {
+            colorize(_color);
+            drawCircle(0, 0, TRAIL_THRESHOLD, 18);
+        }
     	
         glBegin(GL_TRIANGLE_FAN); //topo fantasma
         

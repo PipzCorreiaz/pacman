@@ -521,7 +521,11 @@ void Pacman::beHealed(float dt) {
     float dist = getSpeed() * dt;
     int direction = 0;
     int directionBack = turnBack();
-    
+
+    if(getSick()) {
+        sendMessage(BE_HEALED);
+    }
+
     if(getSick() && _beliefs[PACMAN]) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
             turn(directionBack);

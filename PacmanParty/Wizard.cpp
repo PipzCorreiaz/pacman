@@ -529,6 +529,37 @@ int Wizard::directionToTurn(char name, float x, float y) {
     return 1000;
 }
 
+int Wizard::smartDirection(char name, float x, float y) {
+
+    int xDifference = 0;
+    int yDifference = 0; 
+
+    for (int i = 0; i < _pacmen.size(); i++) {
+        if (_pacmen[i]->getName() != name) {
+            xDifference = abs(_pacmen[i]->getX() - x);
+            yDifference = abs(_pacmen[i]->getY() - y);
+
+            if (xDifference > yDifference) {
+                if(_pacmen[i]->getX() > x) { //esta a direita
+                    return RIGHT;
+                }
+                if(_pacmen[i]->getX() < x) { //esta a esquerda
+                    return LEFT;
+                }
+            } else {
+                if(_pacmen[i]->getY() > y) { //esta acima
+                    return UP;
+                }
+                
+                if(_pacmen[i]->getY() < y) { //esta abaixo
+                    return DOWN;
+                }
+            }
+        }
+    }
+    return 1000;
+}
+
 void Wizard::treatIfSick(char name, float x, float y, int direction) {
     int maxPositions = 3;
     char symbol = HALL;

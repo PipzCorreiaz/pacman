@@ -75,6 +75,7 @@ public:
     float distance(float x, float y, float x2, float y2);
     int friendDirection(char name);
     int directionToTurn(char name, float x, float y);
+    int smartDirection(char name, float x, float y);
     bool pacmanVision(char name, float x, float y);
     void treatIfSick(char, float, float, int);
     void shareAmmunitions();

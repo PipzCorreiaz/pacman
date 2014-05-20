@@ -13,6 +13,7 @@
 #include "Ghost.h"
 #include "Pacman.h"
 #include "Constraints.h"
+#include "Message.h"
 
 void backToNormal(int value);
 void theComeBack(int ghostIndex);
@@ -85,7 +86,7 @@ public:
     void addAmmunitionToQueue(float, float);
     void removeAmmunitionFromQueue();
     
-   
+    void broadcastMessage(Message msg);
     
 private:
     Wizard() {};

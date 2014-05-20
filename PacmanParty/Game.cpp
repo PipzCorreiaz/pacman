@@ -6,8 +6,6 @@ static std::vector<Ghost*>* stack = new std::vector<Ghost*>();
 static int bigBalls;
 
 
-
-
 Game::Game(){
 	try{
 		Wizard::getInstance().loadMap("map.txt");

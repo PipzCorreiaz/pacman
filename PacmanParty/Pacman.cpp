@@ -1,5 +1,7 @@
 #include "Pacman.h"
 #include "Wizard.h"
+#include "Message.h"
+
 
 void moreAmmunitions(int value);
 
@@ -43,14 +45,14 @@ void Pacman::setAmmunitions(int value) {
 
 void Pacman::init() {
     _posX = 9.0f;
-	_posY = 6.0f;
+    _posY = 6.0f;
     _posZ = 1.5f;
-	_speed = 10; // unidades do labirinto per second
+    _speed = 10; // unidades do labirinto per second
     _direction = DOWN;
     _angle = DOWN_ANGLE;
     _sick = false;
-	_eyebrow = new Eyebrow();
-	_eye = new Eye();
+    _eyebrow = new Eyebrow();
+    _eye = new Eye();
     _previousX = 0.0;
     _previousY = 0.0;
     _balls = 0;
@@ -58,6 +60,9 @@ void Pacman::init() {
     _lastSymbol = HALL;
     _ghostCatched = 0;
     _hasPlan = false;
+
+    startChat();
+
 }
 
 bool Pacman::getSick() {
@@ -575,6 +580,31 @@ void Pacman::heal_pacman(float dt) {
     }
 
     //turn(directionBack);
+}
+
+void Pacman::sendMessage(int message) {
+    Message msg(_name, getX(), getY(), message);
+    Wizard::getInstance().broadcastMessage(msg);
+}
+
+Message Pacman::receiveMessage() {
+    std::cout << _name << " is ready to receive messages" << std::endl;
+    while (true) {
+        if (!_inbox.empty()) {
+            Message msg = _inbox.front();
+            _inbox.pop();
+
+            std::cout << "> " << msg.toString() << std::endl;
+        }
+    }
+}
+
+void Pacman::addToInbox(Message msg) {
+    _inbox.push(msg);
+}
+
+void Pacman::startChat() {
+    _chat = std::thread(&Pacman::receiveMessage, this);
 }
 
 void Pacman::deliberative(float dt) {

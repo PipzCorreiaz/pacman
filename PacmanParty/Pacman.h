@@ -8,9 +8,12 @@
 #endif
 
 #include <map>
+#include <queue>
+#include <thread>
 #include "Character.h"
 #include "Eyebrow.h"
 #include "Bullet.h"
+#include "Message.h"
 
 class Pacman : public Character {
     
@@ -51,6 +54,11 @@ public:
     void detonate();
     void treat();
     
+    void addToInbox(Message msg);
+    void startChat();
+    void sendMessage(int message);
+    Message receiveMessage();
+
 private:
     void init();
     void cleanUpBullets();
@@ -59,6 +67,7 @@ private:
     void eatSmallBall(float dt);
     void killGhost(float dt);
     void eatGhost(float dt);
+
 
     float _scarfColor[3];
     bool _sick;
@@ -73,6 +82,9 @@ private:
     std::map<int, bool> _desires;
     int _intention;
     bool _hasPlan;
+
+    std::queue<Message> _inbox;
+    std::thread _chat;
 };
 
 

@@ -672,6 +672,14 @@ void Wizard::killPacman(char pacman) {
     }
 }
 
+void Wizard::broadcastMessage(Message msg) {
+    char senderName = msg.getSender();
+    for (int i = 0; i < _pacmen.size(); i++) {
+        if (_pacmen[i]->getName() != senderName)
+        _pacmen[i]->addToInbox(msg);
+    }
+}
+
 
 void backToNormal(int value) {
     int ballsCatched = Wizard::getInstance().bigBallsCatched();

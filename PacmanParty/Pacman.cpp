@@ -625,7 +625,7 @@ void Pacman::healPacman(float dt) {
         move(dist);
     }
     
-    _messages[HEAL_PACMAN] = false;
+    _messages[BE_HEALED] = false;
 }
 
 
@@ -691,6 +691,7 @@ void Pacman::analyseMessage(Message msg) {
             break;
         case BE_HEALED:
             _messages[BE_HEALED] = true;
+            break;
         case EAT_GHOST:
             _messages[EAT_GHOST] = true;
             break;
@@ -712,7 +713,7 @@ Message Pacman::receiveMessage() {
             analyseMessage(msg);
             _inbox.pop();
 
-            std::cout << "> " << msg.toString() << std::endl;
+            //std::cout << "> " << msg.toString() << std::endl;
         }
     }
 }

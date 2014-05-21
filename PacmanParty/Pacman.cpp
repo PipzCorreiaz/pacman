@@ -200,7 +200,7 @@ void Pacman::changeCrossingMap(float x, float y, char symbol) {
 void Pacman::move(float dist) {
     std::vector<float> nextPosition = Character::nextPosition(dist);
     char symbol = Wizard::getInstance().getMapSymbol(nextPosition[0], nextPosition[1]);
-    
+
     if (getSick()) {
         Wizard::getInstance().changeMap(getX(), getY(), getLastSymbol());
     } else {
@@ -373,11 +373,11 @@ int Pacman::filter() {
     if (_desires[KILL_GHOST]) {
         return KILL_GHOST;
     }
-    if (_desires[HEAL_PACMAN]) {
-        return HEAL_PACMAN;
-    }
     if (_desires[EAT_BIG_BALL]) {
         return EAT_BIG_BALL;
+    }
+    if (_desires[HEAL_PACMAN]) {
+        return HEAL_PACMAN;
     }
     if (_desires[TRANSFER_AMMUNITION]) {
         return TRANSFER_AMMUNITION;
@@ -434,34 +434,35 @@ void Pacman::plan(float dt) {
 
     switch (_intention) {
         case BE_HEALED:
+            std::cout << _name << ": BE HEALED" << std::endl;
             beHealed(dt);
-            //std::cout << _name << ": BE HEALED" << std::endl;
             break;
         case KILL_GHOST:
+            std::cout << _name << ": KILL GHOST" << std::endl;
             killGhost(dt);
-            //std::cout << _name << ": KILL GHOST" << std::endl;
             break;
         case EAT_GHOST:
             eatGhost(dt);
             break;
         case RUNAWAY:
+            std::cout << _name << ": RUNAWAY" << std::endl;
             runaway(dt);
-            //std::cout << _name << ": RUNAWAY" << std::endl;
             break;
         case HEAL_PACMAN:
+            std::cout << _name << ": HEAL PACMAN" << std::endl;
             healPacman(dt);
-            //std::cout << _name << ": HEAL PACMAN" << std::endl;
             break;
         case EAT_BIG_BALL:
-            //std::cout << _name << ": EAT BIG BALL" << std::endl;
+            std::cout << _name << ": EAT BIG BALL" << std::endl;
+            eatBigBall(dt);
             break;
         case TRANSFER_AMMUNITION:
+            std::cout << _name << ": TRANSFER AMMUNITION" << std::endl;
             transferAmmunition(dt);
-            //std::cout << _name << ": TRANSFER AMMUNITION" << std::endl;
             break;
         default:
+            std::cout << _name << ": EAT SMALL BALL" << std::endl;
             eatSmallBall(dt);
-            //std::cout << _name << ": EAT SMALL BALL" << std::endl;
             break;
     }
 }
@@ -663,27 +664,21 @@ void Pacman::healPacman(float dt) {
 void Pacman::runaway(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
-
-    if (_beliefs[CROSSING]) {
-        if (!(_previousX == round(getX()) && _previousY == round(getY()))) {
-            turn(Wizard::getInstance().directionOnCrossing(getX(), getY(), getDirection()));
+    //if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+        if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+            turn(directionBack);
+        } else {
+            int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
+            turn(dir);
         }
-        _previousX = round(getX());
-        _previousY = round(getY());
-        move(dist);
-    }
+    //}
 
-    if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
-        turn(directionBack);
-        if(Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection())) {
-            int dir = Wizard::getInstance().runToCrossing(getX(), getY(), getDirection(), getCrossingMap());
-            if (Wizard::getInstance().isAvailableDirection(getX(), getY(), dir)) {
-                turn(dir);
-            }
-        }
-    } else {
-        move(dist);
-    }
+    _previousX = round(getX());
+    _previousY = round(getY());
+    move(dist);
+    // turn(directionBack);
+    // move(dist);
+    //_hasPlan = false;
 }
 
 
@@ -738,7 +733,7 @@ void Pacman::analyseMessage(Message msg) {
             _messages[EAT_GHOST] = true;
             break;
         default:
-        break;
+            break;
     }
 }
 

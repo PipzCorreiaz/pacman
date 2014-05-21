@@ -85,6 +85,7 @@ private:
     int _intention;
     bool _hasPlan;
 
+    std::map<int, bool> _messages;
     std::queue<Message> _inbox;
     std::thread _chat;
 };

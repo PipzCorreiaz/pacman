@@ -56,7 +56,7 @@ void Pacman::init() {
     _previousX = 0.0;
     _previousY = 0.0;
     _balls = 0;
-    _ammunitions = 2;
+    _ammunitions = 0;
     _lastSymbol = HALL;
     _ghostCatched = 0;
     _hasPlan = false;
@@ -238,6 +238,7 @@ void Pacman::percept(float dt) {
         _beliefs[SCARED_GHOST] = false;
     }        
 
+    
     if (Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection())) {
         _beliefs[GHOST] = true;
     } else {
@@ -291,6 +292,7 @@ void Pacman::options() {
         _desires[RUNAWAY] = false;
     }
 
+    
     if (_beliefs[GHOST]) {
         _desires[KILL_GHOST] = true;
     } else {
@@ -366,6 +368,7 @@ bool Pacman::reconsider(float dt) {
         return true;
     }        
 
+    
     if(Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection()) != _beliefs[GHOST]) {
         return true;
     }
@@ -650,10 +653,10 @@ void Pacman::analyseMessage(Message msg) {
             _messages[TRANSFER_AMMUNITION] = true;
             break;
         default:
-            break;
+        break;
     }
 }
- 
+
 void Pacman::sendMessage(int message) {
     Message msg(_name, getX(), getY(), message);
     Wizard::getInstance().broadcastMessage(msg);
@@ -709,7 +712,6 @@ void Pacman::update(float dt) {
     //reactive(dt);
     deliberative(dt);
 }
-
 
 void Pacman::backAgain() {
     _posX = 9.0f;

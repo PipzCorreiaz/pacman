@@ -65,6 +65,7 @@ private:
     void shoot();
 
     void eatSmallBall(float dt);
+    void eatBigBall(float dt);
     void killGhost(float dt);
     void eatGhost(float dt);
 

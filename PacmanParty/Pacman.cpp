@@ -238,7 +238,6 @@ void Pacman::percept(float dt) {
         _beliefs[SCARED_GHOST] = false;
     }        
 
-    
     if (Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection())) {
         _beliefs[GHOST] = true;
     } else {
@@ -292,14 +291,13 @@ void Pacman::options() {
         _desires[RUNAWAY] = false;
     }
 
-    
     if (_beliefs[GHOST]) {
         _desires[KILL_GHOST] = true;
     } else {
         _desires[KILL_GHOST] = false;
     }
 
-    if (_beliefs[SCARED_GHOST]) {
+    if (_beliefs[SCARED_GHOST] || _messages[EAT_GHOST]) {
         _desires[EAT_GHOST] = true;
     } else {
         _desires[EAT_GHOST] = false;
@@ -335,20 +333,20 @@ int Pacman::filter() {
     if (_desires[BE_HEALED]) {
         return BE_HEALED;
     }
+    if (_desires[EAT_GHOST]) {
+        return EAT_GHOST;
+    }
     if (_desires[RUNAWAY]) {
         return RUNAWAY;
     }
     if (_desires[KILL_GHOST]) {
         return KILL_GHOST;
     }
-    if (_desires[EAT_GHOST]) {
-        return EAT_GHOST;
+    if (_desires[EAT_BIG_BALL]) {
+        return EAT_BIG_BALL;
     }
     if (_desires[HEAL_PACMAN]) {
         return HEAL_PACMAN;
-    }
-    if (_desires[EAT_BIG_BALL]) {
-        return EAT_BIG_BALL;
     }
     if (_desires[TRANSFER_AMMUNITION]) {
         return TRANSFER_AMMUNITION;
@@ -368,7 +366,6 @@ bool Pacman::reconsider(float dt) {
         return true;
     }        
 
-    
     if(Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection()) != _beliefs[GHOST]) {
         return true;
     }
@@ -425,7 +422,8 @@ void Pacman::plan(float dt) {
             //std::cout << _name << ": HEAL PACMAN" << std::endl;
             break;
         case EAT_BIG_BALL:
-            //std::cout << _name << ": EAT BIG BALL" << std::endl;
+            std::cout << _name << ": EAT BIG BALL" << std::endl;
+            eatBigBall(dt);
             break;
         case TRANSFER_AMMUNITION:
             transferAmmunition(dt);
@@ -444,6 +442,34 @@ void Pacman::eatSmallBall(float dt) {
     if(_beliefs[PACMAN]) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
             turn(directionBack);
+        } else {
+            turn(Wizard::getInstance().availablePosition(getX(), getY()));
+        }
+    } 
+    else if (_beliefs[CROSSING]) {
+        if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
+            turn(Wizard::getInstance().availablePositionWithBall(getX(), getY()));
+        }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
+    } else if (_beliefs[BIG_BALL] && !_beliefs[TRAIL]) {
+        if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+            turn(directionBack);
+        } else {
+            turn(Wizard::getInstance().availablePositionExceptCurrent(getX(), getY(), getDirection()));
+        }     
+    } else {
+        move(dist);
+    }
+}
+
+void Pacman::eatBigBall(float dt) {
+    float dist = getSpeed() * dt;
+    int directionBack = turnBack();
+    if(_beliefs[PACMAN]) {
+        if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+            turn(directionBack);
         }else {
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
         }
@@ -456,7 +482,8 @@ void Pacman::eatSmallBall(float dt) {
         _previousY = round(getY());
         move(dist);
     } else {
-        move(dist); 
+        move(dist);
+        sendMessage(EAT_GHOST);
     }
 }
 
@@ -515,6 +542,8 @@ void Pacman::eatGhost(float dt) {
     } else {
         move(dist);
     }
+
+    _messages[EAT_GHOST] = false;
 }
 
 void Pacman::beHealed(float dt) {
@@ -674,8 +703,11 @@ void Pacman::analyseMessage(Message msg) {
             break;
         case BE_HEALED:
             _messages[BE_HEALED] = true;
+        case EAT_GHOST:
+            _messages[EAT_GHOST] = true;
+            break;
         default:
-        break;
+            break;
     }
 }
 
@@ -738,6 +770,7 @@ void Pacman::update(float dt) {
     //reactive(dt);
     deliberative(dt);
 }
+
 
 void Pacman::backAgain() {
     _posX = 9.0f;

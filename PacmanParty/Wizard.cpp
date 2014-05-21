@@ -236,6 +236,31 @@ int Wizard::availablePositionWithGhost(float x, float y) {
     return availablePosition(x, y);
 }
 
+int Wizard::availablePositionExceptCurrent(float x, float y, int dir) {
+    int index = positionToIndex(x, y);
+    std::vector<int> positions = availablePositions(index);
+    int size = (int)positions.size();
+    if(!size) {
+        std::cout << "nao encontrei posicoes" << std::endl;
+        return -1;
+    }
+    int chosenDir = positions[rand() % size];
+    while (size != 1 && chosenDir == dir) {
+        chosenDir = positions[rand() % size];
+    }
+
+    std::cout << "CURRENT DIR: " << dir 
+        << " NEXT DIR: " << chosenDir << "SIZE: " << size
+        << "POSITION: " << index 
+        << " SYMBOL 1: " << _map[upPosition(index, 2)]
+        << " SYMBOL 2: " << _map[leftPosition(index, 2)]
+        << " SYMBOL 3: " << _map[rightPosition(index, 2)]
+        << " SYMBOL 4: " << _map[downPosition(index, 2)]
+        << std::endl;
+    return chosenDir;
+}
+
+
 int Wizard::availablePosition(int index) {
 	std::vector<int> positions = availablePositions(index);
     int size = (int)positions.size();
@@ -444,7 +469,7 @@ bool Wizard::isAmmunition(float x, float y, int direction) {
 }
 
 bool Wizard::isBigBall(float x, float y, int direction) {
-    int maxPositions = 3;
+    int maxPositions = 4;
 
     for (int i = 1; i <= maxPositions; i++) {
         if (_map[positionAhead(x, y, direction, i)] == BIG_BALL) {

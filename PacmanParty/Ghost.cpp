@@ -83,8 +83,9 @@ void Ghost::update(float dt) {
             _previousX = round(getX());
             _previousY = round(getY());
             
-        } else if (!getTrouble() && Wizard::getInstance().isPacman(GHOST, getX(), getY(), getDirection())) {
-            move(dist);
+        } else if (!getTrouble() && Wizard::getInstance().isPacman(GHOST, getX(), getY())) {
+            //move(dist);
+            Wizard::getInstance().killPacman(getX(), getY());
         }else if(Wizard::getInstance().canTurn(getX(), getY())) {
             if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
                 turn(Wizard::getInstance().availablePosition(getX(), getY()));

@@ -408,7 +408,13 @@ bool Wizard::isGhostScared(float x, float y, int direction) {
             return true;
         }
     }
+    
     return false;
+}
+
+bool Wizard::inRange(float origX, float origY, float x, float y, float radius) {
+    
+    return (pow(x - origX, 2) + pow(y - origY, 2)) <= pow(radius, 2);
 }
 
 bool Wizard::isPacman(char name, float x, float y, int direction) {
@@ -420,6 +426,22 @@ bool Wizard::isPacman(char name, float x, float y, int direction) {
             return true;
         }
     }
+    return false;
+}
+
+bool Wizard::isPacman(char name, float x, float y) {
+    for (int i = 0; i < _pacmen.size(); i++) {
+        if (_pacmen[i]->getName() != name) {
+            float pX = _pacmen[i]->getX();
+            float pY = _pacmen[i]->getY();
+            
+            if (!_pacmen[i]->getSick() && inRange(x, y, pX, pY, 2)) {
+                std::cout << "Found a pacman" << std::endl;
+                return true;
+            }
+        }
+    }
+    
     return false;
 }
 
@@ -781,6 +803,18 @@ void Wizard::killPacman(char pacman) {
     for(int i = 0; i < _pacmen.size(); i++) {
         if (pacman == _pacmen[i]->getName()) {
             _pacmen[i]->detonate();
+        }
+    }
+}
+
+void Wizard::killPacman(float x, float y) {
+    for (int i = 0; i < _pacmen.size(); i++) {
+        float pX = _pacmen[i]->getX();
+        float pY = _pacmen[i]->getY();
+        
+        if (!_pacmen[i]->getSick() && inRange(x, y, pX, pY, 2)) {
+            _pacmen[i]->detonate();
+            return;
         }
     }
 }

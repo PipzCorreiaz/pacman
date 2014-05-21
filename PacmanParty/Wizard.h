@@ -62,6 +62,7 @@ public:
     void ghostHidden(float x, float y);
     int shotGhost(float x, float y);
     void killPacman(char pacman);
+    void killPacman(float x, float y);
 
     
     bool isWall(float, float, int);
@@ -69,6 +70,7 @@ public:
     bool isGhost(float x, float y, int direction);
     bool isGhostScared(float x, float y, int direction);
     bool isPacman(char, float, float, int);
+    bool isPacman(char, float, float);
     bool isPacmanOnSights(char name, float x, float y, int direction);
     bool isPacmanOnAnyDirection(char name, float x, float y);
     bool isAmmunition(float x, float y, int direction);
@@ -92,6 +94,8 @@ public:
     void removeAmmunitionFromQueue();
     
     void broadcastMessage(Message msg);
+    
+    bool inRange(float origX, float origY, float x, float y, float radius);
     
 private:
     Wizard() {};

@@ -68,23 +68,23 @@ void Game::update() {
     	present_time = glutGet(GLUT_ELAPSED_TIME); /* in milliseconds */
     	dt = 0.001f*(present_time - last_time); /* in seconds */
 
-        std::thread p1(&Pacman::update, _pac, dt);
-        std::thread p2(&Pacman::update, _poc, dt);
-        std::thread g1(&Ghost::update, _ghostOne, dt);
-        std::thread g2(&Ghost::update, _ghostTwo, dt);
-        std::thread g3(&Ghost::update, _ghostThree, dt);
+//        std::thread p1(&Pacman::update, _pac, dt);
+//        std::thread p2(&Pacman::update, _poc, dt);
+//        std::thread g1(&Ghost::update, _ghostOne, dt);
+//        std::thread g2(&Ghost::update, _ghostTwo, dt);
+//        std::thread g3(&Ghost::update, _ghostThree, dt);
 
-            // _pac->update(dt);
-            //_poc->update(dt);
-            // _ghostOne->update(dt);
-            // _ghostTwo->update(dt);
-            // _ghostThree->update(dt);
+            _pac->update(dt);
+            _poc->update(dt);
+            _ghostOne->update(dt);
+            _ghostTwo->update(dt);
+            _ghostThree->update(dt);
 
-        p1.join();
-        p2.join();
-        g1.join();
-        g2.join();
-        g3.join();
+//        p1.join();
+//        p2.join();
+//        g1.join();
+//        g2.join();
+//        g3.join();
         
         last_time = present_time;
     } 

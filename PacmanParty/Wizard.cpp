@@ -526,7 +526,7 @@ int Wizard::directionToTurn(char name, float x, float y) {
             }
         }
     }
-    return 1000;
+    return -1;
 }
 
 int Wizard::smartDirection(char name, float x, float y) {
@@ -557,7 +557,7 @@ int Wizard::smartDirection(char name, float x, float y) {
             }
         }
     }
-    return 1000;
+    return -1;
 }
 
 void Wizard::treatIfSick(char name, float x, float y, int direction) {

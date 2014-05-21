@@ -260,6 +260,62 @@ int Wizard::availablePositionExceptCurrent(float x, float y, int dir) {
     return chosenDir;
 }
 
+int Wizard::runToCrossing(float x, float y, int direction, std::string crossingMap) {
+    bool continue1, continue2;
+    continue1 = continue2 = true;
+    int index, index1, index2, direction1, direction2;
+    index = positionToIndex(x, y);
+    index1 = index2 = direction1 = direction2 = 0;
+
+    for (int i = 0; (continue1 || continue2) ; i++) {
+        if(direction == UP || direction == DOWN) {
+            if(continue1) {
+                index1 = upPosition(index, i);
+                direction1 = UP;    
+            }
+            if(continue2) {
+                index2 = downPosition(index, i);
+                direction2 = DOWN;
+            }
+        } else if (direction == RIGHT || direction == LEFT){
+            if(continue1) {
+                index1 = leftPosition(index, i);
+                direction1 = RIGHT;
+            }
+            if(continue2) {
+                index2 = rightPosition(index, i);
+                direction2 = LEFT;
+            }
+        }
+
+        if (continue1 && crossingMap[index1] == CROSSING) {
+            return direction1;
+        } else if (_map[index1] == WALL || _map[index1] == ' ' || _map[index1] == GHOST) {
+            continue1 = false;
+        }
+
+        if (continue2 && crossingMap[index2] == CROSSING)  {
+            return direction2;
+        } else if (_map[index2] == WALL || _map[index2] == ' ' || _map[index2] == GHOST) {
+            continue2 = false;
+        }
+    }
+    return -1;
+}
+
+int Wizard::directionOnCrossing(float x, float y, int direction) {
+    int direction1, direction2 = 0;
+    direction1 = (direction+1) % 4;
+    direction2 = (direction-1) % 4;
+    if(isAvailableDirection(x,y, direction1)) {
+        return direction1;
+    } else {
+        return direction2;
+    }
+
+    return -1;
+}
+
 
 int Wizard::availablePosition(int index) {
 	std::vector<int> positions = availablePositions(index);
@@ -410,6 +466,7 @@ bool Wizard::isPacmanOnAnyDirection(char name, float x, float y) {
     bool continueDown = true;
     bool continueLeft = true;
     bool continueRight = true;
+    int index = positionToIndex(x,y);
     int indexUp = 0;
     int indexDown = 0;
     int indexLeft = 0;
@@ -418,16 +475,16 @@ bool Wizard::isPacmanOnAnyDirection(char name, float x, float y) {
     for (int i = 0; (continueUp || continueDown || continueLeft || continueRight) ; i++) {
 
         if(continueUp) {
-            indexUp = upPosition(positionToIndex(x, y), i);    
+            indexUp = upPosition(index, i);    
         }
         if(continueDown) {
-            indexDown = downPosition(positionToIndex(x, y), i);
+            indexDown = downPosition(index, i);
         }
         if(continueLeft) {
-            indexLeft = leftPosition(positionToIndex(x, y), i);
+            indexLeft = leftPosition(index, i);
         }
         if(continueRight) {
-            indexRight = rightPosition(positionToIndex(x, y), i);
+            indexRight = rightPosition(index, i);
         }
         
         if (continueUp && (_map[indexUp] != name && (_map[indexUp] == PACMAN || _map[indexUp] == POCMAN))) {
@@ -526,7 +583,7 @@ int Wizard::friendDirection(char name) {
             return (_pacmen[i]->getDirection());
         }
     }
-    return 1000;
+    return -1;
 }
 
 int Wizard::directionToTurn(char name, float x, float y) {

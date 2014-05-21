@@ -24,6 +24,9 @@ Game::Game(){
     
     _pac = new Pacman(9.0f, 6.0f, yellow, pink);
     _poc = new Pacman(-9.0f, 6.0f, yellow, lightBlue);
+
+    _pac->setCrossingMap(Wizard::getInstance().getMap());
+    _poc->setCrossingMap(Wizard::getInstance().getMap());
     
     _pac->setName(PACMAN);
     _poc->setName(POCMAN);

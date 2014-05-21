@@ -7,6 +7,7 @@
 #include <GL/glut.h>
 #endif
 
+#include <string.h>
 #include "Maze.h"
 #include "Ghost.h"
 #include "Camera.h"

@@ -94,6 +94,27 @@ int Pacman::getGhostCatched() {
     return _ghostCatched;
 }
 
+std::string Pacman::getCrossingMap() {
+    return _crossingMap;
+}
+
+void Pacman::setCrossingMap(std::string map) {
+    _crossingMap = map;
+}
+
+void Pacman::printCrossingMap() {
+    int limit = 0;
+    for (int i = 0; i < _crossingMap.length(); i++) {
+        std::cout << _crossingMap[i];
+        limit++;
+        if (limit == 55) {
+            std::cout << std::endl;
+            limit = 0;
+        }
+    }
+    
+    std::cout << std::endl;
+}
 
 void Pacman::cleanUpBullets() {
     std::vector<Bullet*> newBullets;
@@ -170,6 +191,12 @@ void Pacman::draw() {
     
 }
 
+void Pacman::changeCrossingMap(float x, float y, char symbol) {
+    int index = Wizard::getInstance().positionToIndex(x, y);
+    _crossingMap[index] = symbol;
+}
+
+
 void Pacman::move(float dist) {
     std::vector<float> nextPosition = Character::nextPosition(dist);
     char symbol = Wizard::getInstance().getMapSymbol(nextPosition[0], nextPosition[1]);
@@ -238,6 +265,7 @@ void Pacman::percept(float dt) {
         _beliefs[SCARED_GHOST] = false;
     }        
 
+    
     if (Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection())) {
         _beliefs[GHOST] = true;
     } else {
@@ -269,6 +297,8 @@ void Pacman::percept(float dt) {
 
     if (Wizard::getInstance().canTurn(getX(), getY(), getDirection())) {
         _beliefs[CROSSING] = true;
+        changeCrossingMap(getX(), getY(), CROSSING);
+
     } else {
         _beliefs[CROSSING] = false;
     }
@@ -291,6 +321,7 @@ void Pacman::options() {
         _desires[RUNAWAY] = false;
     }
 
+    
     if (_beliefs[GHOST]) {
         _desires[KILL_GHOST] = true;
     } else {
@@ -632,16 +663,27 @@ void Pacman::healPacman(float dt) {
 void Pacman::runaway(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
-    if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
-        turn(directionBack);
-    } else {
-        int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
-        turn(dir);
+
+    if (_beliefs[CROSSING]) {
+        if (!(_previousX == round(getX()) && _previousY == round(getY()))) {
+            turn(Wizard::getInstance().directionOnCrossing(getX(), getY(), getDirection()));
+        }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
     }
 
-    _previousX = round(getX());
-    _previousY = round(getY());
-    move(dist);
+    if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+        turn(directionBack);
+        if(Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection())) {
+            int dir = Wizard::getInstance().runToCrossing(getX(), getY(), getDirection(), getCrossingMap());
+            if (Wizard::getInstance().isAvailableDirection(getX(), getY(), dir)) {
+                turn(dir);
+            }
+        }
+    } else {
+        move(dist);
+    }
 }
 
 

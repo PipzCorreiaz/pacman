@@ -28,11 +28,13 @@ public:
     int getAmmunitions();
     float* getScarfColor();
     int getGhostCatched();
+    std::string getCrossingMap();
     
     void setName(char);
     void setScarfColor(float color[3]);
     void setGhostCatched();
     void setAmmunitions(int value);
+    void setCrossingMap(std::string);
     
     void draw();
     void move(float);
@@ -58,6 +60,9 @@ public:
     void startChat();
     void sendMessage(int message);
     Message receiveMessage();
+
+    void changeCrossingMap(float, float, char symbol);
+    void printCrossingMap();
 
 private:
     void init();
@@ -89,6 +94,8 @@ private:
     std::map<int, bool> _messages;
     std::queue<Message> _inbox;
     std::thread _chat;
+
+    std::string _crossingMap;
 };
 
 

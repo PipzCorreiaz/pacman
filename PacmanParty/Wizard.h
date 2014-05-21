@@ -7,6 +7,7 @@
 #include <GL/glut.h>
 #endif
 
+#include <string.h>
 #include <fstream>
 #include <queue>
 #include <cmath>
@@ -46,6 +47,8 @@ public:
     int availablePositionExceptCurrent(float x, float y, int dir);
     int availablePositionWithBall(float x, float y);
     int availablePositionWithGhost(float x, float y);
+    int runToCrossing(float x, float y, int direction, std::string map);
+    int directionOnCrossing(float x, float y, int direction);
     bool isAvailableDirection(float x, float y, int direction);
     int availablePosition(int index);
     char getMapSymbol(float x, float y);
@@ -96,6 +99,7 @@ private:
     void operator= (Wizard const&);
     
     void printMap();
+
 
     int positionAhead(float x, float y, int direction, int nPositions);
     std::vector<int> availablePositions(int index);

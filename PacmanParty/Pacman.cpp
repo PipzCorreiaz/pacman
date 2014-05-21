@@ -311,7 +311,7 @@ void Pacman::options() {
         _desires[EAT_BIG_BALL] = false;
     }
 
-    if (_beliefs[PACMAN_SICK]) {
+    if (_beliefs[PACMAN_SICK] || _messages[BE_HEALED]) {
         _desires[HEAL_PACMAN] = true;
     } else {
         _desires[HEAL_PACMAN] = false;
@@ -421,7 +421,7 @@ void Pacman::plan(float dt) {
             //std::cout << _name << ": RUNAWAY" << std::endl;
             break;
         case HEAL_PACMAN:
-            heal_pacman(dt);
+            healPacman(dt);
             //std::cout << _name << ": HEAL PACMAN" << std::endl;
             break;
         case EAT_BIG_BALL:
@@ -522,10 +522,6 @@ void Pacman::beHealed(float dt) {
     int direction = 0;
     int directionBack = turnBack();
 
-    if(getSick()) {
-        sendMessage(BE_HEALED);
-    }
-
     if(getSick() && _beliefs[PACMAN]) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
             turn(directionBack);
@@ -571,17 +567,41 @@ void Pacman::beHealed(float dt) {
     }
 }
 
-void Pacman::heal_pacman(float dt) {
+void Pacman::healPacman(float dt) {
     float dist = getSpeed() * dt;
     std::vector<float> nextPosition = Character::nextPosition(dist);
     Wizard::getInstance().treatIfSick(getName(), nextPosition[0], nextPosition[1], getDirection());
     int directionBack = turnBack();
 
-    if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
-        turn(directionBack);
+
+    if(_beliefs[PACMAN_SICK] || _beliefs[PACMAN]) {
+        if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+            turn(directionBack);
+        } else {
+            turn(Wizard::getInstance().availablePosition(getX(), getY(), getDirection()));
+        }
+    } else if (_beliefs[CROSSING]) {
+        if (!(_previousX == round(getX()) && _previousY == round(getY()))) {
+            int dir = Wizard::getInstance().smartDirection(getName(), getX(), getY());
+            if (Wizard::getInstance().isAvailableDirection(getX(), getY(), dir)) {
+                turn(dir);
+            } else {
+                dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
+                turn(dir);
+            }
+        }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
     } else {
-        turn(Wizard::getInstance().availablePosition(getX(), getY(), getDirection()));
+        move(dist);
     }
+    
+    _messages[HEAL_PACMAN] = false;
+
+
+
+
 
     //turn(directionBack);
 }
@@ -652,6 +672,8 @@ void Pacman::analyseMessage(Message msg) {
         case TRANSFER_AMMUNITION:
             _messages[TRANSFER_AMMUNITION] = true;
             break;
+        case BE_HEALED:
+            _messages[BE_HEALED] = true;
         default:
         break;
     }
@@ -708,6 +730,10 @@ void Pacman::update(float dt) {
     }
     if (_ammunitions == 0) {
         sendMessage(TRANSFER_AMMUNITION);
+    }
+
+    if(getSick()) {
+        sendMessage(BE_HEALED);
     }
     //reactive(dt);
     deliberative(dt);

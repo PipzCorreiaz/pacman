@@ -42,7 +42,7 @@ public:
     bool reconsider(float dt);
     void plan(float dt);
     void beHealed(float dt);
-    void heal_pacman(float dt);
+    void healPacman(float dt);
     void reactive(float dt);
     void deliberative(float dt);
     void update(float dt);

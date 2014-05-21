@@ -35,7 +35,19 @@ int Message::getMessage() {
 
 std::string Message::toString() {
     std::ostringstream oss;
+    std::string type;
 
-    oss << getSender() << " says: " << getMessage() << " at (" << getX() << ", " << getY() << ")";
+    switch (getMessage()) {
+        case TRANSFER_AMMUNITION:
+            type = "TRANSFER_AMMUNITION";
+            break;
+        case BE_HEALED:
+            type = "BE_HEALED";
+            break;
+        default:
+            break;
+    }
+
+    oss << getSender() << " says: " << type << " at (" << getX() << ", " << getY() << ")";
     return oss.str();
 }

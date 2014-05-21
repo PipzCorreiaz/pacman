@@ -342,11 +342,11 @@ int Pacman::filter() {
     if (_desires[KILL_GHOST]) {
         return KILL_GHOST;
     }
-    if (_desires[EAT_BIG_BALL]) {
-        return EAT_BIG_BALL;
-    }
     if (_desires[HEAL_PACMAN]) {
         return HEAL_PACMAN;
+    }
+    if (_desires[EAT_BIG_BALL]) {
+        return EAT_BIG_BALL;
     }
     if (_desires[TRANSFER_AMMUNITION]) {
         return TRANSFER_AMMUNITION;
@@ -422,8 +422,7 @@ void Pacman::plan(float dt) {
             //std::cout << _name << ": HEAL PACMAN" << std::endl;
             break;
         case EAT_BIG_BALL:
-            std::cout << _name << ": EAT BIG BALL" << std::endl;
-            eatBigBall(dt);
+            //std::cout << _name << ": EAT BIG BALL" << std::endl;
             break;
         case TRANSFER_AMMUNITION:
             transferAmmunition(dt);
@@ -627,33 +626,22 @@ void Pacman::healPacman(float dt) {
     }
     
     _messages[HEAL_PACMAN] = false;
-
-
-
-
-
-    //turn(directionBack);
 }
 
 
 void Pacman::runaway(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
-    //if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
-        if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
-            turn(directionBack);
-        } else {
-            int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
-            turn(dir);
-        }
-    //}
+    if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+        turn(directionBack);
+    } else {
+        int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
+        turn(dir);
+    }
 
     _previousX = round(getX());
     _previousY = round(getY());
     move(dist);
-    // turn(directionBack);
-    // move(dist);
-    //_hasPlan = false;
 }
 
 
@@ -707,7 +695,7 @@ void Pacman::analyseMessage(Message msg) {
             _messages[EAT_GHOST] = true;
             break;
         default:
-            break;
+        break;
     }
 }
 
@@ -770,7 +758,6 @@ void Pacman::update(float dt) {
     //reactive(dt);
     deliberative(dt);
 }
-
 
 void Pacman::backAgain() {
     _posX = 9.0f;

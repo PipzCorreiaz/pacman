@@ -10,6 +10,7 @@
 #include <string>
 #include <ostream>
 #include <iostream>
+#include "Constraints.h"
 
 class Message {
     

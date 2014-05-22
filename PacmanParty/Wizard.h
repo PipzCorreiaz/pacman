@@ -46,7 +46,7 @@ public:
     int availablePosition(float x, float y, int dir);
     int availablePositionExceptCurrent(float x, float y, int dir);
     int availablePositionWithBall(float x, float y);
-    int availablePositionWithGhost(float x, float y);
+    int availablePositionWithScaredGhost(float x, float y);
     int runToCrossing(float x, float y, int direction, std::string map);
     int directionOnCrossing(float x, float y, int direction);
     bool isAvailableDirection(float x, float y, int direction);
@@ -80,6 +80,7 @@ public:
     bool isPacmanSick(char name, float x, float y, int direction);
     bool isGhostTrail(float x, float y);
     bool isGhostOnSight(float x, float y, int direction);
+    bool isScaredGhostOnSight(float x, float y, int direction);
     float distance(float x, float y, float x2, float y2);
     int friendDirection(char name);
     int directionToTurn(char name, float x, float y);

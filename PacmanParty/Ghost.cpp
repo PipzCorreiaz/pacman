@@ -19,7 +19,7 @@ Ghost::Ghost(int posx, int posy, int id, float color[3]) : Character(color) {
     _angle = DOWN_ANGLE;
     _direction = DOWN;
     _speed = GHOST_NORMAL_SPEED; // unidades do labirinto per second
-    _trouble = true;  // TESTING
+    _trouble = false;
     _ghostId = id;
     _hidden = false;
     

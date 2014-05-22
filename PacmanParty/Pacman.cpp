@@ -261,7 +261,7 @@ void Pacman::percept(float dt) {
     }
 
     // if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection())) {
-    if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1])) {
+    if(Wizard::getInstance().isScaredGhostOnSight(getX(), getY(), getDirection())) {
         _beliefs[SCARED_GHOST] = true;
     } else {
         _beliefs[SCARED_GHOST] = false;
@@ -568,7 +568,7 @@ void Pacman::eatGhost(float dt) {
         move(dist);
     } else if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
-            turn(Wizard::getInstance().availablePositionWithGhost(getX(), getY()));
+            turn(Wizard::getInstance().availablePositionWithScaredGhost(getX(), getY()));
         }
         _previousX = round(getX());
         _previousY = round(getY());

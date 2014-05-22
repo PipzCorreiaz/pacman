@@ -351,34 +351,34 @@ void Pacman::plan(float dt) {
 
     switch (_intention) {
         case BE_HEALED:
-            //std::cout << _name << ": BE HEALED" << std::endl;
+            std::cout << _name << ": BE HEALED" << std::endl;
             beHealed(dt);
             break;
         case KILL_GHOST:
-            //std::cout << _name << ": KILL GHOST" << std::endl;
+            std::cout << _name << ": KILL GHOST" << std::endl;
             killGhost(dt);
             break;
         case EAT_GHOST:
             eatGhost(dt);
             break;
         case RUNAWAY:
-            //std::cout << _name << ": RUNAWAY" << std::endl;
+            std::cout << _name << ": RUNAWAY" << std::endl;
             runaway(dt);
             break;
         case HEAL_PACMAN:
-            //std::cout << _name << ": HEAL PACMAN" << std::endl;
+            std::cout << _name << ": HEAL PACMAN" << std::endl;
             healPacman(dt);
             break;
         case EAT_BIG_BALL:
-            //std::cout << _name << ": EAT BIG BALL" << std::endl;
+            std::cout << _name << ": EAT BIG BALL" << std::endl;
             eatBigBall(dt);
             break;
         case TRANSFER_AMMUNITION:
-            //std::cout << _name << ": TRANSFER AMMUNITION" << std::endl;
+            std::cout << _name << ": TRANSFER AMMUNITION" << std::endl;
             transferAmmunition(dt);
             break;
         default:
-            //std::cout << _name << ": EAT SMALL BALL" << std::endl;
+            std::cout << _name << ": EAT SMALL BALL" << std::endl;
             eatSmallBall(dt);
             break;
     }

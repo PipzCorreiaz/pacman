@@ -272,12 +272,13 @@ void Pacman::update(float dt) {
             setGhostCatched();
         }
     }
-     if(getSick()) {
+    if(getSick()) {
         sendMessage(BE_HEALED);
     } else if (_ammunitions == 0) {
         sendMessage(TRANSFER_AMMUNITION);
     }
 
+    
     //reactive(dt);
     deliberative(dt);
     //hybrid(dt);
@@ -420,9 +421,7 @@ void Pacman::eatBigBall(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
 
-    if(getSick()) {
-        _hasPlan = false;    
-    } else if(_beliefs[PACMAN]) {
+    if(_beliefs[PACMAN]) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
             turn(directionBack);
         }else {
@@ -597,23 +596,49 @@ void Pacman::healPacman(float dt) {
     _messages[BE_HEALED] = false;
 }
 
+// void Pacman::runaway(float dt) {
+//     float dist = getSpeed() * dt;
+//     int directionBack = turnBack();
+
+//     if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+//         turn(directionBack);
+//     } else {
+//         int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
+//         turn(dir);
+//     }
+
+//     _previousX = round(getX());
+//     _previousY = round(getY());
+//     move(dist);
+//     _hasPlan = false;
+// }
+
+
 void Pacman::runaway(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
 
     if(getSick()) {
         _hasPlan = false;    
+    } else if (_beliefs[CROSSING]) {
+        if (!(_previousX == round(getX()) && _previousY == round(getY()))) {
+            turn(Wizard::getInstance().directionOnCrossing(getX(), getY(), getDirection()));
+        }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
     } else if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
         turn(directionBack);
+        if(Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection())) {
+            int dir = Wizard::getInstance().runToCrossing(getX(), getY(), getDirection(), getCrossingMap());
+            std::cout << "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL " << dir << std::endl;
+            turn(dir);
+        }
+        move(dist);
     } else {
-        int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
-        turn(dir);
+        move(dist);
     }
-
-    _previousX = round(getX());
-    _previousY = round(getY());
-    move(dist);
-    _hasPlan = false;
+        _hasPlan = false;
 }
 
 void Pacman::transferAmmunition(float dt) {
@@ -915,19 +940,43 @@ void Pacman::healPacmanHybrid(float dt) {
     _messages[BE_HEALED] = false;
 }
 
+// void Pacman::runawayHybrid(float dt) {
+//     float dist = getSpeed() * dt;
+//     int directionBack = turnBack();
+//     if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+//         turn(directionBack);
+//     } else {
+//         int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
+//         turn(dir);
+//     }
+
+//     _previousX = round(getX());
+//     _previousY = round(getY());
+//     move(dist);
+// }
+
 void Pacman::runawayHybrid(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
-    if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
-        turn(directionBack);
-    } else {
-        int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
-        turn(dir);
-    }
 
-    _previousX = round(getX());
-    _previousY = round(getY());
-    move(dist);
+    if (_beliefs[CROSSING]) {
+        if (!(_previousX == round(getX()) && _previousY == round(getY()))) {
+            turn(Wizard::getInstance().directionOnCrossing(getX(), getY(), getDirection()));
+        }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
+    } else if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+        turn(directionBack);
+        if(Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection())) {
+            int dir = Wizard::getInstance().runToCrossing(getX(), getY(), getDirection(), getCrossingMap());
+            std::cout << "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL " << dir << std::endl;
+            turn(dir);
+        }
+        move(dist);
+    } else {
+        move(dist);
+    }
 }
 
 void Pacman::transferAmmunitionHybrid(float dt) {

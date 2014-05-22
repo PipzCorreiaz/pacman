@@ -309,7 +309,7 @@ int Wizard::directionOnCrossing(float x, float y, int direction) {
     direction2 = (direction-1) % 4;
     if(isAvailableDirection(x,y, direction1)) {
         return direction1;
-    } else {
+    } else if(isAvailableDirection(x,y, direction2)) {
         return direction2;
     }
 

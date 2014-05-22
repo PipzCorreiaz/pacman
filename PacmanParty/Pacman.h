@@ -43,14 +43,12 @@ public:
     int filter();
     bool reconsider(float dt);
     void plan(float dt);
-    void beHealed(float dt);
-    void healPacman(float dt);
+    void hybridPlan(float dt);
     void reactive(float dt);
     void deliberative(float dt);
+    void hybrid(float dt);
     void update(float dt);
     
-    void runaway(float dt);
-    void transferAmmunition(float dt);
     void backAgain();
     void eat(float x, float y, char symbol);
     void detonate();
@@ -75,6 +73,19 @@ private:
     void eatBigBall(float dt);
     void killGhost(float dt);
     void eatGhost(float dt);
+    void runaway(float dt);
+    void transferAmmunition(float dt);
+    void beHealed(float dt);
+    void healPacman(float dt);
+
+    void eatSmallBallHybrid(float dt);
+    void eatBigBallHybrid(float dt);
+    void killGhostHybrid(float dt);
+    void eatGhostHybrid(float dt);
+    void runawayHybrid(float dt);
+    void transferAmmunitionHybrid(float dt);
+    void beHealedHybrid(float dt);
+    void healPacmanHybrid(float dt);
 
     void analyseMessage(Message msg);
 
@@ -91,6 +102,7 @@ private:
     std::map<char, bool> _beliefs;
     std::map<int, bool> _desires;
     int _intention;
+
     bool _hasPlan;
 
     std::map<int, bool> _messages;

@@ -64,6 +64,8 @@ public:
     void changeCrossingMap(float, float, char symbol);
     void printCrossingMap();
 
+    void catchGhost();
+
 private:
     void init();
     void cleanUpBullets();

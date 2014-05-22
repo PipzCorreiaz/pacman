@@ -60,6 +60,7 @@ public:
     
     void ghostsTrouble();
     void ghostHidden(float x, float y);
+    bool isGhostInRange(float x, float y);
     int shotGhost(float x, float y);
     void killPacman(char pacman);
     void killPacman(float x, float y);
@@ -69,6 +70,7 @@ public:
     bool isBall(float x, float y);
     bool isGhost(float x, float y, int direction);
     bool isGhostScared(float x, float y, int direction);
+    bool isGhostScared(float x, float y);
     bool isPacman(char, float, float, int);
     bool isPacman(char, float, float);
     bool isPacmanOnSights(char name, float x, float y, int direction);

@@ -412,6 +412,20 @@ bool Wizard::isGhostScared(float x, float y, int direction) {
     return false;
 }
 
+bool Wizard::isGhostScared(float x, float y) {
+    for (int i = 0; i < _ghosts.size(); i++) {
+        float pX = _ghosts[i]->getX();
+        float pY = _ghosts[i]->getY();
+
+        if (!_ghosts[i]->getTrouble() && inRange(x, y, pX, pY, 2)) {
+            std::cout << "Found a ghost" << std::endl;
+            return true;
+        }
+    }
+    
+    return false;
+}
+
 bool Wizard::inRange(float origX, float origY, float x, float y, float radius) {
     
     return (pow(x - origX, 2) + pow(y - origY, 2)) <= pow(radius, 2);
@@ -783,6 +797,23 @@ void Wizard::ghostHidden(float x, float y) {
         }
     }
     
+}
+
+bool Wizard::isGhostInRange(float x, float y) {
+    for (int i = 0; i < _ghosts.size(); i++) {
+        float pX = _ghosts[i]->getX();
+        float pY = _ghosts[i]->getY();
+        
+        if (_ghosts[i]->getTrouble() && inRange(x, y, pX, pY, 2)) {
+            _ghosts[i]->setHidden(true);
+            _ghosts[i]->setTrouble(false);
+            _ghosts[i]->backAgain();
+            glutTimerFunc(5000, theComeBack, i);
+            return true;
+        }
+    }
+
+    return false;
 }
 
 int Wizard::shotGhost(float x, float y) {

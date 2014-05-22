@@ -208,6 +208,7 @@ void Pacman::move(float dist) {
         eat(nextPosition[0], nextPosition[1], symbol);
     }
     Character::move(dist);
+    catchGhost();
     Wizard::getInstance().changeMap(getX(), getY(), getName());
     setLastSymbol(symbol);
 }
@@ -259,7 +260,8 @@ void Pacman::percept(float dt) {
         _beliefs[WALL] = false;
     }
 
-    if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection())) {
+    // if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection())) {
+    if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1])) {
         _beliefs[SCARED_GHOST] = true;
     } else {
         _beliefs[SCARED_GHOST] = false;
@@ -393,7 +395,8 @@ bool Pacman::reconsider(float dt) {
         return true;
     }
 
-    if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection()) != _beliefs[SCARED_GHOST]) {
+    // if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1], getDirection()) != _beliefs[SCARED_GHOST]) {
+    if(Wizard::getInstance().isGhostScared(nextPosition[0], nextPosition[1]) != _beliefs[SCARED_GHOST]) {
         return true;
     }        
 
@@ -815,8 +818,8 @@ void Pacman::eat(float x, float y, char symbol) {
                 _balls++;
                 break;
             case SCARED_GHOST:
-                Wizard::getInstance().ghostHidden(x, y);
-                setGhostCatched();
+                // Wizard::getInstance().ghostHidden(x, y);
+                // setGhostCatched();
 				break;
             case AMMUNITION:
                 _ammunitions += BULLETS_PER_AMMUNITION;
@@ -840,6 +843,12 @@ void Pacman::detonate() {
 
 void Pacman::treat() {
     setSick(false);
+}
+
+void Pacman::catchGhost() {
+    if (Wizard::getInstance().isGhostInRange(getX(), getY())) {
+        setGhostCatched();
+    }
 }
 
 

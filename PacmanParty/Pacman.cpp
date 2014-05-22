@@ -272,13 +272,12 @@ void Pacman::update(float dt) {
             setGhostCatched();
         }
     }
-    if (_ammunitions == 0) {
+     if(getSick()) {
+        sendMessage(BE_HEALED);
+    } else if (_ammunitions == 0) {
         sendMessage(TRANSFER_AMMUNITION);
     }
 
-    if(getSick()) {
-        sendMessage(BE_HEALED);
-    }
     //reactive(dt);
     deliberative(dt);
     //hybrid(dt);
@@ -389,19 +388,17 @@ void Pacman::eatSmallBall(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
 
-    if(_beliefs[PACMAN]) {
+    if(getSick()) {
+        _hasPlan = false;    
+    } else if(_beliefs[PACMAN]) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
-            std::cout << "BACK" << std::endl;
             turn(directionBack);
         } else {
-            std::cout << "RANDOM" << std::endl;
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
         }
     } 
     else if (_beliefs[CROSSING]) {
-        std::cout << "CROSSING" << std::endl;
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
-            std::cout << "CROSSING AVAILABLE" << std::endl;
             turn(Wizard::getInstance().availablePositionWithBall(getX(), getY()));
         }
         _previousX = round(getX());
@@ -414,7 +411,6 @@ void Pacman::eatSmallBall(float dt) {
             turn(Wizard::getInstance().availablePositionExceptCurrent(getX(), getY(), getDirection()));
         }     
     } else {
-        std::cout << "ELSE" << std::endl;
         move(dist);
     }
     _hasPlan = false;
@@ -424,7 +420,9 @@ void Pacman::eatBigBall(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
 
-    if(_beliefs[PACMAN]) {
+    if(getSick()) {
+        _hasPlan = false;    
+    } else if(_beliefs[PACMAN]) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
             turn(directionBack);
         }else {
@@ -450,7 +448,9 @@ void Pacman::killGhost(float dt) {
 
     int directionBack = turnBack();
 
-    if (_ammunitions == 0) {
+     if(getSick()) {
+        _hasPlan = false;    
+    } else if (_ammunitions == 0) {
         _hasPlan = false;
     } else if(_beliefs[PACMAN]) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
@@ -485,7 +485,9 @@ void Pacman::eatGhost(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
 
-    if (_beliefs[GHOST]) {
+     if(getSick()) {
+        _hasPlan = false;    
+    } else if (_beliefs[GHOST]) {
         _hasPlan = false;
     } else if(_beliefs[PACMAN]) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
@@ -565,7 +567,9 @@ void Pacman::healPacman(float dt) {
     Wizard::getInstance().treatIfSick(getName(), nextPosition[0], nextPosition[1], getDirection());
     int directionBack = turnBack();
 
-    if (!_messages[BE_HEALED]) {
+     if(getSick()) {
+        _hasPlan = false;    
+    } else if (!_messages[BE_HEALED]) {
         _hasPlan = false;
     } else  if(_beliefs[PACMAN_SICK] || _beliefs[PACMAN]) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
@@ -597,7 +601,9 @@ void Pacman::runaway(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
 
-    if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
+    if(getSick()) {
+        _hasPlan = false;    
+    } else if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
         turn(directionBack);
     } else {
         int dir = Wizard::getInstance().availablePosition(getX(), getY(), getDirection());
@@ -614,12 +620,15 @@ void Pacman::transferAmmunition(float dt) {
     float dist = getSpeed() * dt;
     int directionBack = turnBack();
 
-    if (_beliefs[PACMAN_SICK]) {
+    if(getSick()) {
+        _hasPlan = false;    
+    } else if (_beliefs[PACMAN_SICK]) {
         if (Wizard::getInstance().isAvailableDirection(getX(), getY(), directionBack)) {
             turn(directionBack);
         } else {
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
         }
+        _hasPlan = false; 
 
     } else if (_beliefs[PACMAN]) {
         Wizard::getInstance().shareAmmunitions();

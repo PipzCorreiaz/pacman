@@ -1143,7 +1143,7 @@ void Pacman::options() {
         _desires[BE_HEALED] = false;
     }
 
-    if (_ammunitions != 0 && _messages[TRANSFER_AMMUNITION]) {
+    if (_ammunitions > 3 && _messages[TRANSFER_AMMUNITION]) {
         _desires[TRANSFER_AMMUNITION] = true;
     } else {
         _desires[TRANSFER_AMMUNITION] = false;

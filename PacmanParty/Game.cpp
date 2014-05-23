@@ -79,11 +79,11 @@ void Game::update() {
         std::thread g2(&Ghost::update, _ghostTwo, dt);
         std::thread g3(&Ghost::update, _ghostThree, dt);
 
-//            _pac->update(dt);
-//            _poc->update(dt);
-//            _ghostOne->update(dt);
-//            _ghostTwo->update(dt);
-//            _ghostThree->update(dt);
+       // _pac->update(dt);
+       // _poc->update(dt);
+       // _ghostOne->update(dt);
+       // _ghostTwo->update(dt);
+       // _ghostThree->update(dt);
 
         p1.detach();
         p2.detach();

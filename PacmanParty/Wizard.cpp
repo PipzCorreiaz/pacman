@@ -204,25 +204,25 @@ int Wizard::availablePositionWithScaredGhost(float x, float y) {
     stopLeft = stopRight = stopUp = stopDown = false;
     
     for (int i = 0; ; i++) {
-        newIndex = leftPosition(index, 2);
+        newIndex = leftPosition(index, i);
         if(!stopLeft && _map[newIndex] == SCARED_GHOST) {
             return LEFT; 
         }
         if (_map[newIndex] == WALL || _map[newIndex] == ' ') stopLeft = true;
 
-        newIndex = rightPosition(index, 2);
+        newIndex = rightPosition(index, i);
         if(!stopRight && _map[newIndex] == SCARED_GHOST) {
             return RIGHT; 
         }
         if (_map[newIndex] == WALL || _map[newIndex] == ' ') stopRight = true;
 
-        newIndex = upPosition(index, 2);
+        newIndex = upPosition(index, i);
         if(!stopUp && _map[newIndex] == SCARED_GHOST) {
             return UP; 
         }
         if (_map[newIndex] == WALL || _map[newIndex] == ' ') stopUp = true;
 
-        newIndex = downPosition(index, 2);
+        newIndex = downPosition(index, i);
         if(!stopDown && _map[newIndex] == SCARED_GHOST) {
             return DOWN; 
         }

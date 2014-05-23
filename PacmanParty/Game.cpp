@@ -61,6 +61,11 @@ Game::Game(){
 
 }
 
+void Game::setMode(int mode) {
+    _pac->setMode(mode);
+    _poc->setMode(mode);
+}
+
 void Game::update() {
 	float dt;
 
@@ -80,11 +85,11 @@ void Game::update() {
 //            _ghostTwo->update(dt);
 //            _ghostThree->update(dt);
 
-        p1.join();
-        p2.join();
-        g1.join();
-        g2.join();
-        g3.join();
+        p1.detach();
+        p2.detach();
+        g1.detach();
+        g2.detach();
+        g3.detach();
         
         last_time = present_time;
     } 

@@ -63,6 +63,7 @@ public:
     void printCrossingMap();
 
     void catchGhost();
+    void setMode(int);
 
 private:
     void init();
@@ -110,6 +111,7 @@ private:
     std::thread _chat;
 
     std::string _crossingMap;
+    int _mode;
 };
 
 

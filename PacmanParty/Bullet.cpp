@@ -100,7 +100,7 @@ int Bullet::update(float dt) {
     
     if ((abs(index - lastIndex) > 1 && abs(index - lastIndex) < 10)
         || (abs(index - lastIndex) > 55 && abs(index - lastIndex) < 500)) {
-        std::cout << "SERIOUS PROBLEMS: talk to Filipa, she'll know what to do!" << std::endl;
+        //std::cout << "SERIOUS PROBLEMS: talk to Filipa, she'll know what to do!" << std::endl;
     }
     
     char symbol = Wizard::getInstance().getMapSymbol(_x, _y);

@@ -60,6 +60,7 @@ void Pacman::init() {
     _lastSymbol = HALL;
     _ghostCatched = 0;
     _hasPlan = false;
+    _mode = REACTIVE_MODE;
 
     startChat();
 
@@ -100,6 +101,10 @@ std::string Pacman::getCrossingMap() {
 
 void Pacman::setCrossingMap(std::string map) {
     _crossingMap = map;
+}
+
+void Pacman::setMode(int mode) {
+    _mode = mode;
 }
 
 void Pacman::printCrossingMap() {
@@ -278,9 +283,19 @@ void Pacman::update(float dt) {
         sendMessage(TRANSFER_AMMUNITION);
     }
 
-    
+    switch (_mode) {
+        case REACTIVE_MODE:
+            reactive(dt);
+            break;
+        case BDI_MODE:
+            deliberative(dt);
+            break;
+        case HYBRID_MODE:
+            hybrid(dt);
+            break;
+    }
     //reactive(dt);
-    deliberative(dt);
+    //deliberative(dt);
     //hybrid(dt);
 }
 
@@ -351,34 +366,34 @@ void Pacman::plan(float dt) {
 
     switch (_intention) {
         case BE_HEALED:
-            std::cout << _name << ": BE HEALED" << std::endl;
+            //std::cout << _name << ": BE HEALED" << std::endl;
             beHealed(dt);
             break;
         case KILL_GHOST:
-            std::cout << _name << ": KILL GHOST" << std::endl;
+            //std::cout << _name << ": KILL GHOST" << std::endl;
             killGhost(dt);
             break;
         case EAT_GHOST:
             eatGhost(dt);
             break;
         case RUNAWAY:
-            std::cout << _name << ": RUNAWAY" << std::endl;
+            //std::cout << _name << ": RUNAWAY" << std::endl;
             runaway(dt);
             break;
         case HEAL_PACMAN:
-            std::cout << _name << ": HEAL PACMAN" << std::endl;
+            //std::cout << _name << ": HEAL PACMAN" << std::endl;
             healPacman(dt);
             break;
         case EAT_BIG_BALL:
-            std::cout << _name << ": EAT BIG BALL" << std::endl;
+            //std::cout << _name << ": EAT BIG BALL" << std::endl;
             eatBigBall(dt);
             break;
         case TRANSFER_AMMUNITION:
-            std::cout << _name << ": TRANSFER AMMUNITION" << std::endl;
+            //std::cout << _name << ": TRANSFER AMMUNITION" << std::endl;
             transferAmmunition(dt);
             break;
         default:
-            std::cout << _name << ": EAT SMALL BALL" << std::endl;
+            //std::cout << _name << ": EAT SMALL BALL" << std::endl;
             eatSmallBall(dt);
             break;
     }
@@ -631,7 +646,7 @@ void Pacman::runaway(float dt) {
         turn(directionBack);
         if(Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection())) {
             int dir = Wizard::getInstance().runToCrossing(getX(), getY(), getDirection(), getCrossingMap());
-            std::cout << "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL " << dir << std::endl;
+            //std::cout << "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL " << dir << std::endl;
             turn(dir);
         }
         move(dist);
@@ -713,34 +728,34 @@ void Pacman::hybridPlan(float dt) {
 
     switch (_intention) {
         case BE_HEALED:
-            std::cout << _name << ": BE HEALED" << std::endl;
+            //std::cout << _name << ": BE HEALED" << std::endl;
             beHealedHybrid(dt);
             break;
         case KILL_GHOST:
-            std::cout << _name << ": KILL GHOST" << std::endl;
+            //std::cout << _name << ": KILL GHOST" << std::endl;
             killGhostHybrid(dt);
             break;
         case EAT_GHOST:
             eatGhostHybrid(dt);
             break;
         case RUNAWAY:
-            std::cout << _name << ": RUNAWAY" << std::endl;
+            //std::cout << _name << ": RUNAWAY" << std::endl;
             runawayHybrid(dt);
             break;
         case HEAL_PACMAN:
-            std::cout << _name << ": HEAL PACMAN" << std::endl;
+            //std::cout << _name << ": HEAL PACMAN" << std::endl;
             healPacmanHybrid(dt);
             break;
         case EAT_BIG_BALL:
-            std::cout << _name << ": EAT BIG BALL" << std::endl;
+            //std::cout << _name << ": EAT BIG BALL" << std::endl;
             eatBigBallHybrid(dt);
             break;
         case TRANSFER_AMMUNITION:
-            std::cout << _name << ": TRANSFER AMMUNITION" << std::endl;
+            //std::cout << _name << ": TRANSFER AMMUNITION" << std::endl;
             transferAmmunitionHybrid(dt);
             break;
         default:
-            std::cout << _name << ": EAT SMALL BALL" << std::endl;
+            //std::cout << _name << ": EAT SMALL BALL" << std::endl;
             eatSmallBallHybrid(dt);
             break;
     }
@@ -970,7 +985,7 @@ void Pacman::runawayHybrid(float dt) {
         turn(directionBack);
         if(Wizard::getInstance().isGhostOnSight(getX(), getY(), getDirection())) {
             int dir = Wizard::getInstance().runToCrossing(getX(), getY(), getDirection(), getCrossingMap());
-            std::cout << "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL " << dir << std::endl;
+            //std::cout << "LOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOL " << dir << std::endl;
             turn(dir);
         }
         move(dist);

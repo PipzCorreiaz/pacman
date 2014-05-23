@@ -132,7 +132,7 @@ int Wizard::availablePosition(float x, float y) {
 	std::vector<int> positions = availablePositions(index);
     int size = (int)positions.size();
     if(!size) {
-        std::cout << "nao encontrei posicoes" << std::endl;
+        //std::cout << "nao encontrei posicoes" << std::endl;
         return -1;
     }
     return positions[rand() % size];
@@ -143,7 +143,7 @@ int Wizard::availablePosition(float x, float y, int dir) {
     std::vector<int> positions = availablePositions(index);
     int size = (int)positions.size();
     if(!size) {
-        std::cout << "nao encontrei posicoes" << std::endl;
+        //std::cout << "nao encontrei posicoes" << std::endl;
         return -1;
     }
     int chosenDir = positions[rand() % size];
@@ -241,7 +241,7 @@ int Wizard::availablePositionExceptCurrent(float x, float y, int dir) {
     std::vector<int> positions = availablePositions(index);
     int size = (int)positions.size();
     if(!size) {
-        std::cout << "nao encontrei posicoes" << std::endl;
+        //std::cout << "nao encontrei posicoes" << std::endl;
         return -1;
     }
     int chosenDir = positions[rand() % size];
@@ -249,14 +249,6 @@ int Wizard::availablePositionExceptCurrent(float x, float y, int dir) {
         chosenDir = positions[rand() % size];
     }
 
-    std::cout << "CURRENT DIR: " << dir 
-        << " NEXT DIR: " << chosenDir << "SIZE: " << size
-        << "POSITION: " << index 
-        << " SYMBOL 1: " << _map[upPosition(index, 2)]
-        << " SYMBOL 2: " << _map[leftPosition(index, 2)]
-        << " SYMBOL 3: " << _map[rightPosition(index, 2)]
-        << " SYMBOL 4: " << _map[downPosition(index, 2)]
-        << std::endl;
     return chosenDir;
 }
 
@@ -321,7 +313,7 @@ int Wizard::availablePosition(int index) {
 	std::vector<int> positions = availablePositions(index);
     int size = (int)positions.size();
     if(!size) {
-        std::cout << "nao encontrei posicoes" << std::endl;
+        //std::cout << "nao encontrei posicoes" << std::endl;
         return -1;
     }
     return positions[rand() % size];
@@ -418,7 +410,7 @@ bool Wizard::isGhostScared(float x, float y) {
         float pY = _ghosts[i]->getY();
 
         if (!_ghosts[i]->getTrouble() && inRange(x, y, pX, pY, 2)) {
-            std::cout << "Found a ghost" << std::endl;
+            //std::cout << "Found a ghost" << std::endl;
             return true;
         }
     }
@@ -450,7 +442,7 @@ bool Wizard::isPacman(char name, float x, float y) {
             float pY = _pacmen[i]->getY();
             
             if (!_pacmen[i]->getSick() && inRange(x, y, pX, pY, 2)) {
-                std::cout << "Found a pacman" << std::endl;
+                //std::cout << "Found a pacman" << std::endl;
                 return true;
             }
         }

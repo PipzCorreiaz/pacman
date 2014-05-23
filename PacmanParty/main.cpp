@@ -84,6 +84,18 @@ void keyboard(unsigned char key, int x, int y) {
 	if(key == '2'){
         game->_light = new Gspot();
     }
+    if (key == 'r') {
+        std::cout << "REACTIVE_MODE" << std::endl;
+        game->setMode(REACTIVE_MODE);
+    }
+    if (key == 'd') {
+        std::cout << "BDI_MODE" << std::endl;
+        game->setMode(BDI_MODE);
+    }
+    if (key == 'h') {
+        std::cout << "HYBRID_MODE" << std::endl;
+        game->setMode(HYBRID_MODE);
+    }
 }
 
 

@@ -37,6 +37,7 @@ public:
     std::string integerToString(int num);
     void setScore();
     void draw();
+    void setMode(int);
         
 public:
     

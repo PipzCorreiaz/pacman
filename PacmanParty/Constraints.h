@@ -62,5 +62,9 @@
 #define EAT_SMALL_BALL 106
 #define EAT_GHOST 107
 
+#define REACTIVE_MODE 0
+#define BDI_MODE 1
+#define HYBRID_MODE 2
+
 
 #endif

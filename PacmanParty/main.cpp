@@ -6,11 +6,13 @@
 
 
 #include <iostream>
+#include <csignal>
+
 #include "Game.h"
 #include "Gspot.h"
 #include "DayLight.h"
 #include "BMPReader.h"
-
+#include "Stats.h"
 
 void myReshape(GLsizei w, GLsizei h) ;
 void myDisplay(void) ;
@@ -104,8 +106,22 @@ void update() {
 	glutPostRedisplay();
 }
 
+void sighandler( int signum )
+{
+    
+    Stats::getInstance().dump();
+    // cleanup and close up stuff here  
+    // terminate program  
+
+   exit(signum);  
+
+}
 
 int main(int argc, char** argv) {
+
+    signal(SIGABRT, &sighandler);
+    signal(SIGTERM, &sighandler);
+    signal(SIGINT, &sighandler);
 	
 	srand((unsigned int)time(NULL));
 	

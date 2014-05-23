@@ -1,5 +1,5 @@
 #include "Wizard.h"
-
+#include "Stats.h"
 
 Wizard::~Wizard() {
     
@@ -867,6 +867,7 @@ void Wizard::killPacman(float x, float y) {
         
         if (!_pacmen[i]->getSick() && inRange(x, y, pX, pY, 2)) {
             _pacmen[i]->detonate();
+            Stats::getInstance().incZombies();
             return;
         }
     }

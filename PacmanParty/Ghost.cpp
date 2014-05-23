@@ -1,5 +1,6 @@
 #include "Ghost.h"
 #include "Wizard.h"
+#include "Stats.h"
 
 /////////////SO DEVE SER USADO PARA O HUD
 Ghost::Ghost() : Character() {
@@ -58,7 +59,7 @@ void Ghost::move(float dist) {
     
     Wizard::getInstance().changeMap(getX(), getY(), _lastSymbol);
     Character::move(dist);
-    eat(nextPosition[0], nextPosition[1], symbol);
+    //eat(nextPosition[0], nextPosition[1], symbol);
     
     if (getTrouble()) {
         setLastSymbol(Wizard::getInstance().getMapSymbol(getX(), getY()));
@@ -108,6 +109,7 @@ int Ghost::shoot(int i) {
         backAgain();
         glutTimerFunc(5000, theComeBack, i);
         deadGhost = 1;
+        Stats::getInstance().incGhosts();
     }
     return deadGhost;
 }

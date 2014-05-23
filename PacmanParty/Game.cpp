@@ -1,4 +1,5 @@
 #include "Game.h"
+#include "Stats.h"
 #include <thread>
 
 
@@ -136,6 +137,7 @@ void Game::mapItemsDrawer(){ //actualiza o desenho das bolas
 		}
 	}
     
+    Stats::getInstance().setBalls(balls);
     if ((_balls - balls) == 0) {
         _done = true;
     }
@@ -317,8 +319,12 @@ void Game::draw(){
     
     if (_done) {
         winnerBitmap();
+        Stats::getInstance().dump();
+        exit(-1);
     } else if (_pac->getSick() && _poc->getSick()) {
         loserBitmap();
+        Stats::getInstance().dump();
+        exit(-1);
     } else {
     
 

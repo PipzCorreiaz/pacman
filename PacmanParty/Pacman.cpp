@@ -414,6 +414,9 @@ void Pacman::eatSmallBall(float dt) {
         } else {
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
         }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
     } 
     else if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
@@ -427,7 +430,10 @@ void Pacman::eatSmallBall(float dt) {
             turn(directionBack);
         } else {
             turn(Wizard::getInstance().availablePositionExceptCurrent(getX(), getY(), getDirection()));
-        }     
+        }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);     
     } else {
         move(dist);
     }
@@ -444,6 +450,9 @@ void Pacman::eatBigBall(float dt) {
         }else {
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
         }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
     } 
     else if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
@@ -474,6 +483,9 @@ void Pacman::killGhost(float dt) {
         }else {
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
         }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
     } else if (_beliefs[GHOST] && _beliefs[CROSSING]) {
         shoot();
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
@@ -511,6 +523,9 @@ void Pacman::eatGhost(float dt) {
         }else {
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
         }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
     } else if (_beliefs[SCARED_GHOST]) {
         move(dist);
     } else if (_beliefs[CROSSING]) {
@@ -538,6 +553,9 @@ void Pacman::beHealed(float dt) {
         }else {
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
         }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
     } else if(getSick() && _beliefs[CROSSING]) {
         if (Wizard::getInstance().isPacmanOnAnyDirection(getName(), getX(), getY())) {
             direction = Wizard::getInstance().directionToTurn(getName(), getX(), getY());
@@ -571,6 +589,8 @@ void Pacman::beHealed(float dt) {
                 }
             }
         }
+        _previousX = round(getX());
+        _previousY = round(getY());
         move(dist);
     } else {
         _hasPlan = false;
@@ -593,6 +613,9 @@ void Pacman::healPacman(float dt) {
         } else {
             turn(Wizard::getInstance().availablePosition(getX(), getY(), getDirection()));
         }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
     } else if (_beliefs[CROSSING]) {
         if (!(_previousX == round(getX()) && _previousY == round(getY()))) {
             int dir = Wizard::getInstance().smartDirection(getName(), getX(), getY());
@@ -773,6 +796,9 @@ void Pacman::eatSmallBallHybrid(float dt) {
         } else {
             turn(Wizard::getInstance().availablePosition(getX(), getY()));
         }
+        _previousX = round(getX());
+        _previousY = round(getY());
+        move(dist);
     } 
     else if (_beliefs[CROSSING]) {
         if (! (_previousX == round(getX()) && _previousY == round(getY()))) {
